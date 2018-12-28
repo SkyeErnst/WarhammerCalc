@@ -47,6 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\Calculator.cs" />
+    <Compile Include="src\StatBlocks\GeqStats.cs" />
+    <Compile Include="src\StatBlocks\IStats.cs" />
+    <Compile Include="src\StatBlocks\MeqStats.cs" />
+    <Compile Include="src\StatBlocks\TeqStats.cs" />
     <Compile Include="src\UI.cs">
       <SubType>Form</SubType>
     </Compile>

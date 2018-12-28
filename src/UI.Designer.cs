@@ -60,6 +60,12 @@
             this._failedSavesNum = new System.Windows.Forms.Label();
             this._invulSaveLabel = new System.Windows.Forms.Label();
             this._invulSaveBox = new System.Windows.Forms.MaskedTextBox();
+            this._geqButton = new System.Windows.Forms.Button();
+            this._fillsLabel = new System.Windows.Forms.Label();
+            this._meqButton = new System.Windows.Forms.Button();
+            this._teqButton = new System.Windows.Forms.Button();
+            this._keqButton = new System.Windows.Forms.Button();
+            this._veqButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // _AtkLabel
@@ -175,7 +181,7 @@
             // 
             // m_rollButton
             // 
-            this.m_rollButton.Location = new System.Drawing.Point(391, 51);
+            this.m_rollButton.Location = new System.Drawing.Point(380, 78);
             this.m_rollButton.Name = "m_rollButton";
             this.m_rollButton.Size = new System.Drawing.Size(75, 23);
             this.m_rollButton.TabIndex = 15;
@@ -342,12 +348,73 @@
             this._invulSaveBox.Size = new System.Drawing.Size(52, 20);
             this._invulSaveBox.TabIndex = 33;
             // 
+            // _geqButton
+            // 
+            this._geqButton.Location = new System.Drawing.Point(481, 30);
+            this._geqButton.Name = "_geqButton";
+            this._geqButton.Size = new System.Drawing.Size(75, 23);
+            this._geqButton.TabIndex = 34;
+            this._geqButton.Text = "GEQ";
+            this._geqButton.UseVisualStyleBackColor = true;
+            // 
+            // _fillsLabel
+            // 
+            this._fillsLabel.AutoSize = true;
+            this._fillsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._fillsLabel.Location = new System.Drawing.Point(623, 7);
+            this._fillsLabel.Name = "_fillsLabel";
+            this._fillsLabel.Size = new System.Drawing.Size(36, 20);
+            this._fillsLabel.TabIndex = 35;
+            this._fillsLabel.Text = "Fills";
+            // 
+            // _meqButton
+            // 
+            this._meqButton.Location = new System.Drawing.Point(562, 30);
+            this._meqButton.Name = "_meqButton";
+            this._meqButton.Size = new System.Drawing.Size(75, 23);
+            this._meqButton.TabIndex = 36;
+            this._meqButton.Text = "MEQ";
+            this._meqButton.UseVisualStyleBackColor = true;
+            // 
+            // _teqButton
+            // 
+            this._teqButton.Location = new System.Drawing.Point(643, 30);
+            this._teqButton.Name = "_teqButton";
+            this._teqButton.Size = new System.Drawing.Size(75, 23);
+            this._teqButton.TabIndex = 37;
+            this._teqButton.Text = "TEQ";
+            this._teqButton.UseVisualStyleBackColor = true;
+            // 
+            // _keqButton
+            // 
+            this._keqButton.Location = new System.Drawing.Point(805, 30);
+            this._keqButton.Name = "_keqButton";
+            this._keqButton.Size = new System.Drawing.Size(75, 23);
+            this._keqButton.TabIndex = 38;
+            this._keqButton.Text = "KEQ";
+            this._keqButton.UseVisualStyleBackColor = true;
+            // 
+            // _veqButton
+            // 
+            this._veqButton.Location = new System.Drawing.Point(724, 30);
+            this._veqButton.Name = "_veqButton";
+            this._veqButton.Size = new System.Drawing.Size(75, 23);
+            this._veqButton.TabIndex = 39;
+            this._veqButton.Text = "VEQ";
+            this._veqButton.UseVisualStyleBackColor = true;
+            // 
             // MathHammer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(704, 441);
+            this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this._veqButton);
+            this.Controls.Add(this._keqButton);
+            this.Controls.Add(this._teqButton);
+            this.Controls.Add(this._meqButton);
+            this.Controls.Add(this._fillsLabel);
+            this.Controls.Add(this._geqButton);
             this.Controls.Add(this._invulSaveBox);
             this.Controls.Add(this._invulSaveLabel);
             this.Controls.Add(this._failedSavesNum);
@@ -421,6 +488,12 @@
         private System.Windows.Forms.Label _failedSavesNum;
         private System.Windows.Forms.Label _invulSaveLabel;
         private System.Windows.Forms.MaskedTextBox _invulSaveBox;
+        private System.Windows.Forms.Button _geqButton;
+        private System.Windows.Forms.Label _fillsLabel;
+        private System.Windows.Forms.Button _meqButton;
+        private System.Windows.Forms.Button _teqButton;
+        private System.Windows.Forms.Button _keqButton;
+        private System.Windows.Forms.Button _veqButton;
     }
 }
 

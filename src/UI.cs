@@ -17,17 +17,21 @@ namespace MathHammer
 
         private void m_rollButton_Click(object sender, EventArgs e)
         {
-            Chart crt;
+            Chart crt = new Chart
+            {
+                WsBs = Int32.Parse((_atkWsBsBox.Text)),
+                Shots = Int32.Parse(_atkShotsBox.Text),
+                Strength = Int32.Parse(_atkStrBox.Text),
+                Ap = Int32.Parse(m_atkAPBox.Text),
+                DiceNum = Int32.Parse(_atkDiceAmount.Text),
+                DiceType = Int32.Parse(_atkDiceD.Text),
+                Tough = Int32.Parse(_defToughness.Text),
+                Save = Int32.Parse(_defSave.Text),
+                InvulSave = Int32.Parse(_invulSaveBox.Text)
+            };
 
-            crt = MainProgram.Calc.Roll(Int32.Parse((_atkWsBsBox.Text)),
-                Int32.Parse(_atkShotsBox.Text),
-                Int32.Parse(_atkStrBox.Text),
-                Int32.Parse(m_atkAPBox.Text),
-                Int32.Parse(_atkDiceAmount.Text),
-                Int32.Parse(_atkDiceD.Text),
-                Int32.Parse(_defToughness.Text),
-                Int32.Parse(_defSave.Text),
-                Int32.Parse(_invulSaveBox.Text));
+
+            MainProgram.Calc.Roll(ref crt);
 
             DisplayResults(crt);
         }
@@ -111,14 +115,14 @@ namespace MathHammer
 
         private void CascadeValues(Point startPoint, List<int> values, Color clr)
         {
-            int yOffset = 27;
+            int yOffset = 28;
             Point currPoint = startPoint;
             currPoint.Y += yOffset;
 
             for (int i = 0; i < values.Count; i++)
             {
                 Label lbl = new Label();
-                lbl.Text = values[i].ToString();
+                lbl.Text = i.ToString();
                 lbl.ForeColor = clr;
 
                 this.Controls.Add(lbl);
@@ -130,7 +134,7 @@ namespace MathHammer
             }
         }
 
-        private int Sum(List<int> values)
+        private static int Sum(IReadOnlyList<int> values)
         {
             int total = 0;
 
@@ -140,14 +144,6 @@ namespace MathHammer
             }
 
             return total;
-        }
-
-        private enum CascadeType
-        {
-            Hit = 0,
-            Wound = 1,
-            Save = 2,
-            Damage = 3
         }
     }
 }

@@ -7,21 +7,20 @@ namespace MathHammer.src
 {
     public class Calculator
     {
-        private Random _rand;
+        private readonly Random _rand;
 
         public Calculator()
         {
             _rand = new Random();
         }
 
-        public Chart Roll(int wSbS, int shots, int atkStr, int atkAp, int atkDiceNum, int atkDType, int defTough, int defSave, int defInvulSave)
+        public Chart Roll(ref Chart chart)
         {
-            Chart chart = new Chart();
 
-            RollHit(wSbS, shots, out chart.ShotsTaken, out chart.ShotsHit, out chart.ShotsMissed);
-            RollWound(chart.ShotsHit, atkStr, defTough, out chart.SuccessfulWounds, out chart.WoundAttempts, out chart.FailedWounds);
-            RollSave(chart.SuccessfulWounds, defSave, defInvulSave, atkAp, out chart.SaveAttempts, out chart.FailedSaves, out chart.SuccessfulSaves);
-            RollDamage(chart.FailedSaves, atkDiceNum, atkDType, out chart.Damage);
+            RollHit(chart.WsBs, chart.Shots, out chart.ShotsTaken, out chart.ShotsHit, out chart.ShotsMissed);
+            RollWound(chart.ShotsHit, chart.Strength, chart.Tough, out chart.SuccessfulWounds, out chart.WoundAttempts, out chart.FailedWounds);
+            RollSave(chart.SuccessfulWounds, chart.Save, chart.InvulSave, chart.Ap, out chart.SaveAttempts, out chart.FailedSaves, out chart.SuccessfulSaves);
+            RollDamage(chart.FailedSaves, chart.DiceNum, chart.DiceType, out chart.Damage);
 
             chart.Damage.Sort();
             chart.FailedSaves.Sort();
@@ -33,15 +32,6 @@ namespace MathHammer.src
             chart.FailedWounds.Sort();
             chart.SuccessfulSaves.Sort();
             chart.ShotsMissed.Sort();
-
-            chart.WsBs = wSbS;
-            chart.Shots = shots;
-            chart.Strength = atkStr;
-            chart.Ap = atkAp;
-            chart.DiceNum = atkDiceNum;
-            chart.DiceType = atkDType;
-            chart.Tough = defTough;
-            chart.Save = defSave;
 
             return chart;
         }
@@ -194,5 +184,6 @@ namespace MathHammer.src
         internal int DiceType;
         internal int Tough;
         internal int Save;
+        internal int InvulSave;
     }
 }
