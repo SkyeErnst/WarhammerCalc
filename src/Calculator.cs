@@ -14,13 +14,13 @@ namespace MathHammer.src
             _rand = new Random();
         }
 
-        public Chart Roll(int wSbS, int shots, int atkStr, int atkAp, int atkDiceNum, int atkDType, int defTough, int defSave)
+        public Chart Roll(int wSbS, int shots, int atkStr, int atkAp, int atkDiceNum, int atkDType, int defTough, int defSave, int defInvulSave)
         {
             Chart chart = new Chart();
 
             RollHit(wSbS, shots, out chart.ShotsTaken, out chart.ShotsHit, out chart.ShotsMissed);
             RollWound(chart.ShotsHit, atkStr, defTough, out chart.SuccessfulWounds, out chart.WoundAttempts, out chart.FailedWounds);
-            RollSave(chart.SuccessfulWounds, defSave, atkAp, out chart.SaveAttempts, out chart.FailedSaves, out chart.SuccessfulSaves);
+            RollSave(chart.SuccessfulWounds, defSave, defInvulSave, atkAp, out chart.SaveAttempts, out chart.FailedSaves, out chart.SuccessfulSaves);
             RollDamage(chart.FailedSaves, atkDiceNum, atkDType, out chart.Damage);
 
             chart.Damage.Sort();
@@ -30,6 +30,9 @@ namespace MathHammer.src
             chart.ShotsTaken.Sort();
             chart.SuccessfulWounds.Sort();
             chart.WoundAttempts.Sort();
+            chart.FailedWounds.Sort();
+            chart.SuccessfulSaves.Sort();
+            chart.ShotsMissed.Sort();
 
             chart.WsBs = wSbS;
             chart.Shots = shots;
@@ -112,11 +115,29 @@ namespace MathHammer.src
             }
         }
 
-        private void RollSave(List<int> wounds, int save, int aP, out List<int> saveAttempts, out List<int> failedSaves, out List<int> succSaves)
+        private void RollSave(List<int> wounds, int save, int invulSave, int aP, out List<int> saveAttempts, out List<int> failedSaves, out List<int> succSaves)
         {
             saveAttempts = new List<int>();
             failedSaves = new List<int>();
             succSaves = new List<int>();
+
+            int saveToUse;
+
+            if (invulSave != 0)
+            {
+                if (invulSave < (save + aP))
+                {
+                    saveToUse = invulSave;
+                }
+                else
+                {
+                    saveToUse = save + aP;
+                }
+            }
+            else
+            {
+                saveToUse = save + aP;
+            }
 
             for (int i = 0; i < wounds.Count; i++)
             {
@@ -124,7 +145,7 @@ namespace MathHammer.src
 
                 saveAttempts.Add(currSaveRoll);
 
-                if (currSaveRoll < (save + aP))
+                if (currSaveRoll < saveToUse)
                 {
                     failedSaves.Add(currSaveRoll);
                 }

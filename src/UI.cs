@@ -26,7 +26,8 @@ namespace MathHammer
                 Int32.Parse(_atkDiceAmount.Text),
                 Int32.Parse(_atkDiceD.Text),
                 Int32.Parse(_defToughness.Text),
-                Int32.Parse(_defSave.Text));
+                Int32.Parse(_defSave.Text),
+                Int32.Parse(_invulSaveBox.Text));
 
             DisplayResults(crt);
         }
@@ -61,13 +62,13 @@ namespace MathHammer
 
             if (crt.ShotsHit.Count > 0)
             {
-                if (_labels.Count != 0)
+                if (crt.ShotsMissed.Count > 0)
                 {
                     CascadeValues(_labels[_labels.Count - 1].Location, crt.ShotsHit, successColor);
                 }
                 else
                 {
-                    CascadeValues(_hitResults.Location, crt.ShotsHit, failColor);
+                    CascadeValues(_hitResults.Location, crt.ShotsHit, successColor);
                 }
             }
 
@@ -78,7 +79,14 @@ namespace MathHammer
 
             if (crt.SuccessfulWounds.Count > 0)
             {
-                CascadeValues(_labels[_labels.Count - 1].Location, crt.SuccessfulWounds, successColor);
+                if (crt.FailedWounds.Count > 0)
+                {
+                    CascadeValues(_labels[_labels.Count - 1].Location, crt.SuccessfulWounds, successColor);
+                }
+                else
+                {
+                    CascadeValues(_woundResults.Location, crt.SuccessfulWounds, successColor);
+                }
             }
 
             if (crt.FailedSaves.Count > 0)
@@ -88,7 +96,14 @@ namespace MathHammer
 
             if (crt.SuccessfulSaves.Count > 0)
             {
-                CascadeValues(_labels[_labels.Count - 1].Location, crt.SuccessfulSaves, successColor);
+                if (crt.FailedSaves.Count > 0)
+                {
+                    CascadeValues(_labels[_labels.Count - 1].Location, crt.SuccessfulSaves, successColor);
+                }
+                else
+                {
+                    CascadeValues(_saveResultsLabel.Location, crt.SuccessfulSaves, successColor);
+                }
             }
 
             CascadeValues(_damageResultsLabel.Location, crt.Damage, defaultColor);

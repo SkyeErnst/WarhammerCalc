@@ -58,6 +58,8 @@
             this._saveResultsLabel = new System.Windows.Forms.Label();
             this._failedSavesLabel = new System.Windows.Forms.Label();
             this._failedSavesNum = new System.Windows.Forms.Label();
+            this._invulSaveLabel = new System.Windows.Forms.Label();
+            this._invulSaveBox = new System.Windows.Forms.MaskedTextBox();
             this.SuspendLayout();
             // 
             // _AtkLabel
@@ -98,7 +100,7 @@
             // m_atkAPBox
             // 
             this.m_atkAPBox.Location = new System.Drawing.Point(65, 103);
-            this.m_atkAPBox.Mask = "00";
+            this.m_atkAPBox.Mask = "0";
             this.m_atkAPBox.Name = "m_atkAPBox";
             this.m_atkAPBox.Size = new System.Drawing.Size(52, 20);
             this.m_atkAPBox.TabIndex = 4;
@@ -131,7 +133,7 @@
             // _defSave
             // 
             this._defSave.Location = new System.Drawing.Point(301, 54);
-            this._defSave.Mask = "00";
+            this._defSave.Mask = "0";
             this._defSave.Name = "_defSave";
             this._defSave.Size = new System.Drawing.Size(52, 20);
             this._defSave.TabIndex = 12;
@@ -274,7 +276,7 @@
             // _atkWsBsBox
             // 
             this._atkWsBsBox.Location = new System.Drawing.Point(65, 24);
-            this._atkWsBsBox.Mask = "00";
+            this._atkWsBsBox.Mask = "0";
             this._atkWsBsBox.Name = "_atkWsBsBox";
             this._atkWsBsBox.Size = new System.Drawing.Size(52, 20);
             this._atkWsBsBox.TabIndex = 26;
@@ -323,12 +325,31 @@
             this._failedSavesNum.TabIndex = 31;
             this._failedSavesNum.Text = "0";
             // 
+            // _invulSaveLabel
+            // 
+            this._invulSaveLabel.AutoSize = true;
+            this._invulSaveLabel.Location = new System.Drawing.Point(211, 80);
+            this._invulSaveLabel.Name = "_invulSaveLabel";
+            this._invulSaveLabel.Size = new System.Drawing.Size(58, 13);
+            this._invulSaveLabel.TabIndex = 32;
+            this._invulSaveLabel.Text = "Invul Save";
+            // 
+            // _invulSaveBox
+            // 
+            this._invulSaveBox.Location = new System.Drawing.Point(300, 80);
+            this._invulSaveBox.Mask = "0";
+            this._invulSaveBox.Name = "_invulSaveBox";
+            this._invulSaveBox.Size = new System.Drawing.Size(52, 20);
+            this._invulSaveBox.TabIndex = 33;
+            // 
             // MathHammer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(704, 441);
+            this.Controls.Add(this._invulSaveBox);
+            this.Controls.Add(this._invulSaveLabel);
             this.Controls.Add(this._failedSavesNum);
             this.Controls.Add(this._failedSavesLabel);
             this.Controls.Add(this._saveResultsLabel);
@@ -398,6 +419,8 @@
         private System.Windows.Forms.Label _saveResultsLabel;
         private System.Windows.Forms.Label _failedSavesLabel;
         private System.Windows.Forms.Label _failedSavesNum;
+        private System.Windows.Forms.Label _invulSaveLabel;
+        private System.Windows.Forms.MaskedTextBox _invulSaveBox;
     }
 }
 
