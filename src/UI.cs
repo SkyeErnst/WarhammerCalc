@@ -30,18 +30,17 @@ namespace MathHammer
         private void RollButton_Click(object sender, EventArgs e)
         {
             Chart crt = new Chart
-            {
-                WsBs = Int32.Parse((_atkWsBsBox.Text)),
-                Shots = Int32.Parse(_atkShotsBox.Text),
-                Strength = Int32.Parse(_atkStrBox.Text),
-                Ap = Int32.Parse(m_atkAPBox.Text),
-                DiceNum = Int32.Parse(_atkDiceAmount.Text),
-                DiceType = Int32.Parse(_atkDiceD.Text),
-                Tough = Int32.Parse(_defToughness.Text),
-                Save = Int32.Parse(_defSave.Text),
-                InvulSave = Int32.Parse(_invulSaveBox.Text)
-            };
-
+                (
+                Int32.Parse(_atkWsBsBox.Text),
+                Int32.Parse(_atkShotsBox.Text),
+                Int32.Parse(_atkStrBox.Text),
+                Int32.Parse(m_atkAPBox.Text),
+                Int32.Parse(_atkDiceAmount.Text),
+                Int32.Parse(_atkDiceD.Text),
+                Int32.Parse(_defToughness.Text),
+                Int32.Parse(_defSave.Text),
+                Int32.Parse(_invulSaveBox.Text)
+                );
 
             MainProgram.Calc.Roll(ref crt);
 
@@ -187,6 +186,7 @@ namespace MathHammer
         /// <param name="tough"></param>
         /// <param name="save"></param>
         /// <param name="invulSave"></param>
+        /// <param name="wounds"></param>
         private void FillHelper(int tough, int save, int invulSave, int wounds)
         {
             _defToughness.Text = tough.ToString();

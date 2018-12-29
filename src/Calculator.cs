@@ -17,10 +17,10 @@ namespace MathHammer.src
         public Chart Roll(ref Chart chart)
         {
 
-            RollHit(chart.WsBs, chart.Shots, out chart.ShotsTaken, out chart.ShotsHit, out chart.ShotsMissed);
-            RollWound(chart.ShotsHit, chart.Strength, chart.Tough, out chart.SuccessfulWounds, out chart.WoundAttempts, out chart.FailedWounds);
-            RollSave(chart.SuccessfulWounds, chart.Save, chart.InvulSave, chart.Ap, out chart.SaveAttempts, out chart.FailedSaves, out chart.SuccessfulSaves);
-            RollDamage(chart.FailedSaves, chart.DiceNum, chart.DiceType, out chart.Damage);
+            RollHit(ref chart);
+            RollWound(ref chart);
+            RollSave(ref chart);
+            RollDamage(ref chart);
 
             chart.Damage.Sort();
             chart.FailedSaves.Sort();
@@ -36,129 +36,117 @@ namespace MathHammer.src
             return chart;
         }
 
-        private void RollHit(int minHitVal, int shots, out List<int> taken, out List<int> hit, out List<int> missed)
+        private void RollHit(ref Chart chart)
         {
-            taken = new List<int>();
-            hit = new List<int>();
-            missed = new List<int>();
 
-            for (int i = 0; i < shots; i++)
+            for (int i = 0; i < chart.Shots; i++)
             {
                 int currShot = 0;
 
-                taken.Add((currShot = _rand.Next(1, 7)));
+                chart.ShotsTaken.Add((currShot = _rand.Next(1, 7)));
 
-                if (currShot >= minHitVal)
+                if (currShot >= chart.WsBs)
                 {
-                    hit.Add((currShot));
+                    chart.ShotsHit.Add((currShot));
                 }
                 else
                 {
-                    missed.Add((currShot));
+                    chart.ShotsMissed.Add((currShot));
                 }
             }
         }
 
-        private void RollWound(List<int> hits, int str, int tough, out List<int> succWounds, out List<int> attemptWound, out List<int> failedWounds)
+        private void RollWound(ref Chart chart)
         {
             int target = 0;
-            succWounds = new List<int>();
-            attemptWound = new List<int>();
-            failedWounds = new List<int>();
 
             // Set the target for the to wound roll.
-            if ((str == (tough * 2)) || str >= (tough * 2)) // strength equal to or double tough, 2+
+            if ((chart.Strength == (chart.Tough * 2)) || chart.Strength >= (chart.Tough * 2)) // strength equal to or double tough, 2+
             {
                 target = 2;
             }
-            else if (str > tough) // strength greater than toughness, 3+
+            else if (chart.Strength > chart.Tough) // strength greater than toughness, 3+
             {
                 target = 3;
             }
-            else if (str == tough) // both equal, 4+
+            else if (chart.Strength == chart.Tough) // both equal, 4+
             {
                 target = 4;
             }
-            else if (str < tough) // str lower than tough, 5+
+            else if (chart.Strength < chart.Tough) // str lower than tough, 5+
             {
                 target = 5;
             }
-            else if ((tough == (str / 2)) || (tough >= (str / 2))) // str is 1/2 or less than tough
+            else if ((chart.Tough == (chart.Strength / 2)) || (chart.Tough >= (chart.Strength / 2))) // str is 1/2 or less than tough
             {
                 target = 6;
             }
 
             // Rolls for wounds
-            for (int i = 0; i < hits.Count; i++)
+            for (int i = 0; i < chart.ShotsHit.Count; i++)
             {
                 int currWoundRoll = 0;
-                attemptWound.Add(currWoundRoll = _rand.Next(1, 7));
+                chart.WoundAttempts.Add(currWoundRoll = _rand.Next(1, 7));
 
                 if (currWoundRoll >= target)
                 {
-                    succWounds.Add(currWoundRoll);
+                    chart.SuccessfulWounds.Add(currWoundRoll);
                 }
                 else
                 {
-                    failedWounds.Add(currWoundRoll);
+                    chart.FailedWounds.Add(currWoundRoll);
                 }
             }
         }
 
-        private void RollSave(List<int> wounds, int save, int invulSave, int aP, out List<int> saveAttempts, out List<int> failedSaves, out List<int> succSaves)
+        private void RollSave(ref Chart chart)
         {
-            saveAttempts = new List<int>();
-            failedSaves = new List<int>();
-            succSaves = new List<int>();
-
             int saveToUse;
 
-            if (invulSave != 0)
+            if (chart.InvulSave != 0)
             {
-                if (invulSave < (save + aP))
+                if (chart.InvulSave < (chart.Save + chart.Ap))
                 {
-                    saveToUse = invulSave;
+                    saveToUse = chart.InvulSave;
                 }
                 else
                 {
-                    saveToUse = save + aP;
+                    saveToUse = chart.Save + chart.Ap;
                 }
             }
             else
             {
-                saveToUse = save + aP;
+                saveToUse = chart.Save + chart.Ap;
             }
 
-            for (int i = 0; i < wounds.Count; i++)
+            for (int i = 0; i < chart.SuccessfulWounds.Count; i++)
             {
                 int currSaveRoll = _rand.Next(1, 7);
 
-                saveAttempts.Add(currSaveRoll);
+                chart.SaveAttempts.Add(currSaveRoll);
 
                 if (currSaveRoll < saveToUse)
                 {
-                    failedSaves.Add(currSaveRoll);
+                    chart.FailedSaves.Add(currSaveRoll);
                 }
                 else
                 {
-                    succSaves.Add(currSaveRoll);
+                    chart.SuccessfulSaves.Add(currSaveRoll);
                 }
             }
         }
 
-        private void RollDamage(List<int> wounds, int diceNum, int diceType, out List<int> damage)
+        private void RollDamage(ref Chart chart)
         {
-            damage = new List<int>();
-
-            for (int i = 0; i < wounds.Count; i++)
+            for (int i = 0; i < chart.FailedSaves.Count; i++)
             {
                 int innerTotal = 0;
-                for (int j = 0; j < diceNum; j++)
+                for (int j = 0; j < chart.DiceNum; j++)
                 {
-                    int roll = _rand.Next(1, diceType + 1);
+                    int roll = _rand.Next(1, chart.DiceType + 1);
                     innerTotal += roll;
                 }
-                damage.Add(innerTotal);
+                chart.Damage.Add(innerTotal);
             }
         }
     }
@@ -176,14 +164,38 @@ namespace MathHammer.src
         internal List<int> SuccessfulSaves;
         internal List<int> Damage;
 
-        internal int WsBs;
-        internal int Shots;
-        internal int Strength;
-        internal int Ap;
-        internal int DiceNum;
-        internal int DiceType;
-        internal int Tough;
-        internal int Save;
-        internal int InvulSave;
+        internal readonly int WsBs;
+        internal readonly int Shots;
+        internal readonly int Strength;
+        internal readonly int Ap;
+        internal readonly int DiceNum;
+        internal readonly int DiceType;
+        internal readonly int Tough;
+        internal readonly int Save;
+        internal readonly int InvulSave;
+
+        public Chart(int score, int shots, int strength, int ap, int diceNum, int diceType, int tough, int save, int invulSave)
+        {
+            WsBs = score;
+            Shots = shots;
+            Strength = strength;
+            Ap = ap;
+            DiceNum = diceNum;
+            DiceType = diceType;
+            Tough = tough;
+            Save = save;
+            InvulSave = invulSave;
+
+            ShotsMissed = new List<int>();
+            ShotsHit = new List<int>();
+            ShotsTaken = new List<int>();
+            FailedWounds = new List<int>();
+            SuccessfulWounds = new List<int>();
+            WoundAttempts = new List<int>();
+            FailedSaves = new List<int>();
+            SuccessfulSaves = new List<int>();
+            SaveAttempts = new List<int>();
+            Damage = new List<int>();
+        }
     }
 }
