@@ -186,7 +186,6 @@ namespace MathHammer
         /// <param name="tough"></param>
         /// <param name="save"></param>
         /// <param name="invulSave"></param>
-        /// <param name="wounds"></param>
         private void FillHelper(int tough, int save, int invulSave, int wounds)
         {
             _defToughness.Text = tough.ToString();
