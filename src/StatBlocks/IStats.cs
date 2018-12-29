@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing.Text;
 
 namespace MathHammer.src.StatBlocks
 {
@@ -7,5 +8,6 @@ namespace MathHammer.src.StatBlocks
         int Tough { get; }
         int Save { get; }
         int InvulSave { get; }
+        int Wounds { get; }
     }
 }

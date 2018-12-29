@@ -66,6 +66,8 @@
             this._teqButton = new System.Windows.Forms.Button();
             this._keqButton = new System.Windows.Forms.Button();
             this._veqButton = new System.Windows.Forms.Button();
+            this._woundPerModelLabel = new System.Windows.Forms.Label();
+            this._woundsPerModelBox = new System.Windows.Forms.MaskedTextBox();
             this.SuspendLayout();
             // 
             // _AtkLabel
@@ -155,7 +157,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(211, 57);
+            this.label3.Location = new System.Drawing.Point(211, 61);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(32, 13);
             this.label3.TabIndex = 10;
@@ -181,13 +183,13 @@
             // 
             // m_rollButton
             // 
-            this.m_rollButton.Location = new System.Drawing.Point(380, 78);
+            this.m_rollButton.Location = new System.Drawing.Point(380, 108);
             this.m_rollButton.Name = "m_rollButton";
             this.m_rollButton.Size = new System.Drawing.Size(75, 23);
             this.m_rollButton.TabIndex = 15;
             this.m_rollButton.Text = "Roll!";
             this.m_rollButton.UseVisualStyleBackColor = true;
-            this.m_rollButton.Click += new System.EventHandler(this.m_rollButton_Click);
+            this.m_rollButton.Click += new System.EventHandler(this.RollButton_Click);
             // 
             // _hitResults
             // 
@@ -334,7 +336,7 @@
             // _invulSaveLabel
             // 
             this._invulSaveLabel.AutoSize = true;
-            this._invulSaveLabel.Location = new System.Drawing.Point(211, 80);
+            this._invulSaveLabel.Location = new System.Drawing.Point(211, 84);
             this._invulSaveLabel.Name = "_invulSaveLabel";
             this._invulSaveLabel.Size = new System.Drawing.Size(58, 13);
             this._invulSaveLabel.TabIndex = 32;
@@ -356,6 +358,7 @@
             this._geqButton.TabIndex = 34;
             this._geqButton.Text = "GEQ";
             this._geqButton.UseVisualStyleBackColor = true;
+            this._geqButton.Click += new System.EventHandler(this._geqButton_Click);
             // 
             // _fillsLabel
             // 
@@ -375,6 +378,7 @@
             this._meqButton.TabIndex = 36;
             this._meqButton.Text = "MEQ";
             this._meqButton.UseVisualStyleBackColor = true;
+            this._meqButton.Click += new System.EventHandler(this._meqButton_Click);
             // 
             // _teqButton
             // 
@@ -384,6 +388,7 @@
             this._teqButton.TabIndex = 37;
             this._teqButton.Text = "TEQ";
             this._teqButton.UseVisualStyleBackColor = true;
+            this._teqButton.Click += new System.EventHandler(this._teqButton_Click);
             // 
             // _keqButton
             // 
@@ -393,6 +398,7 @@
             this._keqButton.TabIndex = 38;
             this._keqButton.Text = "KEQ";
             this._keqButton.UseVisualStyleBackColor = true;
+            this._keqButton.Click += new System.EventHandler(this._keqButton_Click);
             // 
             // _veqButton
             // 
@@ -402,6 +408,24 @@
             this._veqButton.TabIndex = 39;
             this._veqButton.Text = "VEQ";
             this._veqButton.UseVisualStyleBackColor = true;
+            this._veqButton.Click += new System.EventHandler(this._veqButton_Click);
+            // 
+            // _woundPerModelLabel
+            // 
+            this._woundPerModelLabel.AutoSize = true;
+            this._woundPerModelLabel.Location = new System.Drawing.Point(211, 113);
+            this._woundPerModelLabel.Name = "_woundPerModelLabel";
+            this._woundPerModelLabel.Size = new System.Drawing.Size(80, 13);
+            this._woundPerModelLabel.TabIndex = 40;
+            this._woundPerModelLabel.Text = "Wounds/model";
+            // 
+            // _woundsPerModelBox
+            // 
+            this._woundsPerModelBox.Location = new System.Drawing.Point(300, 110);
+            this._woundsPerModelBox.Mask = "00";
+            this._woundsPerModelBox.Name = "_woundsPerModelBox";
+            this._woundsPerModelBox.Size = new System.Drawing.Size(52, 20);
+            this._woundsPerModelBox.TabIndex = 41;
             // 
             // MathHammer
             // 
@@ -409,6 +433,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this._woundsPerModelBox);
+            this.Controls.Add(this._woundPerModelLabel);
             this.Controls.Add(this._veqButton);
             this.Controls.Add(this._keqButton);
             this.Controls.Add(this._teqButton);
@@ -494,6 +520,8 @@
         private System.Windows.Forms.Button _teqButton;
         private System.Windows.Forms.Button _keqButton;
         private System.Windows.Forms.Button _veqButton;
+        private System.Windows.Forms.Label _woundPerModelLabel;
+        private System.Windows.Forms.MaskedTextBox _woundsPerModelBox;
     }
 }
 
