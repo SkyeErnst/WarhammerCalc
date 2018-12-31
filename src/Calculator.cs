@@ -25,13 +25,17 @@ namespace MathHammer.src
             chart.Damage.Sort();
             chart.FailedSaves.Sort();
             chart.SaveAttempts.Sort();
-            chart.ShotsHit.Sort();
+            chart.InitialShotsHit.Sort();
             chart.ShotsTaken.Sort();
             chart.SuccessfulWounds.Sort();
             chart.WoundAttempts.Sort();
             chart.FailedWounds.Sort();
             chart.SuccessfulSaves.Sort();
             chart.ShotsMissed.Sort();
+            chart.RerolledHits.Sort();
+            chart.FinalHitList.Sort();
+            chart.MissedRerolledHits.Sort();
+            chart.SuccessfulRerolledHits.Sort();
 
             return chart;
         }
@@ -43,17 +47,35 @@ namespace MathHammer.src
             {
                 int currShot = 0;
 
-                chart.ShotsTaken.Add((currShot = _rand.Next(1, 7)));
+                chart.ShotsTaken.Add((currShot = _rand.Next(1,7)));
 
                 if (currShot >= chart.WsBs)
                 {
-                    chart.ShotsHit.Add((currShot));
+                    chart.InitialShotsHit.Add((currShot));
                 }
                 else
                 {
-                    chart.ShotsMissed.Add((currShot));
+                    if (chart.ShouldRerollOnes == true && currShot == 1)
+                    {
+                        chart.RerolledHits.Add(currShot = _rand.Next(1, 7));
+                    }
+                    else if (chart.ShouldRerollMisses == true)
+                    {
+                        chart.RerolledHits.Add(currShot = _rand.Next(1, 7));
+                    }
+
+                    if (currShot >= chart.WsBs)
+                    {
+                        chart.SuccessfulRerolledHits.Add((currShot));
+                    }
+                    else
+                    {
+                        chart.MissedRerolledHits.Add((currShot));
+                    }
                 }
             }
+            chart.FinalHitList.AddRange(chart.InitialShotsHit);
+            chart.FinalHitList.AddRange(chart.SuccessfulRerolledHits);
         }
 
         private void RollWound(ref Chart chart)
@@ -83,7 +105,7 @@ namespace MathHammer.src
             }
 
             // Rolls for wounds
-            for (int i = 0; i < chart.ShotsHit.Count; i++)
+            for (int i = 0; i < chart.InitialShotsHit.Count; i++)
             {
                 int currWoundRoll = 0;
                 chart.WoundAttempts.Add(currWoundRoll = _rand.Next(1, 7));
@@ -154,7 +176,7 @@ namespace MathHammer.src
     public struct Chart
     {
         internal List<int> ShotsTaken;
-        internal List<int> ShotsHit;
+        internal List<int> InitialShotsHit;
         internal List<int> ShotsMissed;
         internal List<int> WoundAttempts;
         internal List<int> FailedWounds;
@@ -163,6 +185,10 @@ namespace MathHammer.src
         internal List<int> FailedSaves;
         internal List<int> SuccessfulSaves;
         internal List<int> Damage;
+        internal List<int> RerolledHits;
+        internal List<int> FinalHitList;
+        internal List<int> MissedRerolledHits;
+        internal List<int> SuccessfulRerolledHits;
 
         internal readonly int WsBs;
         internal readonly int Shots;
@@ -174,7 +200,12 @@ namespace MathHammer.src
         internal readonly int Save;
         internal readonly int InvulSave;
 
-        public Chart(int score, int shots, int strength, int ap, int diceNum, int diceType, int tough, int save, int invulSave)
+        internal readonly bool ShouldReroll;
+        internal readonly bool ShouldRerollOnes;
+        internal readonly bool ShouldRerollMisses;
+        internal readonly bool ShouldRerollWounds;
+
+        public Chart(int score, int shots, int strength, int ap, int diceNum, int diceType, int tough, int save, int invulSave, bool rNone, bool rOnes, bool rMisses, bool rWounds)
         {
             WsBs = score;
             Shots = shots;
@@ -186,8 +217,13 @@ namespace MathHammer.src
             Save = save;
             InvulSave = invulSave;
 
+            ShouldReroll = rNone;
+            ShouldRerollOnes = rOnes;
+            ShouldRerollMisses = rMisses;
+            ShouldRerollWounds = rWounds;
+
             ShotsMissed = new List<int>();
-            ShotsHit = new List<int>();
+            InitialShotsHit = new List<int>();
             ShotsTaken = new List<int>();
             FailedWounds = new List<int>();
             SuccessfulWounds = new List<int>();
@@ -196,6 +232,10 @@ namespace MathHammer.src
             SuccessfulSaves = new List<int>();
             SaveAttempts = new List<int>();
             Damage = new List<int>();
+            RerolledHits = new List<int>();
+            FinalHitList = new List<int>();
+            MissedRerolledHits = new List<int>();
+            SuccessfulRerolledHits = new List<int>();
         }
     }
 }

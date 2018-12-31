@@ -39,7 +39,11 @@ namespace MathHammer
                 Int32.Parse(_atkDiceD.Text),
                 Int32.Parse(_defToughness.Text),
                 Int32.Parse(_defSave.Text),
-                Int32.Parse(_invulSaveBox.Text)
+                Int32.Parse(_invulSaveBox.Text),
+                _noRerollRadio.Checked,
+                _rerollOnesRadio.Checked,
+                _rerollMisses.Checked,
+                _rerollWoundsRadio.Checked
                 );
 
             MainProgram.Calc.Roll(ref crt);
@@ -69,25 +73,25 @@ namespace MathHammer
 
             _labels = new List<Label>();
 
-            _totalHitsNum.Text = crt.ShotsHit.Count.ToString();
+            _totalHitsNum.Text = crt.FinalHitList.Count.ToString();
             _woundsTotalNum.Text = crt.SuccessfulWounds.Count.ToString();
             _failedSavesNum.Text = crt.FailedSaves.Count.ToString();
             _damageTotalNum.Text = Sum(crt.Damage).ToString();
 
             if (crt.ShotsMissed.Count > 0)
             {
-                CascadeValues(_hitResults.Location, crt.ShotsMissed, failColor);
+                CascadeValues(_InitialhitResults.Location, crt.ShotsMissed, failColor);
             }
 
-            if (crt.ShotsHit.Count > 0)
+            if (crt.InitialShotsHit.Count > 0)
             {
                 if (crt.ShotsMissed.Count > 0)
                 {
-                    CascadeValues(_labels[_labels.Count - 1].Location, crt.ShotsHit, successColor);
+                    CascadeValues(_labels[_labels.Count - 1].Location, crt.InitialShotsHit, successColor);
                 }
                 else
                 {
-                    CascadeValues(_hitResults.Location, crt.ShotsHit, successColor);
+                    CascadeValues(_InitialhitResults.Location, crt.InitialShotsHit, successColor);
                 }
             }
 
@@ -123,6 +127,28 @@ namespace MathHammer
                 {
                     CascadeValues(_saveResultsLabel.Location, crt.SuccessfulSaves, successColor);
                 }
+            }
+
+            if (crt.MissedRerolledHits.Count > 0)
+            {
+                CascadeValues(_hitRerollsLabel.Location, crt.MissedRerolledHits, failColor);
+            }
+
+            if (crt.SuccessfulRerolledHits.Count > 0)
+            {
+                if (crt.MissedRerolledHits.Count > 0)
+                {
+                    CascadeValues(_labels[_labels.Count - 1].Location, crt.SuccessfulRerolledHits, successColor);
+                }
+                else
+                {
+                    CascadeValues(_hitRerollsLabel.Location, crt.SuccessfulRerolledHits, successColor);
+                }
+            }
+
+            if (crt.FinalHitList.Count > 0)
+            {
+                CascadeValues(_finalHitsLabel.Location, crt.FinalHitList, defaultColor);
             }
 
             CascadeValues(_damageResultsLabel.Location, crt.Damage, defaultColor);
