@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MathHammer.src;
 
-namespace MathHammer
+namespace MathHammer.src
 {
     static class MainProgram
     {
@@ -20,7 +20,8 @@ namespace MathHammer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Calc = new Calculator();
-            Application.Run(new MathHammer());
+            
+            Application.Run(new UI());
         }
     }
 }

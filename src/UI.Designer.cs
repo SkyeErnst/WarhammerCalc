@@ -1,6 +1,6 @@
-﻿namespace MathHammer
+﻿namespace MathHammer.src
 {
-    partial class MathHammer
+    partial class UI
     {
         /// <summary>
         /// Required designer variable.
@@ -42,8 +42,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.m_defLabel = new System.Windows.Forms.Label();
             this.m_rollButton = new System.Windows.Forms.Button();
-            this._InitialhitResults = new System.Windows.Forms.Label();
-            this._woundResults = new System.Windows.Forms.Label();
+            this._missedShotsLabel = new System.Windows.Forms.Label();
+            this._successfulWoundsLabel = new System.Windows.Forms.Label();
             this._totalHitsLabel = new System.Windows.Forms.Label();
             this._totalHitsNum = new System.Windows.Forms.Label();
             this._woundTotalLabel = new System.Windows.Forms.Label();
@@ -55,8 +55,7 @@
             this._atkWsBsBox = new System.Windows.Forms.MaskedTextBox();
             this._atkShotsLabel = new System.Windows.Forms.Label();
             this._atkShotsBox = new System.Windows.Forms.MaskedTextBox();
-            this._saveResultsLabel = new System.Windows.Forms.Label();
-            this._failedSavesLabel = new System.Windows.Forms.Label();
+            this._totalFailedSavesLabel = new System.Windows.Forms.Label();
             this._failedSavesNum = new System.Windows.Forms.Label();
             this._invulSaveLabel = new System.Windows.Forms.Label();
             this._invulSaveBox = new System.Windows.Forms.MaskedTextBox();
@@ -76,8 +75,12 @@
             this._rerollMisses = new System.Windows.Forms.RadioButton();
             this._rerollOnesRadio = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
-            this._hitRerollsLabel = new System.Windows.Forms.Label();
+            this._rerollHitsLabel = new System.Windows.Forms.Label();
             this._finalHitsLabel = new System.Windows.Forms.Label();
+            this._hitShotsLabel = new System.Windows.Forms.Label();
+            this._failedWoundsLabel = new System.Windows.Forms.Label();
+            this._saveAttemptsLabel = new System.Windows.Forms.Label();
+            this._rerollMissLabel = new System.Windows.Forms.Label();
             this._modifersPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -203,28 +206,28 @@
             this.m_rollButton.UseVisualStyleBackColor = true;
             this.m_rollButton.Click += new System.EventHandler(this.RollButton_Click);
             // 
-            // _InitialhitResults
+            // _missedShotsLabel
             // 
-            this._InitialhitResults.AutoSize = true;
-            this._InitialhitResults.Location = new System.Drawing.Point(5, 214);
-            this._InitialhitResults.Name = "_InitialhitResults";
-            this._InitialhitResults.Size = new System.Drawing.Size(83, 13);
-            this._InitialhitResults.TabIndex = 16;
-            this._InitialhitResults.Text = "Inital Hit Results";
+            this._missedShotsLabel.AutoSize = true;
+            this._missedShotsLabel.Location = new System.Drawing.Point(63, 214);
+            this._missedShotsLabel.Name = "_missedShotsLabel";
+            this._missedShotsLabel.Size = new System.Drawing.Size(39, 13);
+            this._missedShotsLabel.TabIndex = 16;
+            this._missedShotsLabel.Text = "Misses";
             // 
-            // _woundResults
+            // _successfulWoundsLabel
             // 
-            this._woundResults.AutoSize = true;
-            this._woundResults.Location = new System.Drawing.Point(327, 214);
-            this._woundResults.Name = "_woundResults";
-            this._woundResults.Size = new System.Drawing.Size(80, 13);
-            this._woundResults.TabIndex = 17;
-            this._woundResults.Text = "Wound Results";
+            this._successfulWoundsLabel.AutoSize = true;
+            this._successfulWoundsLabel.Location = new System.Drawing.Point(364, 214);
+            this._successfulWoundsLabel.Name = "_successfulWoundsLabel";
+            this._successfulWoundsLabel.Size = new System.Drawing.Size(102, 13);
+            this._successfulWoundsLabel.TabIndex = 17;
+            this._successfulWoundsLabel.Text = "Successful Wounds";
             // 
             // _totalHitsLabel
             // 
             this._totalHitsLabel.AutoSize = true;
-            this._totalHitsLabel.Location = new System.Drawing.Point(232, 214);
+            this._totalHitsLabel.Location = new System.Drawing.Point(306, 214);
             this._totalHitsLabel.Name = "_totalHitsLabel";
             this._totalHitsLabel.Size = new System.Drawing.Size(52, 13);
             this._totalHitsLabel.TabIndex = 18;
@@ -233,7 +236,7 @@
             // _totalHitsNum
             // 
             this._totalHitsNum.AutoSize = true;
-            this._totalHitsNum.Location = new System.Drawing.Point(232, 236);
+            this._totalHitsNum.Location = new System.Drawing.Point(306, 236);
             this._totalHitsNum.Name = "_totalHitsNum";
             this._totalHitsNum.Size = new System.Drawing.Size(13, 13);
             this._totalHitsNum.TabIndex = 19;
@@ -242,7 +245,7 @@
             // _woundTotalLabel
             // 
             this._woundTotalLabel.AutoSize = true;
-            this._woundTotalLabel.Location = new System.Drawing.Point(434, 214);
+            this._woundTotalLabel.Location = new System.Drawing.Point(552, 214);
             this._woundTotalLabel.Name = "_woundTotalLabel";
             this._woundTotalLabel.Size = new System.Drawing.Size(74, 13);
             this._woundTotalLabel.TabIndex = 20;
@@ -251,7 +254,7 @@
             // _woundsTotalNum
             // 
             this._woundsTotalNum.AutoSize = true;
-            this._woundsTotalNum.Location = new System.Drawing.Point(434, 236);
+            this._woundsTotalNum.Location = new System.Drawing.Point(552, 236);
             this._woundsTotalNum.Name = "_woundsTotalNum";
             this._woundsTotalNum.Size = new System.Drawing.Size(13, 13);
             this._woundsTotalNum.TabIndex = 21;
@@ -260,7 +263,7 @@
             // _damageResultsLabel
             // 
             this._damageResultsLabel.AutoSize = true;
-            this._damageResultsLabel.Location = new System.Drawing.Point(670, 214);
+            this._damageResultsLabel.Location = new System.Drawing.Point(815, 214);
             this._damageResultsLabel.Name = "_damageResultsLabel";
             this._damageResultsLabel.Size = new System.Drawing.Size(85, 13);
             this._damageResultsLabel.TabIndex = 22;
@@ -269,7 +272,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(761, 214);
+            this.label7.Location = new System.Drawing.Point(906, 214);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(68, 13);
             this.label7.TabIndex = 23;
@@ -278,7 +281,7 @@
             // _damageTotalNum
             // 
             this._damageTotalNum.AutoSize = true;
-            this._damageTotalNum.Location = new System.Drawing.Point(761, 236);
+            this._damageTotalNum.Location = new System.Drawing.Point(906, 236);
             this._damageTotalNum.Name = "_damageTotalNum";
             this._damageTotalNum.Size = new System.Drawing.Size(13, 13);
             this._damageTotalNum.TabIndex = 24;
@@ -318,28 +321,19 @@
             this._atkShotsBox.Size = new System.Drawing.Size(52, 20);
             this._atkShotsBox.TabIndex = 28;
             // 
-            // _saveResultsLabel
+            // _totalFailedSavesLabel
             // 
-            this._saveResultsLabel.AutoSize = true;
-            this._saveResultsLabel.Location = new System.Drawing.Point(514, 214);
-            this._saveResultsLabel.Name = "_saveResultsLabel";
-            this._saveResultsLabel.Size = new System.Drawing.Size(70, 13);
-            this._saveResultsLabel.TabIndex = 29;
-            this._saveResultsLabel.Text = "Save Results";
-            // 
-            // _failedSavesLabel
-            // 
-            this._failedSavesLabel.AutoSize = true;
-            this._failedSavesLabel.Location = new System.Drawing.Point(594, 214);
-            this._failedSavesLabel.Name = "_failedSavesLabel";
-            this._failedSavesLabel.Size = new System.Drawing.Size(68, 13);
-            this._failedSavesLabel.TabIndex = 30;
-            this._failedSavesLabel.Text = "Failed Saves";
+            this._totalFailedSavesLabel.AutoSize = true;
+            this._totalFailedSavesLabel.Location = new System.Drawing.Point(714, 214);
+            this._totalFailedSavesLabel.Name = "_totalFailedSavesLabel";
+            this._totalFailedSavesLabel.Size = new System.Drawing.Size(95, 13);
+            this._totalFailedSavesLabel.TabIndex = 30;
+            this._totalFailedSavesLabel.Text = "Total Failed Saves";
             // 
             // _failedSavesNum
             // 
             this._failedSavesNum.AutoSize = true;
-            this._failedSavesNum.Location = new System.Drawing.Point(594, 236);
+            this._failedSavesNum.Location = new System.Drawing.Point(714, 236);
             this._failedSavesNum.Name = "_failedSavesNum";
             this._failedSavesNum.Size = new System.Drawing.Size(13, 13);
             this._failedSavesNum.TabIndex = 31;
@@ -525,32 +519,72 @@
             this.label1.TabIndex = 44;
             this.label1.Text = "Modifiers";
             // 
-            // _hitRerollsLabel
+            // _rerollHitsLabel
             // 
-            this._hitRerollsLabel.AutoSize = true;
-            this._hitRerollsLabel.Location = new System.Drawing.Point(94, 214);
-            this._hitRerollsLabel.Name = "_hitRerollsLabel";
-            this._hitRerollsLabel.Size = new System.Drawing.Size(50, 13);
-            this._hitRerollsLabel.TabIndex = 44;
-            this._hitRerollsLabel.Text = "Hit rerolls";
+            this._rerollHitsLabel.AutoSize = true;
+            this._rerollHitsLabel.Location = new System.Drawing.Point(113, 214);
+            this._rerollHitsLabel.Name = "_rerollHitsLabel";
+            this._rerollHitsLabel.Size = new System.Drawing.Size(55, 13);
+            this._rerollHitsLabel.TabIndex = 44;
+            this._rerollHitsLabel.Text = "Reroll Hits";
             // 
             // _finalHitsLabel
             // 
             this._finalHitsLabel.AutoSize = true;
-            this._finalHitsLabel.Location = new System.Drawing.Point(161, 214);
+            this._finalHitsLabel.Location = new System.Drawing.Point(242, 214);
             this._finalHitsLabel.Name = "_finalHitsLabel";
             this._finalHitsLabel.Size = new System.Drawing.Size(58, 13);
             this._finalHitsLabel.TabIndex = 45;
             this._finalHitsLabel.Text = "Final hit list";
             // 
-            // MathHammer
+            // _hitShotsLabel
+            // 
+            this._hitShotsLabel.AutoSize = true;
+            this._hitShotsLabel.Location = new System.Drawing.Point(5, 214);
+            this._hitShotsLabel.Name = "_hitShotsLabel";
+            this._hitShotsLabel.Size = new System.Drawing.Size(25, 13);
+            this._hitShotsLabel.TabIndex = 46;
+            this._hitShotsLabel.Text = "Hits";
+            // 
+            // _failedWoundsLabel
+            // 
+            this._failedWoundsLabel.AutoSize = true;
+            this._failedWoundsLabel.Location = new System.Drawing.Point(471, 214);
+            this._failedWoundsLabel.Name = "_failedWoundsLabel";
+            this._failedWoundsLabel.Size = new System.Drawing.Size(78, 13);
+            this._failedWoundsLabel.TabIndex = 47;
+            this._failedWoundsLabel.Text = "Failed Wounds";
+            // 
+            // _saveAttemptsLabel
+            // 
+            this._saveAttemptsLabel.AutoSize = true;
+            this._saveAttemptsLabel.Location = new System.Drawing.Point(632, 214);
+            this._saveAttemptsLabel.Name = "_saveAttemptsLabel";
+            this._saveAttemptsLabel.Size = new System.Drawing.Size(76, 13);
+            this._saveAttemptsLabel.TabIndex = 48;
+            this._saveAttemptsLabel.Text = "Save Attempts";
+            // 
+            // _rerollMissLabel
+            // 
+            this._rerollMissLabel.AutoSize = true;
+            this._rerollMissLabel.Location = new System.Drawing.Point(178, 214);
+            this._rerollMissLabel.Name = "_rerollMissLabel";
+            this._rerollMissLabel.Size = new System.Drawing.Size(58, 13);
+            this._rerollMissLabel.TabIndex = 49;
+            this._rerollMissLabel.Text = "Reroll Miss";
+            // 
+            // UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this._rerollMissLabel);
+            this.Controls.Add(this._saveAttemptsLabel);
+            this.Controls.Add(this._failedWoundsLabel);
+            this.Controls.Add(this._hitShotsLabel);
             this.Controls.Add(this._finalHitsLabel);
-            this.Controls.Add(this._hitRerollsLabel);
+            this.Controls.Add(this._rerollHitsLabel);
             this.Controls.Add(this._modifersPanel);
             this.Controls.Add(this._woundsPerModelBox);
             this.Controls.Add(this._woundPerModelLabel);
@@ -563,8 +597,7 @@
             this.Controls.Add(this._invulSaveBox);
             this.Controls.Add(this._invulSaveLabel);
             this.Controls.Add(this._failedSavesNum);
-            this.Controls.Add(this._failedSavesLabel);
-            this.Controls.Add(this._saveResultsLabel);
+            this.Controls.Add(this._totalFailedSavesLabel);
             this.Controls.Add(this._atkShotsBox);
             this.Controls.Add(this._atkShotsLabel);
             this.Controls.Add(this._atkWsBsBox);
@@ -576,8 +609,8 @@
             this.Controls.Add(this._woundTotalLabel);
             this.Controls.Add(this._totalHitsNum);
             this.Controls.Add(this._totalHitsLabel);
-            this.Controls.Add(this._woundResults);
-            this.Controls.Add(this._InitialhitResults);
+            this.Controls.Add(this._successfulWoundsLabel);
+            this.Controls.Add(this._missedShotsLabel);
             this.Controls.Add(this.m_rollButton);
             this.Controls.Add(this._defSave);
             this.Controls.Add(this._defToughness);
@@ -619,8 +652,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label m_defLabel;
         private System.Windows.Forms.Button m_rollButton;
-        private System.Windows.Forms.Label _InitialhitResults;
-        private System.Windows.Forms.Label _woundResults;
+        private System.Windows.Forms.Label _missedShotsLabel;
+        private System.Windows.Forms.Label _successfulWoundsLabel;
         private System.Windows.Forms.Label _totalHitsLabel;
         private System.Windows.Forms.Label _totalHitsNum;
         private System.Windows.Forms.Label _woundTotalLabel;
@@ -632,8 +665,7 @@
         private System.Windows.Forms.MaskedTextBox _atkWsBsBox;
         private System.Windows.Forms.Label _atkShotsLabel;
         private System.Windows.Forms.MaskedTextBox _atkShotsBox;
-        private System.Windows.Forms.Label _saveResultsLabel;
-        private System.Windows.Forms.Label _failedSavesLabel;
+        private System.Windows.Forms.Label _totalFailedSavesLabel;
         private System.Windows.Forms.Label _failedSavesNum;
         private System.Windows.Forms.Label _invulSaveLabel;
         private System.Windows.Forms.MaskedTextBox _invulSaveBox;
@@ -653,8 +685,12 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.RadioButton _rerollWoundsRadio;
         private System.Windows.Forms.RadioButton _normalWoundingRadio;
-        private System.Windows.Forms.Label _hitRerollsLabel;
+        private System.Windows.Forms.Label _rerollHitsLabel;
         private System.Windows.Forms.Label _finalHitsLabel;
+        private System.Windows.Forms.Label _hitShotsLabel;
+        private System.Windows.Forms.Label _failedWoundsLabel;
+        private System.Windows.Forms.Label _saveAttemptsLabel;
+        private System.Windows.Forms.Label _rerollMissLabel;
     }
 }
 

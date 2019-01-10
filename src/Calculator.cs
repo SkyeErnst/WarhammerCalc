@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Text;
-using System.Security.AccessControl;
+using MathHammer.src;
 
 namespace MathHammer.src
 {
@@ -47,7 +46,7 @@ namespace MathHammer.src
             {
                 int currShot = 0;
 
-                chart.ShotsTaken.Add((currShot = _rand.Next(1,7)));
+                chart.ShotsTaken.Add((currShot = _rand.Next(1, 7)));
 
                 if (currShot >= chart.WsBs)
                 {
@@ -55,6 +54,10 @@ namespace MathHammer.src
                 }
                 else
                 {
+                    if (chart.ShouldReroll == false)
+                    {
+                        chart.ShotsMissed.Add(currShot);
+                    }
                     if (chart.ShouldRerollOnes == true && currShot == 1)
                     {
                         chart.RerolledHits.Add(currShot = _rand.Next(1, 7));
@@ -74,8 +77,10 @@ namespace MathHammer.src
                     }
                 }
             }
+
             chart.FinalHitList.AddRange(chart.InitialShotsHit);
             chart.FinalHitList.AddRange(chart.SuccessfulRerolledHits);
+
         }
 
         private void RollWound(ref Chart chart)
@@ -83,7 +88,8 @@ namespace MathHammer.src
             int target = 0;
 
             // Set the target for the to wound roll.
-            if ((chart.Strength == (chart.Tough * 2)) || chart.Strength >= (chart.Tough * 2)) // strength equal to or double tough, 2+
+            if ((chart.Strength == (chart.Tough * 2)) || chart.Strength >= (chart.Tough * 2)
+            ) // strength equal to or double tough, 2+
             {
                 target = 2;
             }
@@ -99,7 +105,8 @@ namespace MathHammer.src
             {
                 target = 5;
             }
-            else if ((chart.Tough == (chart.Strength / 2)) || (chart.Tough >= (chart.Strength / 2))) // str is 1/2 or less than tough
+            else if ((chart.Tough == (chart.Strength / 2)) || (chart.Tough >= (chart.Strength / 2))
+            ) // str is 1/2 or less than tough
             {
                 target = 6;
             }
@@ -168,6 +175,7 @@ namespace MathHammer.src
                     int roll = _rand.Next(1, chart.DiceType + 1);
                     innerTotal += roll;
                 }
+
                 chart.Damage.Add(innerTotal);
             }
         }
@@ -205,7 +213,19 @@ namespace MathHammer.src
         internal readonly bool ShouldRerollMisses;
         internal readonly bool ShouldRerollWounds;
 
-        public Chart(int score, int shots, int strength, int ap, int diceNum, int diceType, int tough, int save, int invulSave, bool rNone, bool rOnes, bool rMisses, bool rWounds)
+        public Chart(int score,
+            int shots,
+            int strength,
+            int ap,
+            int diceNum,
+            int diceType,
+            int tough,
+            int save,
+            int invulSave,
+            bool rNone,
+            bool rOnes,
+            bool rMisses,
+            bool rWounds)
         {
             WsBs = score;
             Shots = shots;

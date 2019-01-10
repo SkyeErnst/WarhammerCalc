@@ -2,21 +2,22 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using MathHammer.src;
 using MathHammer.src.StatBlocks;
 
-namespace MathHammer
+namespace MathHammer.src
 {
-    public partial class MathHammer : Form
+    public partial class UI : Form
     {
         /// <summary>
         /// List of all the labels that we have added to the form.
         /// </summary>
         private List<Label> _labels;
 
-        public MathHammer()
+        public UI()
         {
             InitializeComponent();
+            _noRerollRadio.Checked = true;
+            _normalWoundingRadio.Checked = true;
         }
 
         /// <summary>
@@ -80,41 +81,27 @@ namespace MathHammer
 
             if (crt.ShotsMissed.Count > 0)
             {
-                CascadeValues(_InitialhitResults.Location, crt.ShotsMissed, failColor);
+                CascadeValues(_missedShotsLabel.Location, crt.ShotsMissed, failColor);
             }
 
             if (crt.InitialShotsHit.Count > 0)
             {
-                if (crt.ShotsMissed.Count > 0)
-                {
-                    CascadeValues(_labels[_labels.Count - 1].Location, crt.InitialShotsHit, successColor);
-                }
-                else
-                {
-                    CascadeValues(_InitialhitResults.Location, crt.InitialShotsHit, successColor);
-                }
+               CascadeValues(_hitShotsLabel.Location, crt.InitialShotsHit, successColor);
             }
 
             if (crt.FailedWounds.Count > 0)
             {
-                CascadeValues(_woundResults.Location, crt.FailedWounds, failColor);
+                CascadeValues(_failedWoundsLabel.Location, crt.FailedWounds, failColor);
             }
 
             if (crt.SuccessfulWounds.Count > 0)
             {
-                if (crt.FailedWounds.Count > 0)
-                {
-                    CascadeValues(_labels[_labels.Count - 1].Location, crt.SuccessfulWounds, successColor);
-                }
-                else
-                {
-                    CascadeValues(_woundResults.Location, crt.SuccessfulWounds, successColor);
-                }
+                CascadeValues(_successfulWoundsLabel.Location, crt.SuccessfulWounds, successColor);
             }
 
             if (crt.FailedSaves.Count > 0)
             {
-                CascadeValues(_saveResultsLabel.Location, crt.FailedSaves, failColor);
+                CascadeValues(_saveAttemptsLabel.Location, crt.FailedSaves, failColor);
             }
 
             if (crt.SuccessfulSaves.Count > 0)
@@ -125,25 +112,18 @@ namespace MathHammer
                 }
                 else
                 {
-                    CascadeValues(_saveResultsLabel.Location, crt.SuccessfulSaves, successColor);
+                    CascadeValues(_saveAttemptsLabel.Location, crt.SuccessfulSaves, successColor);
                 }
             }
 
             if (crt.MissedRerolledHits.Count > 0)
             {
-                CascadeValues(_hitRerollsLabel.Location, crt.MissedRerolledHits, failColor);
+                CascadeValues(_rerollMissLabel.Location, crt.MissedRerolledHits, failColor);
             }
 
             if (crt.SuccessfulRerolledHits.Count > 0)
             {
-                if (crt.MissedRerolledHits.Count > 0)
-                {
-                    CascadeValues(_labels[_labels.Count - 1].Location, crt.SuccessfulRerolledHits, successColor);
-                }
-                else
-                {
-                    CascadeValues(_hitRerollsLabel.Location, crt.SuccessfulRerolledHits, successColor);
-                }
+                 CascadeValues(_rerollHitsLabel.Location, crt.SuccessfulRerolledHits, successColor);
             }
 
             if (crt.FinalHitList.Count > 0)
@@ -156,21 +136,24 @@ namespace MathHammer
 
         private void CascadeValues(Point startPoint, List<int> values, Color clr)
         {
-            int yOffset = 28;
+            int yOffset = 30;
             Point currPoint = startPoint;
             currPoint.Y += yOffset;
-
 
             for (int i = 0; i < values.Count; i++)
             {
                 Label lbl = new Label();
                 lbl.Text = values[i].ToString();
                 lbl.ForeColor = clr;
+                _labels.Add((lbl));
 
                 this.Controls.Add(lbl);
 
+                this.Refresh();
+
                 lbl.Location = currPoint;
-                _labels.Add((lbl));
+
+                this.Refresh();
 
                 currPoint.Y += yOffset;
             }
