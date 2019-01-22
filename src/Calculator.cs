@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace MathHammer
 {
     public class Calculator
     {
         private readonly Random _rand;
+
+        private bool _calcTesla = false;
+        private int _teslaShots = 0;
 
         public Calculator()
         {
@@ -15,9 +20,31 @@ namespace MathHammer
 
         public Chart Roll(ref Chart chart)
         {
-            for (int i = 0; i < chart.Shots; i++)
+            _calcTesla = false;
+            _teslaShots = 0;
+            int itter = 0;
+
+            // Sets up number of times to run loop depending on if the number of shots is variable or 
+            // an explicit number.
+            if (false == chart.VariableShots)
             {
-                if(true == RollHit(ref chart, i))
+                itter = chart.FlatShots;
+            }
+            else
+            {
+                for (int i = 0; i < chart.ShotDiceNum; i++)
+                {
+                    itter += _rand.Next(1, chart.ShotDiceType + 1);
+                }
+            }
+
+            // As long as each previous hit / wound, etc is successful, continue rolling.
+            // Otherwise, go to next roll line.
+            // Else clauses are there to simply fill in the text properties that would normally
+            // be the default zero
+            for (int i = 0; i < itter; i++)
+            {
+                if (true == RollHit(ref chart, i))
                 {
                     if (true == RollWound(ref chart, i))
                     {
@@ -25,10 +52,36 @@ namespace MathHammer
                         {
                             RollDamage(ref chart, i);
                         }
+                        else
+                        {
+                            chart.RollStats[i]._damageValue.Text = chart.NaText;
+                        }
                     }
-                } 
+                    //else
+                    //{
+                    //    chart.RollStats[i]._armorRoll.Text = chart.NaText;
+                    //    chart.RollStats[i]._damageValue.Text = chart.NaText;
+                    //}
+                }
+                //else
+                //{
+                //    chart.RollStats[i]._woundValue.Text = chart.NaText;
+                //    chart.RollStats[i]._woundRerollValue.Text = chart.NaText;
+                //    chart.RollStats[i]._armorRoll.Text = chart.NaText;
+                //    chart.RollStats[i]._damageValue.Text = chart.NaText;
+                //}
             }
 
+            // Handles the case of a tesla weapon being fired.
+            if (true == _calcTesla)
+            {
+                for (int i = 0; i < _teslaShots; i++)
+                {
+                    HandleTesla(ref chart);
+                }
+            }
+
+            // Puts together the initial hits list and the rerolled hits list.
             if (chart.InitialShotsHit.Count > 0)
             {
                 chart.FinalHitList.AddRange(chart.InitialShotsHit);
@@ -43,49 +96,85 @@ namespace MathHammer
 
         private bool RollHit(ref Chart chart, int i)
         {
-                int currShot = 0;
-                chart.RollStats.Add(new RollLine());
+            // Variable for holding the current randomly generated dice roll
+            int currShot = 0;
 
+            chart.RollStats.Add(new RollLine());
+
+            if (true == chart.ShouldAutohit)
+            {
+                chart.InitialShotsHit.Add(0);
+                chart.RollStats[i]._hitValue.Text = chart.AutohitText;
+                chart.RollStats[i]._hitValue.ForeColor = chart.SpecialEventColor;
+                return true;
+            }
+            else
+            {
+                // Randomly generates a dice roll and sets the text property to the roll
                 chart.ShotsTaken.Add((currShot = _rand.Next(1, 7)));
                 chart.RollStats[i]._hitValue.Text = currShot.ToString();
 
+                // If initial shot is a hit...
                 if (currShot >= chart.WsBs)
                 {
                     chart.InitialShotsHit.Add((currShot));
                     chart.RollStats[i]._hitValue.ForeColor = chart.SuccsessColor;
-                    chart.RollStats[i]._rerollValue.Text = chart.NAText;
-                    return true;
+                    chart.RollStats[i]._hitRerollValue.Text = chart.NaText;
                 }
+                // if initial shot is a miss.
                 else
                 {
                     if (chart.DontReroll == true)
                     {
                         chart.ShotsMissed.Add(currShot);
                         chart.RollStats[i]._hitValue.ForeColor = chart.FailColor;
-                        chart.RollStats[i]._rerollValue.Text = chart.NAText;
+                        //chart.RollStats[i]._hitRerollValue.Text = chart.NaText;
                         return false;
                     }
-                    if (chart.ShouldRerollOnes == true && currShot == 1)
+                    if ((chart.ShouldRerollOnesHit == true && currShot == 1
+                         ||
+                         chart.ShouldRerollMisses == true))
                     {
-                        chart.RerolledShots.Add(currShot = _rand.Next(1, 7));
-                    }
-                    else if (chart.ShouldRerollMisses == true)
-                    {
-                        chart.RerolledShots.Add(currShot = _rand.Next(1, 7));
-                    }
 
-                    if (currShot >= chart.WsBs)
-                    {
-                        chart.RerolledHits.Add((currShot));
-                        chart.RollStats[i]._hitValue.ForeColor = chart.SuccsessColor;
-                        return true;
+                        // Only way to get here is if initial shot fails,
+                        // So set the hit value text color to fail
+                        chart.RollStats[i]._hitValue.ForeColor = chart.FailColor;
+
+                        // Generates a new dice roll and fills in the re-roll value label with the dice roll
+                        chart.RerolledShots.Add(currShot = _rand.Next(1, 7));
+                        chart.RollStats[i]._hitRerollValue.Text = currShot.ToString();
+
+                        // If the newly generated roll is a hit
+                        if (currShot >= chart.WsBs)
+                        {
+                            chart.RerolledHits.Add((currShot));
+                            chart.RollStats[i]._hitRerollValue.ForeColor = chart.SuccsessColor;
+                        }
+                        // If the newly generated roll is not a hit
+                        else
+                        {
+                            chart.RollStats[i]._hitRerollValue.ForeColor = chart.FailColor;
+                            return false;
+                        }
                     }
-                    else
+                    // Handles case of dice roll being greater than 1, but re-roll one's is true
+                    else if (true == chart.ShouldRerollOnesHit && 1 != currShot)
                     {
+                        //chart.RollStats[i]._hitRerollValue.Text = chart.NaText;
+                        chart.RollStats[i]._hitRerollValue.ForeColor = chart.DefaultColor;
                         chart.RollStats[i]._hitValue.ForeColor = chart.FailColor;
                         return false;
                     }
                 }
+
+                // Handles case of the weapon having the tesla rule
+                if (true == chart.IsTeslaWeapon && 6 == currShot)
+                {
+                    _calcTesla = true;
+                    _teslaShots += 3;
+                }
+            }
+            return true;
         }
 
         private bool RollWound(ref Chart chart, int i)
@@ -127,11 +216,13 @@ namespace MathHammer
             {
                 chart.SuccessfulWounds.Add(currWoundRoll);
                 chart.RollStats[i]._woundValue.ForeColor = chart.SuccsessColor;
+                chart.RollStats[i]._woundRerollValue.Text = chart.NaText;
                 return true;
             }
             else
             {
                 chart.RollStats[i]._woundValue.ForeColor = chart.FailColor;
+                chart.RollStats[i]._woundRerollValue.Text = chart.NaText;
                 return false;
             }
         }
@@ -175,14 +266,38 @@ namespace MathHammer
         private void RollDamage(ref Chart chart, int i)
         {
             int innerTotal = 0;
-            for (int j = 0; j < chart.DiceNum; j++)
+
+            if (true == chart.VariableDamage)
             {
-                int roll = _rand.Next(1, chart.DiceType + 1);
-                innerTotal += roll;
+                for (int j = 0; j < chart.DamageDiceNum; j++)
+                {
+                    int roll = _rand.Next(1, chart.DamageDiceType + 1);
+                    innerTotal += roll;
+                }
+            }
+            else
+            {
+                innerTotal = chart.FlatDamge;
             }
 
             chart.Damage.Add(innerTotal);
             chart.RollStats[i]._damageValue.Text = innerTotal.ToString();
+        }
+
+        private void HandleTesla(ref Chart chart)
+        {
+            chart.RollStats.Add(new RollLine());
+            chart.RollStats[chart.RollStats.Count - 1]._hitValue.Text = chart.TeslaText;
+            chart.RollStats[chart.RollStats.Count - 1]._hitValue.ForeColor = chart.SpecialEventColor;
+
+            if(true == RollWound(ref chart, chart.RollStats.Count - 1))
+            {
+                if (false == RollSave(ref chart, chart.RollStats.Count - 1))
+                {
+                    RollDamage(ref chart, chart.RollStats.Count - 1);
+                }
+            }
+            
         }
     }
 
@@ -200,60 +315,98 @@ namespace MathHammer
         internal List<RollLine> RollStats;
 
         internal readonly int WsBs;
-        internal readonly int Shots;
+        internal readonly int FlatShots;
         internal readonly int Strength;
         internal readonly int Ap;
-        internal readonly int DiceNum;
-        internal readonly int DiceType;
+        internal readonly int DamageDiceNum;
+        internal readonly int DamageDiceType;
         internal readonly int Tough;
         internal readonly int Save;
         internal readonly int InvulSave;
+        internal readonly int ShotDiceNum;
+        internal readonly int ShotDiceType;
+        internal readonly int FlatDamge;
 
         internal readonly Color SuccsessColor;
         internal readonly Color FailColor;
+        internal readonly Color SpecialEventColor;
         internal readonly Color DefaultColor;
 
         internal readonly bool DontReroll;
-        internal readonly bool ShouldRerollOnes;
+        internal readonly bool ShouldRerollOnesHit;
         internal readonly bool ShouldRerollMisses;
-        internal readonly bool ShouldRerollWounds;
+        internal readonly bool ShouldRerollFailedWounds;
+        internal readonly bool ShouldRerollWoundsOfOne;
+        internal readonly bool ShouldAutohit;
+        internal readonly bool ShoundWoundOnX;
+        internal readonly bool ShouldMortalWoundOnX;
+        internal readonly bool IsTeslaWeapon;
+        internal readonly bool VariableShots;
+        internal readonly bool VariableDamage;
 
-        internal readonly string NAText;
+        internal readonly string NaText;
+        internal readonly string TeslaText;
+        internal readonly string AutohitText;
 
         public Chart(int stats,
-            int shots,
+            int flatShots,
             int strength,
             int ap,
-            int diceNum,
-            int diceType,
+            int damageDiceNum,
+            int damageDiceType,
             int tough,
             int save,
             int invulSave,
-            bool rNone,
-            bool rOnes,
-            bool rMisses,
-            bool rWounds)
+            int shotDiceNum, 
+            int shotDiceType,
+            int flatDamge,
+            bool rerollNone,
+            bool rerollOnes,
+            bool rerollMisses,
+            bool rerollWounds, 
+            bool shouldRerollWoundsOfOne, 
+            bool shouldAutohit, 
+            bool shoundWoundOnX, 
+            bool shouldMortalWoundOnX, 
+            bool isTeslaWeapon, 
+            bool variableShots, 
+            bool variableDamage
+            )
         {
             WsBs = stats;
-            Shots = shots;
+            FlatShots = flatShots;
             Strength = strength;
             Ap = ap;
-            DiceNum = diceNum;
-            DiceType = diceType;
+            DamageDiceNum = damageDiceNum;
+            DamageDiceType = damageDiceType;
             Tough = tough;
             Save = save;
             InvulSave = invulSave;
+            ShotDiceNum = shotDiceNum;
+            ShotDiceType = shotDiceType;
+            FlatDamge = flatDamge;
 
             SuccsessColor = Color.DarkGreen;
             FailColor = Color.DarkRed;
+            SpecialEventColor = Color.Aquamarine;
             DefaultColor = Color.Black;
+            
 
-            NAText = "N/A";
+            NaText = "N/A";
+            TeslaText = "TESLA";
+            AutohitText = "AUTO";
 
-            DontReroll = rNone;
-            ShouldRerollOnes = rOnes;
-            ShouldRerollMisses = rMisses;
-            ShouldRerollWounds = rWounds;
+            DontReroll = rerollNone;
+            ShouldRerollOnesHit = rerollOnes;
+            ShouldRerollMisses = rerollMisses;
+            ShouldRerollFailedWounds = rerollWounds;
+            ShouldRerollWoundsOfOne = shouldRerollWoundsOfOne;
+            ShouldAutohit = shouldAutohit;
+            ShoundWoundOnX = shoundWoundOnX;
+            ShouldMortalWoundOnX = shouldMortalWoundOnX;
+            IsTeslaWeapon = isTeslaWeapon;
+            VariableShots = variableShots;
+            VariableDamage = variableDamage;
 
             ShotsMissed = new List<int>();
             InitialShotsHit = new List<int>();

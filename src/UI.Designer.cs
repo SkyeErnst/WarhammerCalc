@@ -34,8 +34,8 @@
             this._atkStrBox = new System.Windows.Forms.MaskedTextBox();
             this.m_atkAPBox = new System.Windows.Forms.MaskedTextBox();
             this._atkDamgeLabel = new System.Windows.Forms.Label();
-            this._atkDiceAmount = new System.Windows.Forms.MaskedTextBox();
-            this._atkDiceD = new System.Windows.Forms.MaskedTextBox();
+            this._atkDamageDiceAmount = new System.Windows.Forms.MaskedTextBox();
+            this._atkDiceDType = new System.Windows.Forms.MaskedTextBox();
             this._defSave = new System.Windows.Forms.MaskedTextBox();
             this._defToughness = new System.Windows.Forms.MaskedTextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -52,7 +52,7 @@
             this._atkWsBsLabel = new System.Windows.Forms.Label();
             this._atkWsBsBox = new System.Windows.Forms.MaskedTextBox();
             this._atkShotsLabel = new System.Windows.Forms.Label();
-            this._atkShotsBox = new System.Windows.Forms.MaskedTextBox();
+            this._atkShotsNumberBox = new System.Windows.Forms.MaskedTextBox();
             this._totalFailedSavesLabel = new System.Windows.Forms.Label();
             this._failedSavesNum = new System.Windows.Forms.Label();
             this._invulSaveLabel = new System.Windows.Forms.Label();
@@ -68,22 +68,41 @@
             this._noRerollRadio = new System.Windows.Forms.RadioButton();
             this._modifersPanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this._rerollWoundsRadio = new System.Windows.Forms.RadioButton();
-            this._normalWoundingRadio = new System.Windows.Forms.RadioButton();
+            this._woundMortalOnXBox = new System.Windows.Forms.MaskedTextBox();
+            this._woundOnXRadio = new System.Windows.Forms.RadioButton();
+            this._woundOnXBox = new System.Windows.Forms.MaskedTextBox();
+            this._woundMortalOnXRadio = new System.Windows.Forms.RadioButton();
+            this._woundingUseStandardRadio = new System.Windows.Forms.RadioButton();
+            this._teslaCheckbox = new System.Windows.Forms.CheckBox();
+            this._teslaPanel = new System.Windows.Forms.Panel();
+            this._hitPanel = new System.Windows.Forms.Panel();
             this._rerollMisses = new System.Windows.Forms.RadioButton();
             this._rerollOnesRadio = new System.Windows.Forms.RadioButton();
+            this._woundRerollPanel = new System.Windows.Forms.Panel();
+            this._rerollWoundsOfOneRadio = new System.Windows.Forms.RadioButton();
+            this._rerollFailedWoundsRadio = new System.Windows.Forms.RadioButton();
+            this._dontRerollWounds = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this._finalHitsLabel = new System.Windows.Forms.Label();
             this._results = new System.Windows.Forms.Label();
             this._resultsLabel = new System.Windows.Forms.Label();
+            this._varableDamageCheckbox = new System.Windows.Forms.CheckBox();
+            this._flatDamageBox = new System.Windows.Forms.MaskedTextBox();
+            this._variableShotsCheckbox = new System.Windows.Forms.CheckBox();
+            this._atkShotsDBox = new System.Windows.Forms.MaskedTextBox();
+            this._flatShotsBox = new System.Windows.Forms.MaskedTextBox();
+            this._autoHitCheckbox = new System.Windows.Forms.CheckBox();
             this._modifersPanel.SuspendLayout();
             this.panel1.SuspendLayout();
+            this._teslaPanel.SuspendLayout();
+            this._hitPanel.SuspendLayout();
+            this._woundRerollPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // _AtkLabel
             // 
             this._AtkLabel.AutoSize = true;
-            this._AtkLabel.Location = new System.Drawing.Point(63, 24);
+            this._AtkLabel.Location = new System.Drawing.Point(52, 17);
             this._AtkLabel.Name = "_AtkLabel";
             this._AtkLabel.Size = new System.Drawing.Size(47, 13);
             this._AtkLabel.TabIndex = 0;
@@ -92,7 +111,7 @@
             // _atkStrLabel
             // 
             this._atkStrLabel.AutoSize = true;
-            this._atkStrLabel.Location = new System.Drawing.Point(5, 95);
+            this._atkStrLabel.Location = new System.Drawing.Point(2, 121);
             this._atkStrLabel.Name = "_atkStrLabel";
             this._atkStrLabel.Size = new System.Drawing.Size(47, 13);
             this._atkStrLabel.TabIndex = 1;
@@ -101,7 +120,7 @@
             // _atkAPLable
             // 
             this._atkAPLable.AutoSize = true;
-            this._atkAPLable.Location = new System.Drawing.Point(5, 121);
+            this._atkAPLable.Location = new System.Drawing.Point(2, 147);
             this._atkAPLable.Name = "_atkAPLable";
             this._atkAPLable.Size = new System.Drawing.Size(21, 13);
             this._atkAPLable.TabIndex = 2;
@@ -109,48 +128,50 @@
             // 
             // _atkStrBox
             // 
-            this._atkStrBox.Location = new System.Drawing.Point(58, 92);
+            this._atkStrBox.Location = new System.Drawing.Point(55, 118);
             this._atkStrBox.Mask = "00";
             this._atkStrBox.Name = "_atkStrBox";
-            this._atkStrBox.Size = new System.Drawing.Size(52, 20);
+            this._atkStrBox.Size = new System.Drawing.Size(34, 20);
             this._atkStrBox.TabIndex = 3;
             // 
             // m_atkAPBox
             // 
-            this.m_atkAPBox.Location = new System.Drawing.Point(58, 118);
+            this.m_atkAPBox.Location = new System.Drawing.Point(55, 144);
             this.m_atkAPBox.Mask = "0";
             this.m_atkAPBox.Name = "m_atkAPBox";
-            this.m_atkAPBox.Size = new System.Drawing.Size(52, 20);
+            this.m_atkAPBox.Size = new System.Drawing.Size(34, 20);
             this.m_atkAPBox.TabIndex = 4;
             // 
             // _atkDamgeLabel
             // 
             this._atkDamgeLabel.AutoSize = true;
-            this._atkDamgeLabel.Location = new System.Drawing.Point(5, 147);
+            this._atkDamgeLabel.Location = new System.Drawing.Point(2, 173);
             this._atkDamgeLabel.Name = "_atkDamgeLabel";
             this._atkDamgeLabel.Size = new System.Drawing.Size(47, 13);
             this._atkDamgeLabel.TabIndex = 5;
             this._atkDamgeLabel.Text = "Damage";
             // 
-            // _atkDiceAmount
+            // _atkDamageDiceAmount
             // 
-            this._atkDiceAmount.Location = new System.Drawing.Point(58, 144);
-            this._atkDiceAmount.Mask = "00";
-            this._atkDiceAmount.Name = "_atkDiceAmount";
-            this._atkDiceAmount.Size = new System.Drawing.Size(52, 20);
-            this._atkDiceAmount.TabIndex = 6;
+            this._atkDamageDiceAmount.Location = new System.Drawing.Point(55, 196);
+            this._atkDamageDiceAmount.Mask = "00";
+            this._atkDamageDiceAmount.Name = "_atkDamageDiceAmount";
+            this._atkDamageDiceAmount.Size = new System.Drawing.Size(34, 20);
+            this._atkDamageDiceAmount.TabIndex = 6;
+            this._atkDamageDiceAmount.Text = "0";
             // 
-            // _atkDiceD
+            // _atkDiceDType
             // 
-            this._atkDiceD.Location = new System.Drawing.Point(116, 144);
-            this._atkDiceD.Mask = "00";
-            this._atkDiceD.Name = "_atkDiceD";
-            this._atkDiceD.Size = new System.Drawing.Size(52, 20);
-            this._atkDiceD.TabIndex = 7;
+            this._atkDiceDType.Location = new System.Drawing.Point(97, 196);
+            this._atkDiceDType.Mask = "00";
+            this._atkDiceDType.Name = "_atkDiceDType";
+            this._atkDiceDType.Size = new System.Drawing.Size(34, 20);
+            this._atkDiceDType.TabIndex = 7;
+            this._atkDiceDType.Text = "0";
             // 
             // _defSave
             // 
-            this._defSave.Location = new System.Drawing.Point(294, 69);
+            this._defSave.Location = new System.Drawing.Point(344, 69);
             this._defSave.Mask = "0";
             this._defSave.Name = "_defSave";
             this._defSave.Size = new System.Drawing.Size(52, 20);
@@ -158,7 +179,7 @@
             // 
             // _defToughness
             // 
-            this._defToughness.Location = new System.Drawing.Point(294, 43);
+            this._defToughness.Location = new System.Drawing.Point(344, 43);
             this._defToughness.Mask = "00";
             this._defToughness.Name = "_defToughness";
             this._defToughness.Size = new System.Drawing.Size(52, 20);
@@ -167,7 +188,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(204, 76);
+            this.label3.Location = new System.Drawing.Point(254, 76);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(32, 13);
             this.label3.TabIndex = 10;
@@ -176,7 +197,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(204, 50);
+            this.label4.Location = new System.Drawing.Point(254, 50);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(60, 13);
             this.label4.TabIndex = 9;
@@ -185,7 +206,7 @@
             // m_defLabel
             // 
             this.m_defLabel.AutoSize = true;
-            this.m_defLabel.Location = new System.Drawing.Point(295, 24);
+            this.m_defLabel.Location = new System.Drawing.Point(345, 24);
             this.m_defLabel.Name = "m_defLabel";
             this.m_defLabel.Size = new System.Drawing.Size(51, 13);
             this.m_defLabel.TabIndex = 8;
@@ -193,7 +214,7 @@
             // 
             // m_rollButton
             // 
-            this.m_rollButton.Location = new System.Drawing.Point(373, 123);
+            this.m_rollButton.Location = new System.Drawing.Point(423, 123);
             this.m_rollButton.Name = "m_rollButton";
             this.m_rollButton.Size = new System.Drawing.Size(75, 23);
             this.m_rollButton.TabIndex = 15;
@@ -204,7 +225,7 @@
             // _totalHitsLabel
             // 
             this._totalHitsLabel.AutoSize = true;
-            this._totalHitsLabel.Location = new System.Drawing.Point(535, 214);
+            this._totalHitsLabel.Location = new System.Drawing.Point(677, 194);
             this._totalHitsLabel.Name = "_totalHitsLabel";
             this._totalHitsLabel.Size = new System.Drawing.Size(52, 13);
             this._totalHitsLabel.TabIndex = 18;
@@ -213,7 +234,7 @@
             // _totalHitsNum
             // 
             this._totalHitsNum.AutoSize = true;
-            this._totalHitsNum.Location = new System.Drawing.Point(535, 236);
+            this._totalHitsNum.Location = new System.Drawing.Point(677, 216);
             this._totalHitsNum.Name = "_totalHitsNum";
             this._totalHitsNum.Size = new System.Drawing.Size(13, 13);
             this._totalHitsNum.TabIndex = 19;
@@ -222,7 +243,7 @@
             // _woundTotalLabel
             // 
             this._woundTotalLabel.AutoSize = true;
-            this._woundTotalLabel.Location = new System.Drawing.Point(593, 214);
+            this._woundTotalLabel.Location = new System.Drawing.Point(735, 194);
             this._woundTotalLabel.Name = "_woundTotalLabel";
             this._woundTotalLabel.Size = new System.Drawing.Size(74, 13);
             this._woundTotalLabel.TabIndex = 20;
@@ -231,7 +252,7 @@
             // _woundsTotalNum
             // 
             this._woundsTotalNum.AutoSize = true;
-            this._woundsTotalNum.Location = new System.Drawing.Point(593, 236);
+            this._woundsTotalNum.Location = new System.Drawing.Point(735, 216);
             this._woundsTotalNum.Name = "_woundsTotalNum";
             this._woundsTotalNum.Size = new System.Drawing.Size(13, 13);
             this._woundsTotalNum.TabIndex = 21;
@@ -240,7 +261,7 @@
             // _damageResultsLabel
             // 
             this._damageResultsLabel.AutoSize = true;
-            this._damageResultsLabel.Location = new System.Drawing.Point(774, 214);
+            this._damageResultsLabel.Location = new System.Drawing.Point(916, 194);
             this._damageResultsLabel.Name = "_damageResultsLabel";
             this._damageResultsLabel.Size = new System.Drawing.Size(138, 13);
             this._damageResultsLabel.TabIndex = 22;
@@ -249,7 +270,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(992, 214);
+            this.label7.Location = new System.Drawing.Point(1134, 194);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(68, 13);
             this.label7.TabIndex = 23;
@@ -258,7 +279,7 @@
             // _damageTotalNum
             // 
             this._damageTotalNum.AutoSize = true;
-            this._damageTotalNum.Location = new System.Drawing.Point(992, 236);
+            this._damageTotalNum.Location = new System.Drawing.Point(1134, 216);
             this._damageTotalNum.Name = "_damageTotalNum";
             this._damageTotalNum.Size = new System.Drawing.Size(13, 13);
             this._damageTotalNum.TabIndex = 24;
@@ -275,33 +296,34 @@
             // 
             // _atkWsBsBox
             // 
-            this._atkWsBsBox.Location = new System.Drawing.Point(58, 39);
+            this._atkWsBsBox.Location = new System.Drawing.Point(55, 40);
             this._atkWsBsBox.Mask = "0";
             this._atkWsBsBox.Name = "_atkWsBsBox";
-            this._atkWsBsBox.Size = new System.Drawing.Size(52, 20);
+            this._atkWsBsBox.Size = new System.Drawing.Size(34, 20);
             this._atkWsBsBox.TabIndex = 26;
             // 
             // _atkShotsLabel
             // 
             this._atkShotsLabel.AutoSize = true;
-            this._atkShotsLabel.Location = new System.Drawing.Point(5, 69);
+            this._atkShotsLabel.Location = new System.Drawing.Point(5, 73);
             this._atkShotsLabel.Name = "_atkShotsLabel";
             this._atkShotsLabel.Size = new System.Drawing.Size(34, 13);
             this._atkShotsLabel.TabIndex = 27;
             this._atkShotsLabel.Text = "Shots";
             // 
-            // _atkShotsBox
+            // _atkShotsNumberBox
             // 
-            this._atkShotsBox.Location = new System.Drawing.Point(57, 66);
-            this._atkShotsBox.Mask = "000";
-            this._atkShotsBox.Name = "_atkShotsBox";
-            this._atkShotsBox.Size = new System.Drawing.Size(52, 20);
-            this._atkShotsBox.TabIndex = 28;
+            this._atkShotsNumberBox.Location = new System.Drawing.Point(55, 92);
+            this._atkShotsNumberBox.Mask = "000";
+            this._atkShotsNumberBox.Name = "_atkShotsNumberBox";
+            this._atkShotsNumberBox.Size = new System.Drawing.Size(35, 20);
+            this._atkShotsNumberBox.TabIndex = 28;
+            this._atkShotsNumberBox.Text = "0";
             // 
             // _totalFailedSavesLabel
             // 
             this._totalFailedSavesLabel.AutoSize = true;
-            this._totalFailedSavesLabel.Location = new System.Drawing.Point(673, 214);
+            this._totalFailedSavesLabel.Location = new System.Drawing.Point(815, 194);
             this._totalFailedSavesLabel.Name = "_totalFailedSavesLabel";
             this._totalFailedSavesLabel.Size = new System.Drawing.Size(95, 13);
             this._totalFailedSavesLabel.TabIndex = 30;
@@ -310,7 +332,7 @@
             // _failedSavesNum
             // 
             this._failedSavesNum.AutoSize = true;
-            this._failedSavesNum.Location = new System.Drawing.Point(673, 236);
+            this._failedSavesNum.Location = new System.Drawing.Point(815, 216);
             this._failedSavesNum.Name = "_failedSavesNum";
             this._failedSavesNum.Size = new System.Drawing.Size(13, 13);
             this._failedSavesNum.TabIndex = 31;
@@ -319,7 +341,7 @@
             // _invulSaveLabel
             // 
             this._invulSaveLabel.AutoSize = true;
-            this._invulSaveLabel.Location = new System.Drawing.Point(204, 99);
+            this._invulSaveLabel.Location = new System.Drawing.Point(254, 99);
             this._invulSaveLabel.Name = "_invulSaveLabel";
             this._invulSaveLabel.Size = new System.Drawing.Size(58, 13);
             this._invulSaveLabel.TabIndex = 32;
@@ -327,7 +349,7 @@
             // 
             // _invulSaveBox
             // 
-            this._invulSaveBox.Location = new System.Drawing.Point(293, 95);
+            this._invulSaveBox.Location = new System.Drawing.Point(343, 95);
             this._invulSaveBox.Mask = "0";
             this._invulSaveBox.Name = "_invulSaveBox";
             this._invulSaveBox.Size = new System.Drawing.Size(52, 20);
@@ -335,7 +357,7 @@
             // 
             // _geqButton
             // 
-            this._geqButton.Location = new System.Drawing.Point(474, 45);
+            this._geqButton.Location = new System.Drawing.Point(423, 40);
             this._geqButton.Name = "_geqButton";
             this._geqButton.Size = new System.Drawing.Size(75, 23);
             this._geqButton.TabIndex = 34;
@@ -347,7 +369,7 @@
             // 
             this._fillsLabel.AutoSize = true;
             this._fillsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._fillsLabel.Location = new System.Drawing.Point(616, 22);
+            this._fillsLabel.Location = new System.Drawing.Point(526, 17);
             this._fillsLabel.Name = "_fillsLabel";
             this._fillsLabel.Size = new System.Drawing.Size(36, 20);
             this._fillsLabel.TabIndex = 35;
@@ -355,7 +377,7 @@
             // 
             // _meqButton
             // 
-            this._meqButton.Location = new System.Drawing.Point(555, 45);
+            this._meqButton.Location = new System.Drawing.Point(504, 40);
             this._meqButton.Name = "_meqButton";
             this._meqButton.Size = new System.Drawing.Size(75, 23);
             this._meqButton.TabIndex = 36;
@@ -365,7 +387,7 @@
             // 
             // _teqButton
             // 
-            this._teqButton.Location = new System.Drawing.Point(636, 45);
+            this._teqButton.Location = new System.Drawing.Point(585, 40);
             this._teqButton.Name = "_teqButton";
             this._teqButton.Size = new System.Drawing.Size(75, 23);
             this._teqButton.TabIndex = 37;
@@ -375,7 +397,7 @@
             // 
             // _keqButton
             // 
-            this._keqButton.Location = new System.Drawing.Point(798, 45);
+            this._keqButton.Location = new System.Drawing.Point(544, 71);
             this._keqButton.Name = "_keqButton";
             this._keqButton.Size = new System.Drawing.Size(75, 23);
             this._keqButton.TabIndex = 38;
@@ -385,7 +407,7 @@
             // 
             // _veqButton
             // 
-            this._veqButton.Location = new System.Drawing.Point(717, 45);
+            this._veqButton.Location = new System.Drawing.Point(463, 71);
             this._veqButton.Name = "_veqButton";
             this._veqButton.Size = new System.Drawing.Size(75, 23);
             this._veqButton.TabIndex = 39;
@@ -396,7 +418,7 @@
             // _woundPerModelLabel
             // 
             this._woundPerModelLabel.AutoSize = true;
-            this._woundPerModelLabel.Location = new System.Drawing.Point(204, 128);
+            this._woundPerModelLabel.Location = new System.Drawing.Point(254, 128);
             this._woundPerModelLabel.Name = "_woundPerModelLabel";
             this._woundPerModelLabel.Size = new System.Drawing.Size(80, 13);
             this._woundPerModelLabel.TabIndex = 40;
@@ -404,7 +426,7 @@
             // 
             // _woundsPerModelBox
             // 
-            this._woundsPerModelBox.Location = new System.Drawing.Point(293, 125);
+            this._woundsPerModelBox.Location = new System.Drawing.Point(343, 125);
             this._woundsPerModelBox.Mask = "00";
             this._woundsPerModelBox.Name = "_woundsPerModelBox";
             this._woundsPerModelBox.Size = new System.Drawing.Size(52, 20);
@@ -413,7 +435,7 @@
             // _noRerollRadio
             // 
             this._noRerollRadio.AutoSize = true;
-            this._noRerollRadio.Location = new System.Drawing.Point(12, 41);
+            this._noRerollRadio.Location = new System.Drawing.Point(6, 3);
             this._noRerollRadio.Name = "_noRerollRadio";
             this._noRerollRadio.Size = new System.Drawing.Size(69, 17);
             this._noRerollRadio.TabIndex = 42;
@@ -424,50 +446,111 @@
             // _modifersPanel
             // 
             this._modifersPanel.Controls.Add(this.panel1);
-            this._modifersPanel.Controls.Add(this._rerollMisses);
-            this._modifersPanel.Controls.Add(this._rerollOnesRadio);
+            this._modifersPanel.Controls.Add(this._teslaCheckbox);
+            this._modifersPanel.Controls.Add(this._teslaPanel);
+            this._modifersPanel.Controls.Add(this._hitPanel);
+            this._modifersPanel.Controls.Add(this._woundRerollPanel);
             this._modifersPanel.Controls.Add(this.label1);
-            this._modifersPanel.Controls.Add(this._noRerollRadio);
-            this._modifersPanel.Location = new System.Drawing.Point(909, 24);
+            this._modifersPanel.Location = new System.Drawing.Point(666, 24);
             this._modifersPanel.Name = "_modifersPanel";
-            this._modifersPanel.Size = new System.Drawing.Size(331, 176);
+            this._modifersPanel.Size = new System.Drawing.Size(586, 147);
             this._modifersPanel.TabIndex = 43;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this._rerollWoundsRadio);
-            this.panel1.Controls.Add(this._normalWoundingRadio);
-            this.panel1.Location = new System.Drawing.Point(104, 42);
+            this.panel1.Controls.Add(this._woundMortalOnXBox);
+            this.panel1.Controls.Add(this._woundOnXRadio);
+            this.panel1.Controls.Add(this._woundOnXBox);
+            this.panel1.Controls.Add(this._woundMortalOnXRadio);
+            this.panel1.Controls.Add(this._woundingUseStandardRadio);
+            this.panel1.Location = new System.Drawing.Point(415, 41);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(114, 65);
-            this.panel1.TabIndex = 44;
+            this.panel1.Size = new System.Drawing.Size(161, 72);
+            this.panel1.TabIndex = 48;
             // 
-            // _rerollWoundsRadio
+            // _woundMortalOnXBox
             // 
-            this._rerollWoundsRadio.AutoSize = true;
-            this._rerollWoundsRadio.Location = new System.Drawing.Point(3, 33);
-            this._rerollWoundsRadio.Name = "_rerollWoundsRadio";
-            this._rerollWoundsRadio.Size = new System.Drawing.Size(92, 17);
-            this._rerollWoundsRadio.TabIndex = 48;
-            this._rerollWoundsRadio.TabStop = true;
-            this._rerollWoundsRadio.Text = "Reroll wounds";
-            this._rerollWoundsRadio.UseVisualStyleBackColor = true;
+            this._woundMortalOnXBox.Location = new System.Drawing.Point(123, 48);
+            this._woundMortalOnXBox.Mask = "0";
+            this._woundMortalOnXBox.Name = "_woundMortalOnXBox";
+            this._woundMortalOnXBox.Size = new System.Drawing.Size(20, 20);
+            this._woundMortalOnXBox.TabIndex = 53;
             // 
-            // _normalWoundingRadio
+            // _woundOnXRadio
             // 
-            this._normalWoundingRadio.AutoSize = true;
-            this._normalWoundingRadio.Location = new System.Drawing.Point(3, 10);
-            this._normalWoundingRadio.Name = "_normalWoundingRadio";
-            this._normalWoundingRadio.Size = new System.Drawing.Size(107, 17);
-            this._normalWoundingRadio.TabIndex = 47;
-            this._normalWoundingRadio.TabStop = true;
-            this._normalWoundingRadio.Text = "Normal wounding";
-            this._normalWoundingRadio.UseVisualStyleBackColor = true;
+            this._woundOnXRadio.AutoSize = true;
+            this._woundOnXRadio.Location = new System.Drawing.Point(3, 29);
+            this._woundOnXRadio.Name = "_woundOnXRadio";
+            this._woundOnXRadio.Size = new System.Drawing.Size(101, 17);
+            this._woundOnXRadio.TabIndex = 52;
+            this._woundOnXRadio.TabStop = true;
+            this._woundOnXRadio.Text = "Wound on X roll";
+            this._woundOnXRadio.UseVisualStyleBackColor = true;
+            this._woundOnXRadio.CheckedChanged += new System.EventHandler(this.WoundRollXRadioChanged);
+            // 
+            // _woundOnXBox
+            // 
+            this._woundOnXBox.Location = new System.Drawing.Point(123, 24);
+            this._woundOnXBox.Mask = "0";
+            this._woundOnXBox.Name = "_woundOnXBox";
+            this._woundOnXBox.Size = new System.Drawing.Size(20, 20);
+            this._woundOnXBox.TabIndex = 51;
+            // 
+            // _woundMortalOnXRadio
+            // 
+            this._woundMortalOnXRadio.AutoSize = true;
+            this._woundMortalOnXRadio.Location = new System.Drawing.Point(3, 53);
+            this._woundMortalOnXRadio.Name = "_woundMortalOnXRadio";
+            this._woundMortalOnXRadio.Size = new System.Drawing.Size(114, 17);
+            this._woundMortalOnXRadio.TabIndex = 49;
+            this._woundMortalOnXRadio.TabStop = true;
+            this._woundMortalOnXRadio.Text = "Mortal wound on X";
+            this._woundMortalOnXRadio.UseVisualStyleBackColor = true;
+            this._woundMortalOnXRadio.CheckedChanged += new System.EventHandler(this.MortalWoundOnXRadioChanged);
+            // 
+            // _woundingUseStandardRadio
+            // 
+            this._woundingUseStandardRadio.AutoSize = true;
+            this._woundingUseStandardRadio.Location = new System.Drawing.Point(3, 5);
+            this._woundingUseStandardRadio.Name = "_woundingUseStandardRadio";
+            this._woundingUseStandardRadio.Size = new System.Drawing.Size(117, 17);
+            this._woundingUseStandardRadio.TabIndex = 48;
+            this._woundingUseStandardRadio.TabStop = true;
+            this._woundingUseStandardRadio.Text = "Standard wounding";
+            this._woundingUseStandardRadio.UseVisualStyleBackColor = true;
+            // 
+            // _teslaCheckbox
+            // 
+            this._teslaCheckbox.AutoSize = true;
+            this._teslaCheckbox.Location = new System.Drawing.Point(32, 122);
+            this._teslaCheckbox.Name = "_teslaCheckbox";
+            this._teslaCheckbox.Size = new System.Drawing.Size(110, 17);
+            this._teslaCheckbox.TabIndex = 48;
+            this._teslaCheckbox.Text = "Is Tesla weapon?";
+            this._teslaCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // _teslaPanel
+            // 
+            this._teslaPanel.Controls.Add(this._autoHitCheckbox);
+            this._teslaPanel.Location = new System.Drawing.Point(152, 39);
+            this._teslaPanel.Name = "_teslaPanel";
+            this._teslaPanel.Size = new System.Drawing.Size(112, 75);
+            this._teslaPanel.TabIndex = 48;
+            // 
+            // _hitPanel
+            // 
+            this._hitPanel.Controls.Add(this._noRerollRadio);
+            this._hitPanel.Controls.Add(this._rerollMisses);
+            this._hitPanel.Controls.Add(this._rerollOnesRadio);
+            this._hitPanel.Location = new System.Drawing.Point(26, 38);
+            this._hitPanel.Name = "_hitPanel";
+            this._hitPanel.Size = new System.Drawing.Size(119, 76);
+            this._hitPanel.TabIndex = 48;
             // 
             // _rerollMisses
             // 
             this._rerollMisses.AutoSize = true;
-            this._rerollMisses.Location = new System.Drawing.Point(12, 90);
+            this._rerollMisses.Location = new System.Drawing.Point(6, 49);
             this._rerollMisses.Name = "_rerollMisses";
             this._rerollMisses.Size = new System.Drawing.Size(86, 17);
             this._rerollMisses.TabIndex = 46;
@@ -478,7 +561,7 @@
             // _rerollOnesRadio
             // 
             this._rerollOnesRadio.AutoSize = true;
-            this._rerollOnesRadio.Location = new System.Drawing.Point(12, 67);
+            this._rerollOnesRadio.Location = new System.Drawing.Point(6, 26);
             this._rerollOnesRadio.Name = "_rerollOnesRadio";
             this._rerollOnesRadio.Size = new System.Drawing.Size(66, 17);
             this._rerollOnesRadio.TabIndex = 45;
@@ -486,11 +569,54 @@
             this._rerollOnesRadio.Text = "Reroll 1s";
             this._rerollOnesRadio.UseVisualStyleBackColor = true;
             // 
+            // _woundRerollPanel
+            // 
+            this._woundRerollPanel.Controls.Add(this._rerollWoundsOfOneRadio);
+            this._woundRerollPanel.Controls.Add(this._rerollFailedWoundsRadio);
+            this._woundRerollPanel.Controls.Add(this._dontRerollWounds);
+            this._woundRerollPanel.Location = new System.Drawing.Point(270, 39);
+            this._woundRerollPanel.Name = "_woundRerollPanel";
+            this._woundRerollPanel.Size = new System.Drawing.Size(139, 75);
+            this._woundRerollPanel.TabIndex = 44;
+            // 
+            // _rerollWoundsOfOneRadio
+            // 
+            this._rerollWoundsOfOneRadio.AutoSize = true;
+            this._rerollWoundsOfOneRadio.Location = new System.Drawing.Point(3, 31);
+            this._rerollWoundsOfOneRadio.Name = "_rerollWoundsOfOneRadio";
+            this._rerollWoundsOfOneRadio.Size = new System.Drawing.Size(113, 17);
+            this._rerollWoundsOfOneRadio.TabIndex = 49;
+            this._rerollWoundsOfOneRadio.TabStop = true;
+            this._rerollWoundsOfOneRadio.Text = "Reroll wounds of 1";
+            this._rerollWoundsOfOneRadio.UseVisualStyleBackColor = true;
+            // 
+            // _rerollFailedWoundsRadio
+            // 
+            this._rerollFailedWoundsRadio.AutoSize = true;
+            this._rerollFailedWoundsRadio.Location = new System.Drawing.Point(3, 51);
+            this._rerollFailedWoundsRadio.Name = "_rerollFailedWoundsRadio";
+            this._rerollFailedWoundsRadio.Size = new System.Drawing.Size(120, 17);
+            this._rerollFailedWoundsRadio.TabIndex = 48;
+            this._rerollFailedWoundsRadio.TabStop = true;
+            this._rerollFailedWoundsRadio.Text = "Reroll failed wounds";
+            this._rerollFailedWoundsRadio.UseVisualStyleBackColor = true;
+            // 
+            // _dontRerollWounds
+            // 
+            this._dontRerollWounds.AutoSize = true;
+            this._dontRerollWounds.Location = new System.Drawing.Point(3, 9);
+            this._dontRerollWounds.Name = "_dontRerollWounds";
+            this._dontRerollWounds.Size = new System.Drawing.Size(115, 17);
+            this._dontRerollWounds.TabIndex = 47;
+            this._dontRerollWounds.TabStop = true;
+            this._dontRerollWounds.Text = "Don\'t reroll wounds";
+            this._dontRerollWounds.UseVisualStyleBackColor = true;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(125, 12);
+            this.label1.Location = new System.Drawing.Point(255, 11);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(73, 20);
             this.label1.TabIndex = 44;
@@ -499,7 +625,7 @@
             // _finalHitsLabel
             // 
             this._finalHitsLabel.AutoSize = true;
-            this._finalHitsLabel.Location = new System.Drawing.Point(471, 214);
+            this._finalHitsLabel.Location = new System.Drawing.Point(613, 194);
             this._finalHitsLabel.Name = "_finalHitsLabel";
             this._finalHitsLabel.Size = new System.Drawing.Size(58, 13);
             this._finalHitsLabel.TabIndex = 45;
@@ -508,7 +634,7 @@
             // _results
             // 
             this._results.AutoSize = true;
-            this._results.Location = new System.Drawing.Point(4, 214);
+            this._results.Location = new System.Drawing.Point(1, 252);
             this._results.Name = "_results";
             this._results.Size = new System.Drawing.Size(0, 13);
             this._results.TabIndex = 46;
@@ -516,11 +642,70 @@
             // _resultsLabel
             // 
             this._resultsLabel.AutoSize = true;
-            this._resultsLabel.Location = new System.Drawing.Point(4, 214);
+            this._resultsLabel.Location = new System.Drawing.Point(1, 227);
             this._resultsLabel.Name = "_resultsLabel";
             this._resultsLabel.Size = new System.Drawing.Size(45, 13);
             this._resultsLabel.TabIndex = 47;
             this._resultsLabel.Text = "Results:";
+            // 
+            // _varableDamageCheckbox
+            // 
+            this._varableDamageCheckbox.AutoSize = true;
+            this._varableDamageCheckbox.Location = new System.Drawing.Point(146, 174);
+            this._varableDamageCheckbox.Name = "_varableDamageCheckbox";
+            this._varableDamageCheckbox.Size = new System.Drawing.Size(107, 17);
+            this._varableDamageCheckbox.TabIndex = 48;
+            this._varableDamageCheckbox.Text = "Variable Damage";
+            this._varableDamageCheckbox.UseVisualStyleBackColor = true;
+            this._varableDamageCheckbox.CheckedChanged += new System.EventHandler(this.VariableDamageCheckedChanged);
+            // 
+            // _flatDamageBox
+            // 
+            this._flatDamageBox.Location = new System.Drawing.Point(55, 171);
+            this._flatDamageBox.Mask = "00";
+            this._flatDamageBox.Name = "_flatDamageBox";
+            this._flatDamageBox.Size = new System.Drawing.Size(34, 20);
+            this._flatDamageBox.TabIndex = 49;
+            this._flatDamageBox.Text = "0";
+            // 
+            // _variableShotsCheckbox
+            // 
+            this._variableShotsCheckbox.AutoSize = true;
+            this._variableShotsCheckbox.Location = new System.Drawing.Point(146, 64);
+            this._variableShotsCheckbox.Name = "_variableShotsCheckbox";
+            this._variableShotsCheckbox.Size = new System.Drawing.Size(94, 17);
+            this._variableShotsCheckbox.TabIndex = 50;
+            this._variableShotsCheckbox.Text = "Variable Shots";
+            this._variableShotsCheckbox.UseVisualStyleBackColor = true;
+            this._variableShotsCheckbox.CheckedChanged += new System.EventHandler(this.VariableShotsCheckChanged);
+            // 
+            // _atkShotsDBox
+            // 
+            this._atkShotsDBox.Location = new System.Drawing.Point(97, 93);
+            this._atkShotsDBox.Mask = "000";
+            this._atkShotsDBox.Name = "_atkShotsDBox";
+            this._atkShotsDBox.Size = new System.Drawing.Size(35, 20);
+            this._atkShotsDBox.TabIndex = 51;
+            this._atkShotsDBox.Text = "0";
+            // 
+            // _flatShotsBox
+            // 
+            this._flatShotsBox.Location = new System.Drawing.Point(55, 66);
+            this._flatShotsBox.Mask = "000";
+            this._flatShotsBox.Name = "_flatShotsBox";
+            this._flatShotsBox.Size = new System.Drawing.Size(34, 20);
+            this._flatShotsBox.TabIndex = 52;
+            this._flatShotsBox.Text = "0";
+            // 
+            // _autoHitCheckbox
+            // 
+            this._autoHitCheckbox.AutoSize = true;
+            this._autoHitCheckbox.Location = new System.Drawing.Point(3, 5);
+            this._autoHitCheckbox.Name = "_autoHitCheckbox";
+            this._autoHitCheckbox.Size = new System.Drawing.Size(59, 17);
+            this._autoHitCheckbox.TabIndex = 49;
+            this._autoHitCheckbox.Text = "Autohit";
+            this._autoHitCheckbox.UseVisualStyleBackColor = true;
             // 
             // Ui
             // 
@@ -528,6 +713,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this._flatShotsBox);
+            this.Controls.Add(this._atkShotsDBox);
+            this.Controls.Add(this._variableShotsCheckbox);
+            this.Controls.Add(this._flatDamageBox);
+            this.Controls.Add(this._varableDamageCheckbox);
             this.Controls.Add(this._resultsLabel);
             this.Controls.Add(this._results);
             this.Controls.Add(this._finalHitsLabel);
@@ -544,7 +734,7 @@
             this.Controls.Add(this._invulSaveLabel);
             this.Controls.Add(this._failedSavesNum);
             this.Controls.Add(this._totalFailedSavesLabel);
-            this.Controls.Add(this._atkShotsBox);
+            this.Controls.Add(this._atkShotsNumberBox);
             this.Controls.Add(this._atkShotsLabel);
             this.Controls.Add(this._atkWsBsBox);
             this.Controls.Add(this._atkWsBsLabel);
@@ -561,8 +751,8 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.m_defLabel);
-            this.Controls.Add(this._atkDiceD);
-            this.Controls.Add(this._atkDiceAmount);
+            this.Controls.Add(this._atkDiceDType);
+            this.Controls.Add(this._atkDamageDiceAmount);
             this.Controls.Add(this._atkDamgeLabel);
             this.Controls.Add(this.m_atkAPBox);
             this.Controls.Add(this._atkStrBox);
@@ -575,6 +765,12 @@
             this._modifersPanel.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this._teslaPanel.ResumeLayout(false);
+            this._teslaPanel.PerformLayout();
+            this._hitPanel.ResumeLayout(false);
+            this._hitPanel.PerformLayout();
+            this._woundRerollPanel.ResumeLayout(false);
+            this._woundRerollPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -588,8 +784,8 @@
         private System.Windows.Forms.MaskedTextBox _atkStrBox;
         private System.Windows.Forms.MaskedTextBox m_atkAPBox;
         private System.Windows.Forms.Label _atkDamgeLabel;
-        private System.Windows.Forms.MaskedTextBox _atkDiceAmount;
-        private System.Windows.Forms.MaskedTextBox _atkDiceD;
+        private System.Windows.Forms.MaskedTextBox _atkDamageDiceAmount;
+        private System.Windows.Forms.MaskedTextBox _atkDiceDType;
         private System.Windows.Forms.MaskedTextBox _defSave;
         private System.Windows.Forms.MaskedTextBox _defToughness;
         private System.Windows.Forms.Label label3;
@@ -606,7 +802,7 @@
         private System.Windows.Forms.Label _atkWsBsLabel;
         private System.Windows.Forms.MaskedTextBox _atkWsBsBox;
         private System.Windows.Forms.Label _atkShotsLabel;
-        private System.Windows.Forms.MaskedTextBox _atkShotsBox;
+        private System.Windows.Forms.MaskedTextBox _atkShotsNumberBox;
         private System.Windows.Forms.Label _totalFailedSavesLabel;
         private System.Windows.Forms.Label _failedSavesNum;
         private System.Windows.Forms.Label _invulSaveLabel;
@@ -624,12 +820,28 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RadioButton _rerollMisses;
         private System.Windows.Forms.RadioButton _rerollOnesRadio;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.RadioButton _rerollWoundsRadio;
-        private System.Windows.Forms.RadioButton _normalWoundingRadio;
+        private System.Windows.Forms.Panel _woundRerollPanel;
+        private System.Windows.Forms.RadioButton _rerollFailedWoundsRadio;
+        private System.Windows.Forms.RadioButton _dontRerollWounds;
         private System.Windows.Forms.Label _finalHitsLabel;
         private System.Windows.Forms.Label _results;
         private System.Windows.Forms.Label _resultsLabel;
+        private System.Windows.Forms.RadioButton _rerollWoundsOfOneRadio;
+        private System.Windows.Forms.Panel _hitPanel;
+        private System.Windows.Forms.Panel _teslaPanel;
+        private System.Windows.Forms.CheckBox _teslaCheckbox;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton _woundingUseStandardRadio;
+        private System.Windows.Forms.MaskedTextBox _woundMortalOnXBox;
+        private System.Windows.Forms.RadioButton _woundOnXRadio;
+        private System.Windows.Forms.MaskedTextBox _woundOnXBox;
+        private System.Windows.Forms.RadioButton _woundMortalOnXRadio;
+        private System.Windows.Forms.CheckBox _varableDamageCheckbox;
+        private System.Windows.Forms.MaskedTextBox _flatDamageBox;
+        private System.Windows.Forms.CheckBox _variableShotsCheckbox;
+        private System.Windows.Forms.MaskedTextBox _atkShotsDBox;
+        private System.Windows.Forms.MaskedTextBox _flatShotsBox;
+        private System.Windows.Forms.CheckBox _autoHitCheckbox;
     }
 }
 

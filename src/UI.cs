@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using MathHammer.StatBlocks;
 
@@ -16,7 +17,19 @@ namespace MathHammer
         {
             InitializeComponent();
             _noRerollRadio.Checked = true;
-            _normalWoundingRadio.Checked = true;
+            _dontRerollWounds.Checked = true;
+            _woundingUseStandardRadio.Checked = true;
+
+            _woundOnXBox.Hide();
+            _woundMortalOnXBox.Hide();
+
+            _flatShotsBox.Show();
+            _atkShotsNumberBox.Hide();
+            _atkShotsDBox.Hide();
+            _atkDiceDType.Hide();
+            _atkDamageDiceAmount.Hide();
+            _flatDamageBox.Show();
+
             _linesAdded = new List<RollLine>();
             _woundLabels = new List<Label>();
         }
@@ -31,26 +44,49 @@ namespace MathHammer
         /// <param name="e"></param>
         private void RollButton_Click(object sender, EventArgs e)
         {
-            Chart crt = new Chart
+            try
+            {
+                Chart chart = new Chart
                 (
                 Int32.Parse(_atkWsBsBox.Text),
-                Int32.Parse(_atkShotsBox.Text),
+                Int32.Parse(_flatShotsBox.Text),
                 Int32.Parse(_atkStrBox.Text),
                 Int32.Parse(m_atkAPBox.Text),
-                Int32.Parse(_atkDiceAmount.Text),
-                Int32.Parse(_atkDiceD.Text),
+                Int32.Parse(_atkDamageDiceAmount.Text),
+                Int32.Parse(_atkDiceDType.Text),
                 Int32.Parse(_defToughness.Text),
                 Int32.Parse(_defSave.Text),
                 Int32.Parse(_invulSaveBox.Text),
+                Int32.Parse(_atkShotsNumberBox.Text),
+                Int32.Parse(_atkShotsDBox.Text),
+                Int32.Parse(_flatDamageBox.Text),
+
                 _noRerollRadio.Checked,
                 _rerollOnesRadio.Checked,
                 _rerollMisses.Checked,
-                _rerollWoundsRadio.Checked
+                _rerollFailedWoundsRadio.Checked,
+                _rerollWoundsOfOneRadio.Checked,
+                _autoHitCheckbox.Checked,
+                _woundOnXRadio.Checked,
+                _woundMortalOnXRadio.Checked,
+                _teslaCheckbox.Checked,
+                _variableShotsCheckbox.Checked,
+                _varableDamageCheckbox.Checked
                 );
 
-            MainProgram.Calc.Roll(ref crt);
+                MainProgram.Calc.Roll(ref chart);
 
-            DisplayResults(crt);
+                DisplayResults(chart);
+            }
+            catch (Exception exception)
+            {
+                string errorMessage =
+                    "Something went wrong. Ensure that all visible text boxes are filled in.\n\n" 
+                    + exception.Message + "\n\n"
+                    + "Stacktrace:\n"
+                    + exception.ToString();
+                MessageBox.Show(errorMessage, "ERROR");
+            }
         }
 
         /// <summary>
@@ -59,8 +95,6 @@ namespace MathHammer
         /// <param name="crt"></param>
         private void DisplayResults(Chart crt)
         {
-
-            string wnd = "Wound: ";
 
             if (_linesAdded.Count > 0)
             {
@@ -106,9 +140,9 @@ namespace MathHammer
                 Label lbl = new Label();
                 _woundLabels.Add(lbl);
 
-                lbl.Width = 250;
+                lbl.AutoSize = true;
 
-                lbl.Text = wnd + (i + 1) + " Damage: " + crt.Damage[i];
+                lbl.Text = "Wound: " + (i + 1) + "," + " Damage: " + crt.Damage[i];
 
                 this.Controls.Add(lbl);
 
@@ -209,9 +243,61 @@ namespace MathHammer
             FillEquivalentValues(EqSelection.Keq);
         }
 
-        internal void RefreshForm()
+        private void WoundRollXRadioChanged(object sender, EventArgs e)
         {
-            this.Refresh();
+            if (true == _woundOnXRadio.Checked)
+            {
+                _woundOnXBox.Show();
+            }
+            else
+            {
+                _woundOnXBox.Hide();
+            }
+        }
+
+        private void MortalWoundOnXRadioChanged(object sender, EventArgs e)
+        {
+            if (true == _woundMortalOnXRadio.Checked)
+            {
+                _woundMortalOnXBox.Show();
+            }
+            else
+            {
+                _woundMortalOnXBox.Hide();
+            }
+        }
+
+        private void VariableShotsCheckChanged(object sender, EventArgs e)
+        {
+            if (true == _variableShotsCheckbox.Checked)
+            {
+                _atkShotsNumberBox.Show();
+                _atkShotsDBox.Show();
+                _flatShotsBox.Hide();
+            }
+            else
+            {
+                _atkShotsNumberBox.Hide();
+                _atkShotsDBox.Hide();
+                _flatShotsBox.Show();
+            }
+
+        }
+
+        private void VariableDamageCheckedChanged(object sender, EventArgs e)
+        {
+            if (true == _varableDamageCheckbox.Checked)
+            {
+                _flatDamageBox.Hide();
+                _atkDamageDiceAmount.Show();
+                _atkDiceDType.Show();
+            }
+            else
+            {
+                _flatDamageBox.Show();
+                _atkDamageDiceAmount.Hide();
+                _atkDiceDType.Hide();
+            }
         }
     }
 }
