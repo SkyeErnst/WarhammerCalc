@@ -63,8 +63,6 @@
             this._teqButton = new System.Windows.Forms.Button();
             this._keqButton = new System.Windows.Forms.Button();
             this._veqButton = new System.Windows.Forms.Button();
-            this._woundPerModelLabel = new System.Windows.Forms.Label();
-            this._woundsPerModelBox = new System.Windows.Forms.MaskedTextBox();
             this._noRerollRadio = new System.Windows.Forms.RadioButton();
             this._modifersPanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -414,23 +412,6 @@
             this._veqButton.UseVisualStyleBackColor = true;
             this._veqButton.Click += new System.EventHandler(this._veqButton_Click);
             // 
-            // _woundPerModelLabel
-            // 
-            this._woundPerModelLabel.AutoSize = true;
-            this._woundPerModelLabel.Location = new System.Drawing.Point(254, 128);
-            this._woundPerModelLabel.Name = "_woundPerModelLabel";
-            this._woundPerModelLabel.Size = new System.Drawing.Size(80, 13);
-            this._woundPerModelLabel.TabIndex = 40;
-            this._woundPerModelLabel.Text = "Wounds/model";
-            // 
-            // _woundsPerModelBox
-            // 
-            this._woundsPerModelBox.Location = new System.Drawing.Point(343, 125);
-            this._woundsPerModelBox.Mask = "00";
-            this._woundsPerModelBox.Name = "_woundsPerModelBox";
-            this._woundsPerModelBox.Size = new System.Drawing.Size(52, 20);
-            this._woundsPerModelBox.TabIndex = 41;
-            // 
             // _noRerollRadio
             // 
             this._noRerollRadio.AutoSize = true;
@@ -713,8 +694,6 @@
             this.Controls.Add(this._resultsLabel);
             this.Controls.Add(this._results);
             this.Controls.Add(this._modifersPanel);
-            this.Controls.Add(this._woundsPerModelBox);
-            this.Controls.Add(this._woundPerModelLabel);
             this.Controls.Add(this._veqButton);
             this.Controls.Add(this._keqButton);
             this.Controls.Add(this._teqButton);
@@ -804,8 +783,6 @@
         private System.Windows.Forms.Button _teqButton;
         private System.Windows.Forms.Button _keqButton;
         private System.Windows.Forms.Button _veqButton;
-        private System.Windows.Forms.Label _woundPerModelLabel;
-        private System.Windows.Forms.MaskedTextBox _woundsPerModelBox;
         private System.Windows.Forms.RadioButton _noRerollRadio;
         private System.Windows.Forms.Panel _modifersPanel;
         private System.Windows.Forms.Label label1;

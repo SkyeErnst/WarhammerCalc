@@ -196,7 +196,6 @@ namespace MathHammer
             _defToughness.Text = tough.ToString();
             _defSave.Text = save.ToString();
             _invulSaveBox.Text = invulSave.ToString();
-            _woundsPerModelBox.Text = wounds.ToString();
         }
 
         private static int Sum(IReadOnlyList<int> values)
