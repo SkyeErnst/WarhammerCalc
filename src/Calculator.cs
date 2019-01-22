@@ -11,7 +11,9 @@ namespace MathHammer
         private readonly Random _rand;
 
         private bool _calcTesla = false;
+        private bool _calcMortalWound = false;
         private int _teslaShots = 0;
+        private int _mortalWoundCount = 0;
 
         public Calculator()
         {
@@ -21,7 +23,10 @@ namespace MathHammer
         public Chart Roll(ref Chart chart)
         {
             _calcTesla = false;
+            _calcMortalWound = false;
             _teslaShots = 0;
+            _mortalWoundCount = 0;
+
             int itter = 0;
 
             // Sets up number of times to run loop depending on if the number of shots is variable or 
@@ -57,19 +62,7 @@ namespace MathHammer
                             chart.RollStats[i]._damageValue.Text = chart.NaText;
                         }
                     }
-                    //else
-                    //{
-                    //    chart.RollStats[i]._armorRoll.Text = chart.NaText;
-                    //    chart.RollStats[i]._damageValue.Text = chart.NaText;
-                    //}
                 }
-                //else
-                //{
-                //    chart.RollStats[i]._woundValue.Text = chart.NaText;
-                //    chart.RollStats[i]._woundRerollValue.Text = chart.NaText;
-                //    chart.RollStats[i]._armorRoll.Text = chart.NaText;
-                //    chart.RollStats[i]._damageValue.Text = chart.NaText;
-                //}
             }
 
             // Handles the case of a tesla weapon being fired.
@@ -78,6 +71,14 @@ namespace MathHammer
                 for (int i = 0; i < _teslaShots; i++)
                 {
                     HandleTesla(ref chart);
+                }
+            }
+
+            if (true == _calcMortalWound)
+            {
+                for (int i = 0; i < _mortalWoundCount; i++)
+                {
+                    HandleMortalWounds(ref chart);
                 }
             }
 
@@ -179,29 +180,36 @@ namespace MathHammer
 
         private bool RollWound(ref Chart chart, int i)
         {
-            int target = 0;
+            int woundTarget = 0;
 
-            // Set the target for the to wound roll.
-            if ((chart.Strength == (chart.Tough * 2)) || chart.Strength >= (chart.Tough * 2)) // strength equal to or double tough, 2+
+            if (true == chart.ShoundWoundOnX)
             {
-                target = 2;
+                woundTarget = chart.WoundXValue;
             }
-            else if (chart.Strength > chart.Tough) // strength greater than toughness, 3+
+            else
             {
-                target = 3;
-            }
-            else if (chart.Strength == chart.Tough) // both equal, 4+
-            {
-                target = 4;
-            }
-            else if (chart.Strength < chart.Tough) // str lower than tough, 5+
-            {
-                target = 5;
-            }
-            else if ((chart.Tough == (chart.Strength / 2)) || (chart.Tough >= (chart.Strength / 2))
-            ) // str is 1/2 or less than tough
-            {
-                target = 6;
+                // Set the target for the to wound roll.
+                if ((chart.Strength == (chart.Tough * 2)) || chart.Strength >= (chart.Tough * 2)) // strength equal to or double tough, 2+
+                {
+                    woundTarget = 2;
+                }
+                else if (chart.Strength > chart.Tough) // strength greater than toughness, 3+
+                {
+                    woundTarget = 3;
+                }
+                else if (chart.Strength == chart.Tough) // both equal, 4+
+                {
+                    woundTarget = 4;
+                }
+                else if (chart.Strength < chart.Tough) // str lower than tough, 5+
+                {
+                    woundTarget = 5;
+                }
+                else if ((chart.Tough == (chart.Strength / 2)) || (chart.Tough >= (chart.Strength / 2))
+                ) // str is 1/2 or less than tough
+                {
+                    woundTarget = 6;
+                }
             }
 
             // Rolls for wounds
@@ -211,20 +219,43 @@ namespace MathHammer
 
             chart.RollStats[i]._woundValue.Text = currWoundRoll.ToString();
 
-
-            if (currWoundRoll >= target)
+            if (currWoundRoll >= woundTarget)
             {
                 chart.SuccessfulWounds.Add(currWoundRoll);
                 chart.RollStats[i]._woundValue.ForeColor = chart.SuccsessColor;
-                chart.RollStats[i]._woundRerollValue.Text = chart.NaText;
-                return true;
+
+            }
+            else if ((true == chart.ShouldRerollWoundsOfOne && 1 == currWoundRoll) || true == chart.ShouldRerollFailedWounds)
+            {
+                currWoundRoll = _rand.Next(1, 7);
+
+                chart.RollStats[i]._woundRerollValue.Text = currWoundRoll.ToString();
+                chart.RollStats[i]._woundValue.ForeColor = chart.FailColor;
+
+                if (currWoundRoll >= woundTarget)
+                {
+                    chart.SuccessfulWounds.Add(currWoundRoll);
+                    chart.RollStats[i]._woundRerollValue.ForeColor = chart.SuccsessColor;
+                }
+                else
+                {
+                    chart.RollStats[i]._woundRerollValue.ForeColor = chart.FailColor;
+                    return false;
+                }
             }
             else
             {
                 chart.RollStats[i]._woundValue.ForeColor = chart.FailColor;
-                chart.RollStats[i]._woundRerollValue.Text = chart.NaText;
                 return false;
             }
+
+            if (true == chart.ShouldMortalWoundOnX && currWoundRoll >= chart.WoundMortalXValue)
+            {
+                _mortalWoundCount++;
+                _calcMortalWound = true;
+            }
+
+            return true;
         }
 
         private bool RollSave(ref Chart chart, int i)
@@ -296,11 +327,26 @@ namespace MathHammer
                 {
                     RollDamage(ref chart, chart.RollStats.Count - 1);
                 }
-            }
-            
+            } 
+        }
+
+        private void HandleMortalWounds(ref Chart chart)
+        {
+            chart.RollStats.Add(new RollLine());
+            chart.SuccessfulWounds.Add(0);
+
+            chart.RollStats[chart.RollStats.Count - 1]._hitValue.Text = chart.MortalWoundText;
+            chart.RollStats[chart.RollStats.Count - 1]._hitValue.ForeColor = chart.SpecialEventColor;
+
+            chart.RollStats[chart.RollStats.Count - 1]._woundValue.Text = chart.MortalWoundText;
+            chart.RollStats[chart.RollStats.Count - 1]._woundValue.ForeColor = chart.SpecialEventColor;
+
+            chart.RollStats[chart.RollStats.Count - 1]._damageValue.Text = chart.MortalWoundDamageValue.ToString();
+
+            chart.Damage.Add(1);
         }
     }
-
+    
     public struct Chart
     {
         internal List<int> ShotsTaken;
@@ -326,6 +372,9 @@ namespace MathHammer
         internal readonly int ShotDiceNum;
         internal readonly int ShotDiceType;
         internal readonly int FlatDamge;
+        internal readonly int WoundXValue;
+        internal readonly int WoundMortalXValue;
+        internal readonly int MortalWoundDamageValue;
 
         internal readonly Color SuccsessColor;
         internal readonly Color FailColor;
@@ -347,8 +396,10 @@ namespace MathHammer
         internal readonly string NaText;
         internal readonly string TeslaText;
         internal readonly string AutohitText;
+        internal readonly string MortalWoundText;
 
-        public Chart(int stats,
+        public Chart(
+            int stats,
             int flatShots,
             int strength,
             int ap,
@@ -360,6 +411,8 @@ namespace MathHammer
             int shotDiceNum, 
             int shotDiceType,
             int flatDamge,
+            int woundXValue, 
+            int woundMortalXValue,
             bool rerollNone,
             bool rerollOnes,
             bool rerollMisses,
@@ -370,8 +423,7 @@ namespace MathHammer
             bool shouldMortalWoundOnX, 
             bool isTeslaWeapon, 
             bool variableShots, 
-            bool variableDamage
-            )
+            bool variableDamage)
         {
             WsBs = stats;
             FlatShots = flatShots;
@@ -385,6 +437,9 @@ namespace MathHammer
             ShotDiceNum = shotDiceNum;
             ShotDiceType = shotDiceType;
             FlatDamge = flatDamge;
+            WoundXValue = woundXValue;
+            WoundMortalXValue = woundMortalXValue;
+            MortalWoundDamageValue = 1;
 
             SuccsessColor = Color.DarkGreen;
             FailColor = Color.DarkRed;
@@ -395,6 +450,7 @@ namespace MathHammer
             NaText = "N/A";
             TeslaText = "TESLA";
             AutohitText = "AUTO";
+            MortalWoundText = "MORTAL";
 
             DontReroll = rerollNone;
             ShouldRerollOnesHit = rerollOnes;
@@ -407,6 +463,7 @@ namespace MathHammer
             IsTeslaWeapon = isTeslaWeapon;
             VariableShots = variableShots;
             VariableDamage = variableDamage;
+
 
             ShotsMissed = new List<int>();
             InitialShotsHit = new List<int>();

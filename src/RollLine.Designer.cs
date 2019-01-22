@@ -40,6 +40,7 @@
             this._damageLabel = new System.Windows.Forms.Label();
             this._woundRerollLabel = new System.Windows.Forms.Label();
             this._woundRerollValue = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // _hitLabel
@@ -151,10 +152,19 @@
             this._woundRerollValue.Text = "N/A";
             this._woundRerollValue.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(-3, 37);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(413, 19);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "____________________________________________________________________";
+            // 
             // RollLine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label1);
             this.Controls.Add(this._woundRerollValue);
             this.Controls.Add(this._woundRerollLabel);
             this.Controls.Add(this._damageValue);
@@ -168,7 +178,7 @@
             this.Controls.Add(this._hitValue);
             this.Controls.Add(this._hitLabel);
             this.Name = "RollLine";
-            this.Size = new System.Drawing.Size(403, 47);
+            this.Size = new System.Drawing.Size(402, 56);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -187,5 +197,6 @@
         internal System.Windows.Forms.Label _damageValue;
         private System.Windows.Forms.Label _woundRerollLabel;
         internal System.Windows.Forms.Label _woundRerollValue;
+        private System.Windows.Forms.Label label1;
     }
 }

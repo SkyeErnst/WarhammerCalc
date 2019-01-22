@@ -41,7 +41,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.m_defLabel = new System.Windows.Forms.Label();
-            this.m_rollButton = new System.Windows.Forms.Button();
+            this._rollButton = new System.Windows.Forms.Button();
             this._totalHitsLabel = new System.Windows.Forms.Label();
             this._totalHitsNum = new System.Windows.Forms.Label();
             this._woundTotalLabel = new System.Windows.Forms.Label();
@@ -52,7 +52,7 @@
             this._atkWsBsLabel = new System.Windows.Forms.Label();
             this._atkWsBsBox = new System.Windows.Forms.MaskedTextBox();
             this._atkShotsLabel = new System.Windows.Forms.Label();
-            this._atkShotsNumberBox = new System.Windows.Forms.MaskedTextBox();
+            this._atkVariableShotsNumberBox = new System.Windows.Forms.MaskedTextBox();
             this._totalFailedSavesLabel = new System.Windows.Forms.Label();
             this._failedSavesNum = new System.Windows.Forms.Label();
             this._invulSaveLabel = new System.Windows.Forms.Label();
@@ -75,6 +75,7 @@
             this._woundingUseStandardRadio = new System.Windows.Forms.RadioButton();
             this._teslaCheckbox = new System.Windows.Forms.CheckBox();
             this._teslaPanel = new System.Windows.Forms.Panel();
+            this._autoHitCheckbox = new System.Windows.Forms.CheckBox();
             this._hitPanel = new System.Windows.Forms.Panel();
             this._rerollMisses = new System.Windows.Forms.RadioButton();
             this._rerollOnesRadio = new System.Windows.Forms.RadioButton();
@@ -83,7 +84,6 @@
             this._rerollFailedWoundsRadio = new System.Windows.Forms.RadioButton();
             this._dontRerollWounds = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
-            this._finalHitsLabel = new System.Windows.Forms.Label();
             this._results = new System.Windows.Forms.Label();
             this._resultsLabel = new System.Windows.Forms.Label();
             this._varableDamageCheckbox = new System.Windows.Forms.CheckBox();
@@ -91,7 +91,6 @@
             this._variableShotsCheckbox = new System.Windows.Forms.CheckBox();
             this._atkShotsDBox = new System.Windows.Forms.MaskedTextBox();
             this._flatShotsBox = new System.Windows.Forms.MaskedTextBox();
-            this._autoHitCheckbox = new System.Windows.Forms.CheckBox();
             this._modifersPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this._teslaPanel.SuspendLayout();
@@ -212,15 +211,15 @@
             this.m_defLabel.TabIndex = 8;
             this.m_defLabel.Text = "Defender";
             // 
-            // m_rollButton
+            // _rollButton
             // 
-            this.m_rollButton.Location = new System.Drawing.Point(423, 123);
-            this.m_rollButton.Name = "m_rollButton";
-            this.m_rollButton.Size = new System.Drawing.Size(75, 23);
-            this.m_rollButton.TabIndex = 15;
-            this.m_rollButton.Text = "Roll!";
-            this.m_rollButton.UseVisualStyleBackColor = true;
-            this.m_rollButton.Click += new System.EventHandler(this.RollButton_Click);
+            this._rollButton.Location = new System.Drawing.Point(294, 174);
+            this._rollButton.Name = "_rollButton";
+            this._rollButton.Size = new System.Drawing.Size(179, 42);
+            this._rollButton.TabIndex = 15;
+            this._rollButton.Text = "Roll!";
+            this._rollButton.UseVisualStyleBackColor = true;
+            this._rollButton.Click += new System.EventHandler(this.RollButton_Click);
             // 
             // _totalHitsLabel
             // 
@@ -270,7 +269,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(1134, 194);
+            this.label7.Location = new System.Drawing.Point(1117, 194);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(68, 13);
             this.label7.TabIndex = 23;
@@ -279,7 +278,7 @@
             // _damageTotalNum
             // 
             this._damageTotalNum.AutoSize = true;
-            this._damageTotalNum.Location = new System.Drawing.Point(1134, 216);
+            this._damageTotalNum.Location = new System.Drawing.Point(1117, 216);
             this._damageTotalNum.Name = "_damageTotalNum";
             this._damageTotalNum.Size = new System.Drawing.Size(13, 13);
             this._damageTotalNum.TabIndex = 24;
@@ -311,14 +310,14 @@
             this._atkShotsLabel.TabIndex = 27;
             this._atkShotsLabel.Text = "Shots";
             // 
-            // _atkShotsNumberBox
+            // _atkVariableShotsNumberBox
             // 
-            this._atkShotsNumberBox.Location = new System.Drawing.Point(55, 92);
-            this._atkShotsNumberBox.Mask = "000";
-            this._atkShotsNumberBox.Name = "_atkShotsNumberBox";
-            this._atkShotsNumberBox.Size = new System.Drawing.Size(35, 20);
-            this._atkShotsNumberBox.TabIndex = 28;
-            this._atkShotsNumberBox.Text = "0";
+            this._atkVariableShotsNumberBox.Location = new System.Drawing.Point(55, 92);
+            this._atkVariableShotsNumberBox.Mask = "000";
+            this._atkVariableShotsNumberBox.Name = "_atkVariableShotsNumberBox";
+            this._atkVariableShotsNumberBox.Size = new System.Drawing.Size(35, 20);
+            this._atkVariableShotsNumberBox.TabIndex = 28;
+            this._atkVariableShotsNumberBox.Text = "0";
             // 
             // _totalFailedSavesLabel
             // 
@@ -463,7 +462,7 @@
             this.panel1.Controls.Add(this._woundOnXBox);
             this.panel1.Controls.Add(this._woundMortalOnXRadio);
             this.panel1.Controls.Add(this._woundingUseStandardRadio);
-            this.panel1.Location = new System.Drawing.Point(415, 41);
+            this.panel1.Location = new System.Drawing.Point(403, 37);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(161, 72);
             this.panel1.TabIndex = 48;
@@ -475,6 +474,7 @@
             this._woundMortalOnXBox.Name = "_woundMortalOnXBox";
             this._woundMortalOnXBox.Size = new System.Drawing.Size(20, 20);
             this._woundMortalOnXBox.TabIndex = 53;
+            this._woundMortalOnXBox.Text = "0";
             // 
             // _woundOnXRadio
             // 
@@ -495,6 +495,7 @@
             this._woundOnXBox.Name = "_woundOnXBox";
             this._woundOnXBox.Size = new System.Drawing.Size(20, 20);
             this._woundOnXBox.TabIndex = 51;
+            this._woundOnXBox.Text = "0";
             // 
             // _woundMortalOnXRadio
             // 
@@ -522,7 +523,7 @@
             // _teslaCheckbox
             // 
             this._teslaCheckbox.AutoSize = true;
-            this._teslaCheckbox.Location = new System.Drawing.Point(32, 122);
+            this._teslaCheckbox.Location = new System.Drawing.Point(20, 118);
             this._teslaCheckbox.Name = "_teslaCheckbox";
             this._teslaCheckbox.Size = new System.Drawing.Size(110, 17);
             this._teslaCheckbox.TabIndex = 48;
@@ -532,17 +533,27 @@
             // _teslaPanel
             // 
             this._teslaPanel.Controls.Add(this._autoHitCheckbox);
-            this._teslaPanel.Location = new System.Drawing.Point(152, 39);
+            this._teslaPanel.Location = new System.Drawing.Point(140, 35);
             this._teslaPanel.Name = "_teslaPanel";
             this._teslaPanel.Size = new System.Drawing.Size(112, 75);
             this._teslaPanel.TabIndex = 48;
+            // 
+            // _autoHitCheckbox
+            // 
+            this._autoHitCheckbox.AutoSize = true;
+            this._autoHitCheckbox.Location = new System.Drawing.Point(3, 5);
+            this._autoHitCheckbox.Name = "_autoHitCheckbox";
+            this._autoHitCheckbox.Size = new System.Drawing.Size(59, 17);
+            this._autoHitCheckbox.TabIndex = 49;
+            this._autoHitCheckbox.Text = "Autohit";
+            this._autoHitCheckbox.UseVisualStyleBackColor = true;
             // 
             // _hitPanel
             // 
             this._hitPanel.Controls.Add(this._noRerollRadio);
             this._hitPanel.Controls.Add(this._rerollMisses);
             this._hitPanel.Controls.Add(this._rerollOnesRadio);
-            this._hitPanel.Location = new System.Drawing.Point(26, 38);
+            this._hitPanel.Location = new System.Drawing.Point(14, 34);
             this._hitPanel.Name = "_hitPanel";
             this._hitPanel.Size = new System.Drawing.Size(119, 76);
             this._hitPanel.TabIndex = 48;
@@ -574,7 +585,7 @@
             this._woundRerollPanel.Controls.Add(this._rerollWoundsOfOneRadio);
             this._woundRerollPanel.Controls.Add(this._rerollFailedWoundsRadio);
             this._woundRerollPanel.Controls.Add(this._dontRerollWounds);
-            this._woundRerollPanel.Location = new System.Drawing.Point(270, 39);
+            this._woundRerollPanel.Location = new System.Drawing.Point(258, 35);
             this._woundRerollPanel.Name = "_woundRerollPanel";
             this._woundRerollPanel.Size = new System.Drawing.Size(139, 75);
             this._woundRerollPanel.TabIndex = 44;
@@ -616,20 +627,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(255, 11);
+            this.label1.Location = new System.Drawing.Point(243, 7);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(73, 20);
             this.label1.TabIndex = 44;
             this.label1.Text = "Modifiers";
-            // 
-            // _finalHitsLabel
-            // 
-            this._finalHitsLabel.AutoSize = true;
-            this._finalHitsLabel.Location = new System.Drawing.Point(613, 194);
-            this._finalHitsLabel.Name = "_finalHitsLabel";
-            this._finalHitsLabel.Size = new System.Drawing.Size(58, 13);
-            this._finalHitsLabel.TabIndex = 45;
-            this._finalHitsLabel.Text = "Final hit list";
             // 
             // _results
             // 
@@ -697,16 +699,6 @@
             this._flatShotsBox.TabIndex = 52;
             this._flatShotsBox.Text = "0";
             // 
-            // _autoHitCheckbox
-            // 
-            this._autoHitCheckbox.AutoSize = true;
-            this._autoHitCheckbox.Location = new System.Drawing.Point(3, 5);
-            this._autoHitCheckbox.Name = "_autoHitCheckbox";
-            this._autoHitCheckbox.Size = new System.Drawing.Size(59, 17);
-            this._autoHitCheckbox.TabIndex = 49;
-            this._autoHitCheckbox.Text = "Autohit";
-            this._autoHitCheckbox.UseVisualStyleBackColor = true;
-            // 
             // Ui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -720,7 +712,6 @@
             this.Controls.Add(this._varableDamageCheckbox);
             this.Controls.Add(this._resultsLabel);
             this.Controls.Add(this._results);
-            this.Controls.Add(this._finalHitsLabel);
             this.Controls.Add(this._modifersPanel);
             this.Controls.Add(this._woundsPerModelBox);
             this.Controls.Add(this._woundPerModelLabel);
@@ -734,7 +725,7 @@
             this.Controls.Add(this._invulSaveLabel);
             this.Controls.Add(this._failedSavesNum);
             this.Controls.Add(this._totalFailedSavesLabel);
-            this.Controls.Add(this._atkShotsNumberBox);
+            this.Controls.Add(this._atkVariableShotsNumberBox);
             this.Controls.Add(this._atkShotsLabel);
             this.Controls.Add(this._atkWsBsBox);
             this.Controls.Add(this._atkWsBsLabel);
@@ -745,7 +736,7 @@
             this.Controls.Add(this._woundTotalLabel);
             this.Controls.Add(this._totalHitsNum);
             this.Controls.Add(this._totalHitsLabel);
-            this.Controls.Add(this.m_rollButton);
+            this.Controls.Add(this._rollButton);
             this.Controls.Add(this._defSave);
             this.Controls.Add(this._defToughness);
             this.Controls.Add(this.label3);
@@ -791,7 +782,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label m_defLabel;
-        private System.Windows.Forms.Button m_rollButton;
+        private System.Windows.Forms.Button _rollButton;
         private System.Windows.Forms.Label _totalHitsLabel;
         private System.Windows.Forms.Label _totalHitsNum;
         private System.Windows.Forms.Label _woundTotalLabel;
@@ -802,7 +793,7 @@
         private System.Windows.Forms.Label _atkWsBsLabel;
         private System.Windows.Forms.MaskedTextBox _atkWsBsBox;
         private System.Windows.Forms.Label _atkShotsLabel;
-        private System.Windows.Forms.MaskedTextBox _atkShotsNumberBox;
+        private System.Windows.Forms.MaskedTextBox _atkVariableShotsNumberBox;
         private System.Windows.Forms.Label _totalFailedSavesLabel;
         private System.Windows.Forms.Label _failedSavesNum;
         private System.Windows.Forms.Label _invulSaveLabel;
@@ -823,7 +814,6 @@
         private System.Windows.Forms.Panel _woundRerollPanel;
         private System.Windows.Forms.RadioButton _rerollFailedWoundsRadio;
         private System.Windows.Forms.RadioButton _dontRerollWounds;
-        private System.Windows.Forms.Label _finalHitsLabel;
         private System.Windows.Forms.Label _results;
         private System.Windows.Forms.Label _resultsLabel;
         private System.Windows.Forms.RadioButton _rerollWoundsOfOneRadio;

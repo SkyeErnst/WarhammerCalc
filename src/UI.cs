@@ -24,7 +24,7 @@ namespace MathHammer
             _woundMortalOnXBox.Hide();
 
             _flatShotsBox.Show();
-            _atkShotsNumberBox.Hide();
+            _atkVariableShotsNumberBox.Hide();
             _atkShotsDBox.Hide();
             _atkDiceDType.Hide();
             _atkDamageDiceAmount.Hide();
@@ -57,9 +57,11 @@ namespace MathHammer
                 Int32.Parse(_defToughness.Text),
                 Int32.Parse(_defSave.Text),
                 Int32.Parse(_invulSaveBox.Text),
-                Int32.Parse(_atkShotsNumberBox.Text),
+                Int32.Parse(_atkVariableShotsNumberBox.Text),
                 Int32.Parse(_atkShotsDBox.Text),
                 Int32.Parse(_flatDamageBox.Text),
+                Int32.Parse(_woundOnXBox.Text),
+                Int32.Parse(_woundMortalOnXBox.Text),
 
                 _noRerollRadio.Checked,
                 _rerollOnesRadio.Checked,
@@ -120,7 +122,7 @@ namespace MathHammer
             _damageTotalNum.Text = Sum(crt.Damage).ToString();
 
             Point currPoint;
-            int yOffset = 40;
+            int yOffset = 50;
 
             currPoint = _resultsLabel.Location;
             currPoint.Y += yOffset;
@@ -271,14 +273,16 @@ namespace MathHammer
         {
             if (true == _variableShotsCheckbox.Checked)
             {
-                _atkShotsNumberBox.Show();
+                _atkVariableShotsNumberBox.Show();
                 _atkShotsDBox.Show();
+
                 _flatShotsBox.Hide();
             }
             else
             {
-                _atkShotsNumberBox.Hide();
+                _atkVariableShotsNumberBox.Hide();
                 _atkShotsDBox.Hide();
+
                 _flatShotsBox.Show();
             }
 
