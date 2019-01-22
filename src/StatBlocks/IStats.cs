@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing.Text;
-
-namespace MathHammer.src.StatBlocks
+﻿namespace MathHammer.StatBlocks
 {
     interface IStats
     {

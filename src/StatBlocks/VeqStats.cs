@@ -1,4 +1,4 @@
-﻿namespace MathHammer.src.StatBlocks
+﻿namespace MathHammer.StatBlocks
 {
     public struct VeqStats : IStats
     {

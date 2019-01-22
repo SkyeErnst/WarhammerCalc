@@ -48,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\Calculator.cs" />
+    <Compile Include="src\RollLine.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\RollLine.Designer.cs">
+      <DependentUpon>RollLine.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\StatBlocks\GeqStats.cs" />
     <Compile Include="src\StatBlocks\IStats.cs" />
     <Compile Include="src\StatBlocks\KeqStats.cs" />
@@ -62,6 +68,9 @@
     </Compile>
     <Compile Include="src\MainProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="src\RollLine.resx">
+      <DependentUpon>RollLine.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\UI.resx">
       <DependentUpon>UI.cs</DependentUpon>
     </EmbeddedResource>

@@ -1,22 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
-using MathHammer.src;
-using MathHammer.src.StatBlocks;
+using MathHammer.StatBlocks;
 
 namespace MathHammer
 {
-    public partial class MathHammer : Form
+    public partial class Ui : Form
     {
-        /// <summary>
-        /// List of all the labels that we have added to the form.
-        /// </summary>
-        private List<Label> _labels;
 
-        public MathHammer()
+        private List<RollLine> _linesAdded;
+        private List<Label> _woundLabels;
+
+        public Ui()
         {
             InitializeComponent();
+            _noRerollRadio.Checked = true;
+            _dontRerollWounds.Checked = true;
+            _woundingUseStandardRadio.Checked = true;
+
+            _woundOnXBox.Hide();
+            _woundMortalOnXBox.Hide();
+
+            _flatShotsBox.Show();
+            _atkVariableShotsNumberBox.Hide();
+            _atkShotsDBox.Hide();
+            _atkDiceDType.Hide();
+            _atkDamageDiceAmount.Hide();
+            _flatDamageBox.Show();
+
+            _linesAdded = new List<RollLine>();
+            _woundLabels = new List<Label>();
         }
 
         /// <summary>
@@ -29,22 +44,78 @@ namespace MathHammer
         /// <param name="e"></param>
         private void RollButton_Click(object sender, EventArgs e)
         {
-            Chart crt = new Chart
+
+            if ("" == _flatShotsBox.Text)
+            {
+                _flatShotsBox.Text = "0";
+            }
+            if ("" == _atkVariableShotsNumberBox.Text)
+            {
+                _atkVariableShotsNumberBox.Text = "0";
+            }
+            if ("" == _atkShotsDBox.Text)
+            {
+                _atkShotsDBox.Text = "0";
+            }
+
+            if ("" == _flatDamageBox.Text)
+            {
+                _flatDamageBox.Text = "0";
+            }
+            if ("" == _atkDamageDiceAmount.Text)
+            {
+                _atkDamageDiceAmount.Text = "0";
+            }
+            if ("" == _atkDiceDType.Text)
+            {
+                _atkDiceDType.Text = "0";
+            }
+
+            try
+            {
+                Chart chart = new Chart
                 (
                 Int32.Parse(_atkWsBsBox.Text),
-                Int32.Parse(_atkShotsBox.Text),
+                Int32.Parse(_flatShotsBox.Text),
                 Int32.Parse(_atkStrBox.Text),
-                Int32.Parse(m_atkAPBox.Text),
-                Int32.Parse(_atkDiceAmount.Text),
-                Int32.Parse(_atkDiceD.Text),
+                Int32.Parse(_atkAPBox.Text),
+                Int32.Parse(_atkDamageDiceAmount.Text),
+                Int32.Parse(_atkDiceDType.Text),
                 Int32.Parse(_defToughness.Text),
                 Int32.Parse(_defSave.Text),
-                Int32.Parse(_invulSaveBox.Text)
+                Int32.Parse(_invulSaveBox.Text),
+                Int32.Parse(_atkVariableShotsNumberBox.Text),
+                Int32.Parse(_atkShotsDBox.Text),
+                Int32.Parse(_flatDamageBox.Text),
+                Int32.Parse(_woundOnXBox.Text),
+                Int32.Parse(_woundMortalOnXBox.Text),
+
+                _noRerollRadio.Checked,
+                _rerollOnesRadio.Checked,
+                _rerollMissesRadio.Checked,
+                _rerollFailedWoundsRadio.Checked,
+                _rerollWoundsOfOneRadio.Checked,
+                _autoHitCheckbox.Checked,
+                _woundOnXRadio.Checked,
+                _woundMortalOnXRadio.Checked,
+                _teslaCheckbox.Checked,
+                _variableShotsCheckbox.Checked,
+                _varableDamageCheckbox.Checked
                 );
 
-            MainProgram.Calc.Roll(ref crt);
+                MainProgram.Calc.Roll(ref chart);
 
-            DisplayResults(crt);
+                DisplayResults(chart);
+            }
+            catch (Exception exception)
+            {
+                string errorMessage =
+                    "Something went wrong. Ensure that all visible text boxes are filled in.\n\n" 
+                    + exception.Message + "\n\n"
+                    + "Stacktrace:\n"
+                    + exception.ToString();
+                MessageBox.Show(errorMessage, "ERROR");
+            }
         }
 
         /// <summary>
@@ -53,100 +124,60 @@ namespace MathHammer
         /// <param name="crt"></param>
         private void DisplayResults(Chart crt)
         {
-            if (null != _labels)
-            {
-                foreach (Label label in _labels)
-                {
-                    Controls.Remove((label));
-                }
 
-                _labels.Clear();
+            if (_linesAdded.Count > 0)
+            {
+                foreach (RollLine line in _linesAdded)
+                {
+                    this.Controls.Remove(line);
+                }
+                _linesAdded.Clear();
             }
 
-            Color failColor = Color.Red;
-            Color successColor = Color.Green;
-            Color defaultColor = Color.Black;
+            if (_woundLabels.Count > 0)
+            {
+                foreach (Label lbl in _woundLabels)
+                {
+                    this.Controls.Remove(lbl);
+                }
+                _woundLabels.Clear();
+            }
 
-            _labels = new List<Label>();
-
-            _totalHitsNum.Text = crt.ShotsHit.Count.ToString();
+            _totalHitsNum.Text = crt.FinalHitList.Count.ToString();
             _woundsTotalNum.Text = crt.SuccessfulWounds.Count.ToString();
             _failedSavesNum.Text = crt.FailedSaves.Count.ToString();
             _damageTotalNum.Text = Sum(crt.Damage).ToString();
 
-            if (crt.ShotsMissed.Count > 0)
-            {
-                CascadeValues(_hitResults.Location, crt.ShotsMissed, failColor);
-            }
+            Point currPoint;
+            int yOffset = 50;
 
-            if (crt.ShotsHit.Count > 0)
-            {
-                if (crt.ShotsMissed.Count > 0)
-                {
-                    CascadeValues(_labels[_labels.Count - 1].Location, crt.ShotsHit, successColor);
-                }
-                else
-                {
-                    CascadeValues(_hitResults.Location, crt.ShotsHit, successColor);
-                }
-            }
-
-            if (crt.FailedWounds.Count > 0)
-            {
-                CascadeValues(_woundResults.Location, crt.FailedWounds, failColor);
-            }
-
-            if (crt.SuccessfulWounds.Count > 0)
-            {
-                if (crt.FailedWounds.Count > 0)
-                {
-                    CascadeValues(_labels[_labels.Count - 1].Location, crt.SuccessfulWounds, successColor);
-                }
-                else
-                {
-                    CascadeValues(_woundResults.Location, crt.SuccessfulWounds, successColor);
-                }
-            }
-
-            if (crt.FailedSaves.Count > 0)
-            {
-                CascadeValues(_saveResultsLabel.Location, crt.FailedSaves, failColor);
-            }
-
-            if (crt.SuccessfulSaves.Count > 0)
-            {
-                if (crt.FailedSaves.Count > 0)
-                {
-                    CascadeValues(_labels[_labels.Count - 1].Location, crt.SuccessfulSaves, successColor);
-                }
-                else
-                {
-                    CascadeValues(_saveResultsLabel.Location, crt.SuccessfulSaves, successColor);
-                }
-            }
-
-            CascadeValues(_damageResultsLabel.Location, crt.Damage, defaultColor);
-        }
-
-        private void CascadeValues(Point startPoint, List<int> values, Color clr)
-        {
-            int yOffset = 28;
-            Point currPoint = startPoint;
+            currPoint = _resultsLabel.Location;
             currPoint.Y += yOffset;
 
+            for (int i = 0; i < crt.RollStats.Count; i++)
+            {
+                this.Controls.Add(crt.RollStats[i]);
+                _linesAdded.Add(crt.RollStats[i]);
+                crt.RollStats[i].Location = currPoint;
+                currPoint.Y += yOffset;
+            }
 
-            for (int i = 0; i < values.Count; i++)
+            Point tmpPoint = _damageResultsLabel.Location;
+
+            for (int i = 0; i < crt.Damage.Count; i++)
             {
                 Label lbl = new Label();
-                lbl.Text = values[i].ToString();
-                lbl.ForeColor = clr;
+                _woundLabels.Add(lbl);
+
+                lbl.AutoSize = true;
+
+                lbl.Text = "Wound: " + (i + 1) + "," + " Damage: " + crt.Damage[i];
 
                 this.Controls.Add(lbl);
 
-                lbl.Location = currPoint;
-                _labels.Add((lbl));
+                tmpPoint.Y += 30;
 
-                currPoint.Y += yOffset;
+                lbl.Location = tmpPoint;
             }
         }
 
@@ -192,7 +223,6 @@ namespace MathHammer
             _defToughness.Text = tough.ToString();
             _defSave.Text = save.ToString();
             _invulSaveBox.Text = invulSave.ToString();
-            _woundsPerModelBox.Text = wounds.ToString();
         }
 
         private static int Sum(IReadOnlyList<int> values)
@@ -239,6 +269,148 @@ namespace MathHammer
         private void _keqButton_Click(object sender, EventArgs e)
         {
             FillEquivalentValues(EqSelection.Keq);
+        }
+
+        private void WoundRollXRadioChanged(object sender, EventArgs e)
+        {
+            if (true == _woundOnXRadio.Checked)
+            {
+                _woundOnXBox.Show();
+            }
+            else
+            {
+                _woundOnXBox.Hide();
+            }
+        }
+
+        private void MortalWoundOnXRadioChanged(object sender, EventArgs e)
+        {
+            if (true == _woundMortalOnXRadio.Checked)
+            {
+                _woundMortalOnXBox.Show();
+            }
+            else
+            {
+                _woundMortalOnXBox.Hide();
+            }
+        }
+
+        private void VariableShotsCheckChanged(object sender, EventArgs e)
+        {
+            if (true == _variableShotsCheckbox.Checked)
+            {
+                _atkVariableShotsNumberBox.Show();
+                _atkShotsDBox.Show();
+
+                _flatShotsBox.Hide();
+            }
+            else
+            {
+                _atkVariableShotsNumberBox.Hide();
+                _atkShotsDBox.Hide();
+
+                _flatShotsBox.Show();
+            }
+
+        }
+
+        private void VariableDamageCheckedChanged(object sender, EventArgs e)
+        {
+            if (true == _varableDamageCheckbox.Checked)
+            {
+                _flatDamageBox.Hide();
+                _atkDamageDiceAmount.Show();
+                _atkDiceDType.Show();
+            }
+            else
+            {
+                _flatDamageBox.Show();
+                _atkDamageDiceAmount.Hide();
+                _atkDiceDType.Hide();
+            }
+        }
+
+        private void Ui_Load(object sender, EventArgs e)
+        {
+            _geqButton.TabStop = false;
+            _meqButton.TabStop = false;
+            _teqButton.TabStop = false;
+            _veqButton.TabStop = false;
+            _keqButton.TabStop = false;
+            _noRerollRadio.TabStop = false;
+            _rerollOnesRadio.TabStop = false;
+            _rerollMissesRadio.TabStop = false;
+            _autoHitCheckbox.TabStop = false;
+            _dontRerollWounds.TabStop = false;
+            _rerollWoundsOfOneRadio.TabStop = false;
+            _rerollFailedWoundsRadio.TabStop = false;
+            _woundingUseStandardRadio.TabStop = false;
+            _woundOnXRadio.TabStop = false;
+            _woundMortalOnXRadio.TabStop = false;
+
+            _variableShotsCheckbox.TabStop = false;
+            _varableDamageCheckbox.TabStop = false;
+            _teslaCheckbox.TabStop = false;
+        }
+
+        private void _atkWsBsBox_Click(object sender, EventArgs e)
+        {
+            _atkWsBsBox.Select(0,0);
+        }
+
+        private void _flatShotsBox_Click(object sender, EventArgs e)
+        {
+            _flatShotsBox.Select(0,0);
+        }
+
+        private void _atkVariableShotsNumberBox_Click(object sender, EventArgs e)
+        {
+            _atkVariableShotsNumberBox.Select(0,0);
+        }
+
+        private void _atkShotsDBox_Click(object sender, EventArgs e)
+        {
+            _atkShotsDBox.Select(0,0);
+        }
+
+        private void _atkStrBox_Click(object sender, EventArgs e)
+        {
+            _atkStrBox.Select(0,0);
+        }
+
+        private void _atkAPBox_Click(object sender, EventArgs e)
+        {
+            _atkAPBox.Select(0,0);
+        }
+
+        private void _flatDamageBox_Click(object sender, EventArgs e)
+        {
+            _flatDamageBox.Select(0,0);
+        }
+
+        private void _atkDamageDiceAmount_Click(object sender, EventArgs e)
+        {
+            _atkDamageDiceAmount.Select(0,0);
+        }
+
+        private void _atkDiceDType_Click(object sender, EventArgs e)
+        {
+            _atkDiceDType.Select(0,0);
+        }
+
+        private void _defToughness_Click(object sender, EventArgs e)
+        {
+            _defToughness.Select(0,0);
+        }
+
+        private void _defSave_Click(object sender, EventArgs e)
+        {
+            _defSave.Select(0,0);
+        }
+
+        private void _invulSaveBox_Click(object sender, EventArgs e)
+        {
+            _invulSaveBox.Select(0,0);
         }
     }
 }

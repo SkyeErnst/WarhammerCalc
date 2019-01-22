@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MathHammer.src;
 
 namespace MathHammer
 {
     static class MainProgram
     {
         internal static Calculator Calc;
+        internal static Ui ui;
 
         /// <summary>
         /// The main entry point for the application.
@@ -20,7 +17,9 @@ namespace MathHammer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Calc = new Calculator();
-            Application.Run(new MathHammer());
+            ui = new Ui();
+            
+            Application.Run(ui);
         }
     }
 }
