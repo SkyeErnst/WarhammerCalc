@@ -179,6 +179,7 @@
             this.Controls.Add(this._hitLabel);
             this.Name = "RollLine";
             this.Size = new System.Drawing.Size(402, 56);
+            this.Load += new System.EventHandler(this.RollLine_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

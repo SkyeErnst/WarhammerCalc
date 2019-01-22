@@ -75,7 +75,7 @@
             this._teslaPanel = new System.Windows.Forms.Panel();
             this._autoHitCheckbox = new System.Windows.Forms.CheckBox();
             this._hitPanel = new System.Windows.Forms.Panel();
-            this._rerollMisses = new System.Windows.Forms.RadioButton();
+            this._rerollMissesRadio = new System.Windows.Forms.RadioButton();
             this._rerollOnesRadio = new System.Windows.Forms.RadioButton();
             this._woundRerollPanel = new System.Windows.Forms.Panel();
             this._rerollWoundsOfOneRadio = new System.Windows.Forms.RadioButton();
@@ -129,7 +129,7 @@
             this._atkStrBox.Mask = "00";
             this._atkStrBox.Name = "_atkStrBox";
             this._atkStrBox.Size = new System.Drawing.Size(34, 20);
-            this._atkStrBox.TabIndex = 3;
+            this._atkStrBox.TabIndex = 4;
             // 
             // m_atkAPBox
             // 
@@ -137,7 +137,7 @@
             this.m_atkAPBox.Mask = "0";
             this.m_atkAPBox.Name = "m_atkAPBox";
             this.m_atkAPBox.Size = new System.Drawing.Size(34, 20);
-            this.m_atkAPBox.TabIndex = 4;
+            this.m_atkAPBox.TabIndex = 5;
             // 
             // _atkDamgeLabel
             // 
@@ -154,7 +154,7 @@
             this._atkDamageDiceAmount.Mask = "00";
             this._atkDamageDiceAmount.Name = "_atkDamageDiceAmount";
             this._atkDamageDiceAmount.Size = new System.Drawing.Size(34, 20);
-            this._atkDamageDiceAmount.TabIndex = 6;
+            this._atkDamageDiceAmount.TabIndex = 7;
             this._atkDamageDiceAmount.Text = "0";
             // 
             // _atkDiceDType
@@ -163,7 +163,7 @@
             this._atkDiceDType.Mask = "00";
             this._atkDiceDType.Name = "_atkDiceDType";
             this._atkDiceDType.Size = new System.Drawing.Size(34, 20);
-            this._atkDiceDType.TabIndex = 7;
+            this._atkDiceDType.TabIndex = 8;
             this._atkDiceDType.Text = "0";
             // 
             // _defSave
@@ -172,7 +172,7 @@
             this._defSave.Mask = "0";
             this._defSave.Name = "_defSave";
             this._defSave.Size = new System.Drawing.Size(52, 20);
-            this._defSave.TabIndex = 12;
+            this._defSave.TabIndex = 10;
             // 
             // _defToughness
             // 
@@ -180,7 +180,7 @@
             this._defToughness.Mask = "00";
             this._defToughness.Name = "_defToughness";
             this._defToughness.Size = new System.Drawing.Size(52, 20);
-            this._defToughness.TabIndex = 11;
+            this._defToughness.TabIndex = 9;
             // 
             // label3
             // 
@@ -214,7 +214,7 @@
             this._rollButton.Location = new System.Drawing.Point(294, 174);
             this._rollButton.Name = "_rollButton";
             this._rollButton.Size = new System.Drawing.Size(179, 42);
-            this._rollButton.TabIndex = 15;
+            this._rollButton.TabIndex = 12;
             this._rollButton.Text = "Roll!";
             this._rollButton.UseVisualStyleBackColor = true;
             this._rollButton.Click += new System.EventHandler(this.RollButton_Click);
@@ -297,7 +297,7 @@
             this._atkWsBsBox.Mask = "0";
             this._atkWsBsBox.Name = "_atkWsBsBox";
             this._atkWsBsBox.Size = new System.Drawing.Size(34, 20);
-            this._atkWsBsBox.TabIndex = 26;
+            this._atkWsBsBox.TabIndex = 0;
             // 
             // _atkShotsLabel
             // 
@@ -314,7 +314,7 @@
             this._atkVariableShotsNumberBox.Mask = "000";
             this._atkVariableShotsNumberBox.Name = "_atkVariableShotsNumberBox";
             this._atkVariableShotsNumberBox.Size = new System.Drawing.Size(35, 20);
-            this._atkVariableShotsNumberBox.TabIndex = 28;
+            this._atkVariableShotsNumberBox.TabIndex = 2;
             this._atkVariableShotsNumberBox.Text = "0";
             // 
             // _totalFailedSavesLabel
@@ -350,7 +350,7 @@
             this._invulSaveBox.Mask = "0";
             this._invulSaveBox.Name = "_invulSaveBox";
             this._invulSaveBox.Size = new System.Drawing.Size(52, 20);
-            this._invulSaveBox.TabIndex = 33;
+            this._invulSaveBox.TabIndex = 11;
             // 
             // _geqButton
             // 
@@ -532,23 +532,23 @@
             // _hitPanel
             // 
             this._hitPanel.Controls.Add(this._noRerollRadio);
-            this._hitPanel.Controls.Add(this._rerollMisses);
+            this._hitPanel.Controls.Add(this._rerollMissesRadio);
             this._hitPanel.Controls.Add(this._rerollOnesRadio);
             this._hitPanel.Location = new System.Drawing.Point(14, 34);
             this._hitPanel.Name = "_hitPanel";
             this._hitPanel.Size = new System.Drawing.Size(119, 76);
             this._hitPanel.TabIndex = 48;
             // 
-            // _rerollMisses
+            // _rerollMissesRadio
             // 
-            this._rerollMisses.AutoSize = true;
-            this._rerollMisses.Location = new System.Drawing.Point(6, 49);
-            this._rerollMisses.Name = "_rerollMisses";
-            this._rerollMisses.Size = new System.Drawing.Size(86, 17);
-            this._rerollMisses.TabIndex = 46;
-            this._rerollMisses.TabStop = true;
-            this._rerollMisses.Text = "Reroll misses";
-            this._rerollMisses.UseVisualStyleBackColor = true;
+            this._rerollMissesRadio.AutoSize = true;
+            this._rerollMissesRadio.Location = new System.Drawing.Point(6, 49);
+            this._rerollMissesRadio.Name = "_rerollMissesRadio";
+            this._rerollMissesRadio.Size = new System.Drawing.Size(86, 17);
+            this._rerollMissesRadio.TabIndex = 46;
+            this._rerollMissesRadio.TabStop = true;
+            this._rerollMissesRadio.Text = "Reroll misses";
+            this._rerollMissesRadio.UseVisualStyleBackColor = true;
             // 
             // _rerollOnesRadio
             // 
@@ -648,7 +648,7 @@
             this._flatDamageBox.Mask = "00";
             this._flatDamageBox.Name = "_flatDamageBox";
             this._flatDamageBox.Size = new System.Drawing.Size(34, 20);
-            this._flatDamageBox.TabIndex = 49;
+            this._flatDamageBox.TabIndex = 6;
             this._flatDamageBox.Text = "0";
             // 
             // _variableShotsCheckbox
@@ -668,7 +668,7 @@
             this._atkShotsDBox.Mask = "000";
             this._atkShotsDBox.Name = "_atkShotsDBox";
             this._atkShotsDBox.Size = new System.Drawing.Size(35, 20);
-            this._atkShotsDBox.TabIndex = 51;
+            this._atkShotsDBox.TabIndex = 3;
             this._atkShotsDBox.Text = "0";
             // 
             // _flatShotsBox
@@ -677,7 +677,7 @@
             this._flatShotsBox.Mask = "000";
             this._flatShotsBox.Name = "_flatShotsBox";
             this._flatShotsBox.Size = new System.Drawing.Size(34, 20);
-            this._flatShotsBox.TabIndex = 52;
+            this._flatShotsBox.TabIndex = 1;
             this._flatShotsBox.Text = "0";
             // 
             // Ui
@@ -731,6 +731,7 @@
             this.Controls.Add(this._AtkLabel);
             this.Name = "Ui";
             this.Text = "Math Hammer";
+            this.Load += new System.EventHandler(this.Ui_Load);
             this._modifersPanel.ResumeLayout(false);
             this._modifersPanel.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -786,7 +787,7 @@
         private System.Windows.Forms.RadioButton _noRerollRadio;
         private System.Windows.Forms.Panel _modifersPanel;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RadioButton _rerollMisses;
+        private System.Windows.Forms.RadioButton _rerollMissesRadio;
         private System.Windows.Forms.RadioButton _rerollOnesRadio;
         private System.Windows.Forms.Panel _woundRerollPanel;
         private System.Windows.Forms.RadioButton _rerollFailedWoundsRadio;

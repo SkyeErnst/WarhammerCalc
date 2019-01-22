@@ -65,7 +65,7 @@ namespace MathHammer
 
                 _noRerollRadio.Checked,
                 _rerollOnesRadio.Checked,
-                _rerollMisses.Checked,
+                _rerollMissesRadio.Checked,
                 _rerollFailedWoundsRadio.Checked,
                 _rerollWoundsOfOneRadio.Checked,
                 _autoHitCheckbox.Checked,
@@ -301,6 +301,29 @@ namespace MathHammer
                 _atkDamageDiceAmount.Hide();
                 _atkDiceDType.Hide();
             }
+        }
+
+        private void Ui_Load(object sender, EventArgs e)
+        {
+            _geqButton.TabStop = false;
+            _meqButton.TabStop = false;
+            _teqButton.TabStop = false;
+            _veqButton.TabStop = false;
+            _keqButton.TabStop = false;
+            _noRerollRadio.TabStop = false;
+            _rerollOnesRadio.TabStop = false;
+            _rerollMissesRadio.TabStop = false;
+            _autoHitCheckbox.TabStop = false;
+            _dontRerollWounds.TabStop = false;
+            _rerollWoundsOfOneRadio.TabStop = false;
+            _rerollFailedWoundsRadio.TabStop = false;
+            _woundingUseStandardRadio.TabStop = false;
+            _woundOnXRadio.TabStop = false;
+            _woundMortalOnXRadio.TabStop = false;
+
+            _variableShotsCheckbox.TabStop = false;
+            _varableDamageCheckbox.TabStop = false;
+            _teslaCheckbox.TabStop = false;
         }
     }
 }
