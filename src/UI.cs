@@ -44,6 +44,33 @@ namespace MathHammer
         /// <param name="e"></param>
         private void RollButton_Click(object sender, EventArgs e)
         {
+
+            if ("" == _flatShotsBox.Text)
+            {
+                _flatShotsBox.Text = "0";
+            }
+            if ("" == _atkVariableShotsNumberBox.Text)
+            {
+                _atkVariableShotsNumberBox.Text = "0";
+            }
+            if ("" == _atkShotsDBox.Text)
+            {
+                _atkShotsDBox.Text = "0";
+            }
+
+            if ("" == _flatDamageBox.Text)
+            {
+                _flatDamageBox.Text = "0";
+            }
+            if ("" == _atkDamageDiceAmount.Text)
+            {
+                _atkDamageDiceAmount.Text = "0";
+            }
+            if ("" == _atkDiceDType.Text)
+            {
+                _atkDiceDType.Text = "0";
+            }
+
             try
             {
                 Chart chart = new Chart
@@ -51,7 +78,7 @@ namespace MathHammer
                 Int32.Parse(_atkWsBsBox.Text),
                 Int32.Parse(_flatShotsBox.Text),
                 Int32.Parse(_atkStrBox.Text),
-                Int32.Parse(m_atkAPBox.Text),
+                Int32.Parse(_atkAPBox.Text),
                 Int32.Parse(_atkDamageDiceAmount.Text),
                 Int32.Parse(_atkDiceDType.Text),
                 Int32.Parse(_defToughness.Text),
@@ -324,6 +351,66 @@ namespace MathHammer
             _variableShotsCheckbox.TabStop = false;
             _varableDamageCheckbox.TabStop = false;
             _teslaCheckbox.TabStop = false;
+        }
+
+        private void _atkWsBsBox_Click(object sender, EventArgs e)
+        {
+            _atkWsBsBox.Select(0,0);
+        }
+
+        private void _flatShotsBox_Click(object sender, EventArgs e)
+        {
+            _flatShotsBox.Select(0,0);
+        }
+
+        private void _atkVariableShotsNumberBox_Click(object sender, EventArgs e)
+        {
+            _atkVariableShotsNumberBox.Select(0,0);
+        }
+
+        private void _atkShotsDBox_Click(object sender, EventArgs e)
+        {
+            _atkShotsDBox.Select(0,0);
+        }
+
+        private void _atkStrBox_Click(object sender, EventArgs e)
+        {
+            _atkStrBox.Select(0,0);
+        }
+
+        private void _atkAPBox_Click(object sender, EventArgs e)
+        {
+            _atkAPBox.Select(0,0);
+        }
+
+        private void _flatDamageBox_Click(object sender, EventArgs e)
+        {
+            _flatDamageBox.Select(0,0);
+        }
+
+        private void _atkDamageDiceAmount_Click(object sender, EventArgs e)
+        {
+            _atkDamageDiceAmount.Select(0,0);
+        }
+
+        private void _atkDiceDType_Click(object sender, EventArgs e)
+        {
+            _atkDiceDType.Select(0,0);
+        }
+
+        private void _defToughness_Click(object sender, EventArgs e)
+        {
+            _defToughness.Select(0,0);
+        }
+
+        private void _defSave_Click(object sender, EventArgs e)
+        {
+            _defSave.Select(0,0);
+        }
+
+        private void _invulSaveBox_Click(object sender, EventArgs e)
+        {
+            _invulSaveBox.Select(0,0);
         }
     }
 }

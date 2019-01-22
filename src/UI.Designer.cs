@@ -32,7 +32,7 @@
             this._atkStrLabel = new System.Windows.Forms.Label();
             this._atkAPLable = new System.Windows.Forms.Label();
             this._atkStrBox = new System.Windows.Forms.MaskedTextBox();
-            this.m_atkAPBox = new System.Windows.Forms.MaskedTextBox();
+            this._atkAPBox = new System.Windows.Forms.MaskedTextBox();
             this._atkDamgeLabel = new System.Windows.Forms.Label();
             this._atkDamageDiceAmount = new System.Windows.Forms.MaskedTextBox();
             this._atkDiceDType = new System.Windows.Forms.MaskedTextBox();
@@ -130,14 +130,16 @@
             this._atkStrBox.Name = "_atkStrBox";
             this._atkStrBox.Size = new System.Drawing.Size(34, 20);
             this._atkStrBox.TabIndex = 4;
+            this._atkStrBox.Click += new System.EventHandler(this._atkStrBox_Click);
             // 
-            // m_atkAPBox
+            // _atkAPBox
             // 
-            this.m_atkAPBox.Location = new System.Drawing.Point(55, 144);
-            this.m_atkAPBox.Mask = "0";
-            this.m_atkAPBox.Name = "m_atkAPBox";
-            this.m_atkAPBox.Size = new System.Drawing.Size(34, 20);
-            this.m_atkAPBox.TabIndex = 5;
+            this._atkAPBox.Location = new System.Drawing.Point(55, 144);
+            this._atkAPBox.Mask = "0";
+            this._atkAPBox.Name = "_atkAPBox";
+            this._atkAPBox.Size = new System.Drawing.Size(34, 20);
+            this._atkAPBox.TabIndex = 5;
+            this._atkAPBox.Click += new System.EventHandler(this._atkAPBox_Click);
             // 
             // _atkDamgeLabel
             // 
@@ -155,7 +157,7 @@
             this._atkDamageDiceAmount.Name = "_atkDamageDiceAmount";
             this._atkDamageDiceAmount.Size = new System.Drawing.Size(34, 20);
             this._atkDamageDiceAmount.TabIndex = 7;
-            this._atkDamageDiceAmount.Text = "0";
+            this._atkDamageDiceAmount.Click += new System.EventHandler(this._atkDamageDiceAmount_Click);
             // 
             // _atkDiceDType
             // 
@@ -164,7 +166,7 @@
             this._atkDiceDType.Name = "_atkDiceDType";
             this._atkDiceDType.Size = new System.Drawing.Size(34, 20);
             this._atkDiceDType.TabIndex = 8;
-            this._atkDiceDType.Text = "0";
+            this._atkDiceDType.Click += new System.EventHandler(this._atkDiceDType_Click);
             // 
             // _defSave
             // 
@@ -173,6 +175,7 @@
             this._defSave.Name = "_defSave";
             this._defSave.Size = new System.Drawing.Size(52, 20);
             this._defSave.TabIndex = 10;
+            this._defSave.Click += new System.EventHandler(this._defSave_Click);
             // 
             // _defToughness
             // 
@@ -181,6 +184,7 @@
             this._defToughness.Name = "_defToughness";
             this._defToughness.Size = new System.Drawing.Size(52, 20);
             this._defToughness.TabIndex = 9;
+            this._defToughness.Click += new System.EventHandler(this._defToughness_Click);
             // 
             // label3
             // 
@@ -298,6 +302,7 @@
             this._atkWsBsBox.Name = "_atkWsBsBox";
             this._atkWsBsBox.Size = new System.Drawing.Size(34, 20);
             this._atkWsBsBox.TabIndex = 0;
+            this._atkWsBsBox.Click += new System.EventHandler(this._atkWsBsBox_Click);
             // 
             // _atkShotsLabel
             // 
@@ -315,7 +320,7 @@
             this._atkVariableShotsNumberBox.Name = "_atkVariableShotsNumberBox";
             this._atkVariableShotsNumberBox.Size = new System.Drawing.Size(35, 20);
             this._atkVariableShotsNumberBox.TabIndex = 2;
-            this._atkVariableShotsNumberBox.Text = "0";
+            this._atkVariableShotsNumberBox.Click += new System.EventHandler(this._atkVariableShotsNumberBox_Click);
             // 
             // _totalFailedSavesLabel
             // 
@@ -351,6 +356,7 @@
             this._invulSaveBox.Name = "_invulSaveBox";
             this._invulSaveBox.Size = new System.Drawing.Size(52, 20);
             this._invulSaveBox.TabIndex = 11;
+            this._invulSaveBox.Click += new System.EventHandler(this._invulSaveBox_Click);
             // 
             // _geqButton
             // 
@@ -649,7 +655,7 @@
             this._flatDamageBox.Name = "_flatDamageBox";
             this._flatDamageBox.Size = new System.Drawing.Size(34, 20);
             this._flatDamageBox.TabIndex = 6;
-            this._flatDamageBox.Text = "0";
+            this._flatDamageBox.Click += new System.EventHandler(this._flatDamageBox_Click);
             // 
             // _variableShotsCheckbox
             // 
@@ -669,7 +675,7 @@
             this._atkShotsDBox.Name = "_atkShotsDBox";
             this._atkShotsDBox.Size = new System.Drawing.Size(35, 20);
             this._atkShotsDBox.TabIndex = 3;
-            this._atkShotsDBox.Text = "0";
+            this._atkShotsDBox.Click += new System.EventHandler(this._atkShotsDBox_Click);
             // 
             // _flatShotsBox
             // 
@@ -678,7 +684,7 @@
             this._flatShotsBox.Name = "_flatShotsBox";
             this._flatShotsBox.Size = new System.Drawing.Size(34, 20);
             this._flatShotsBox.TabIndex = 1;
-            this._flatShotsBox.Text = "0";
+            this._flatShotsBox.Click += new System.EventHandler(this._flatShotsBox_Click);
             // 
             // Ui
             // 
@@ -724,7 +730,7 @@
             this.Controls.Add(this._atkDiceDType);
             this.Controls.Add(this._atkDamageDiceAmount);
             this.Controls.Add(this._atkDamgeLabel);
-            this.Controls.Add(this.m_atkAPBox);
+            this.Controls.Add(this._atkAPBox);
             this.Controls.Add(this._atkStrBox);
             this.Controls.Add(this._atkAPLable);
             this.Controls.Add(this._atkStrLabel);
@@ -753,7 +759,7 @@
         private System.Windows.Forms.Label _atkStrLabel;
         private System.Windows.Forms.Label _atkAPLable;
         private System.Windows.Forms.MaskedTextBox _atkStrBox;
-        private System.Windows.Forms.MaskedTextBox m_atkAPBox;
+        private System.Windows.Forms.MaskedTextBox _atkAPBox;
         private System.Windows.Forms.Label _atkDamgeLabel;
         private System.Windows.Forms.MaskedTextBox _atkDamageDiceAmount;
         private System.Windows.Forms.MaskedTextBox _atkDiceDType;
