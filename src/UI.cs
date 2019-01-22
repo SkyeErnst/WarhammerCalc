@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using MathHammer.src.StatBlocks;
+using MathHammer.StatBlocks;
 
-namespace MathHammer.src
+namespace MathHammer
 {
-    public partial class UI : Form
+    public partial class Ui : Form
     {
-        /// <summary>
-        /// List of all the labels that we have added to the form.
-        /// </summary>
-        private List<Label> _labels;
 
-        public UI()
+        private List<RollLine> _linesAdded;
+        private List<Label> _woundLabels;
+
+        public Ui()
         {
             InitializeComponent();
             _noRerollRadio.Checked = true;
             _normalWoundingRadio.Checked = true;
+            _linesAdded = new List<RollLine>();
+            _woundLabels = new List<Label>();
         }
 
         /// <summary>
@@ -58,104 +59,62 @@ namespace MathHammer.src
         /// <param name="crt"></param>
         private void DisplayResults(Chart crt)
         {
-            if (null != _labels)
-            {
-                foreach (Label label in _labels)
-                {
-                    Controls.Remove((label));
-                }
 
-                _labels.Clear();
+            string wnd = "Wound: ";
+
+            if (_linesAdded.Count > 0)
+            {
+                foreach (RollLine line in _linesAdded)
+                {
+                    this.Controls.Remove(line);
+                }
+                _linesAdded.Clear();
             }
 
-            Color failColor = Color.Red;
-            Color successColor = Color.Green;
-            Color defaultColor = Color.Black;
-
-            _labels = new List<Label>();
+            if (_woundLabels.Count > 0)
+            {
+                foreach (Label lbl in _woundLabels)
+                {
+                    this.Controls.Remove(lbl);
+                }
+                _woundLabels.Clear();
+            }
 
             _totalHitsNum.Text = crt.FinalHitList.Count.ToString();
             _woundsTotalNum.Text = crt.SuccessfulWounds.Count.ToString();
             _failedSavesNum.Text = crt.FailedSaves.Count.ToString();
             _damageTotalNum.Text = Sum(crt.Damage).ToString();
 
-            if (crt.ShotsMissed.Count > 0)
-            {
-                CascadeValues(_missedShotsLabel.Location, crt.ShotsMissed, failColor);
-            }
+            Point currPoint;
+            int yOffset = 40;
 
-            if (crt.InitialShotsHit.Count > 0)
-            {
-               CascadeValues(_hitShotsLabel.Location, crt.InitialShotsHit, successColor);
-            }
-
-            if (crt.FailedWounds.Count > 0)
-            {
-                CascadeValues(_failedWoundsLabel.Location, crt.FailedWounds, failColor);
-            }
-
-            if (crt.SuccessfulWounds.Count > 0)
-            {
-                CascadeValues(_successfulWoundsLabel.Location, crt.SuccessfulWounds, successColor);
-            }
-
-            if (crt.FailedSaves.Count > 0)
-            {
-                CascadeValues(_saveAttemptsLabel.Location, crt.FailedSaves, failColor);
-            }
-
-            if (crt.SuccessfulSaves.Count > 0)
-            {
-                if (crt.FailedSaves.Count > 0)
-                {
-                    CascadeValues(_labels[_labels.Count - 1].Location, crt.SuccessfulSaves, successColor);
-                }
-                else
-                {
-                    CascadeValues(_saveAttemptsLabel.Location, crt.SuccessfulSaves, successColor);
-                }
-            }
-
-            if (crt.MissedRerolledHits.Count > 0)
-            {
-                CascadeValues(_rerollMissLabel.Location, crt.MissedRerolledHits, failColor);
-            }
-
-            if (crt.SuccessfulRerolledHits.Count > 0)
-            {
-                 CascadeValues(_rerollHitsLabel.Location, crt.SuccessfulRerolledHits, successColor);
-            }
-
-            if (crt.FinalHitList.Count > 0)
-            {
-                CascadeValues(_finalHitsLabel.Location, crt.FinalHitList, defaultColor);
-            }
-
-            CascadeValues(_damageResultsLabel.Location, crt.Damage, defaultColor);
-        }
-
-        private void CascadeValues(Point startPoint, List<int> values, Color clr)
-        {
-            int yOffset = 30;
-            Point currPoint = startPoint;
+            currPoint = _resultsLabel.Location;
             currPoint.Y += yOffset;
 
-            for (int i = 0; i < values.Count; i++)
+            for (int i = 0; i < crt.RollStats.Count; i++)
+            {
+                this.Controls.Add(crt.RollStats[i]);
+                _linesAdded.Add(crt.RollStats[i]);
+                crt.RollStats[i].Location = currPoint;
+                currPoint.Y += yOffset;
+            }
+
+            Point tmpPoint = _damageResultsLabel.Location;
+
+            for (int i = 0; i < crt.Damage.Count; i++)
             {
                 Label lbl = new Label();
-                lbl.Text = values[i].ToString();
-                lbl.ForeColor = clr;
-                _labels.Add((lbl));
+                _woundLabels.Add(lbl);
+
+                lbl.Width = 250;
+
+                lbl.Text = wnd + (i + 1) + " Damage: " + crt.Damage[i];
 
                 this.Controls.Add(lbl);
 
-                this.Refresh();
+                tmpPoint.Y += 30;
 
-                lbl.Location = currPoint;
-
-                this.Refresh();
-
-                currPoint.Y += yOffset;
+                lbl.Location = tmpPoint;
             }
         }
 
@@ -248,6 +207,11 @@ namespace MathHammer.src
         private void _keqButton_Click(object sender, EventArgs e)
         {
             FillEquivalentValues(EqSelection.Keq);
+        }
+
+        internal void RefreshForm()
+        {
+            this.Refresh();
         }
     }
 }

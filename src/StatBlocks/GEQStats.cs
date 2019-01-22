@@ -1,7 +1,4 @@
-﻿using System;
-using MathHammer.src.StatBlocks;
-
-namespace MathHammer.src
+﻿namespace MathHammer.StatBlocks
 {
     public struct GeqStats : IStats
     {

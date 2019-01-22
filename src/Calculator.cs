@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using MathHammer.src;
+using System.Drawing;
 
-namespace MathHammer.src
+namespace MathHammer
 {
     public class Calculator
     {
@@ -15,81 +15,85 @@ namespace MathHammer.src
 
         public Chart Roll(ref Chart chart)
         {
+            for (int i = 0; i < chart.Shots; i++)
+            {
+                if(true == RollHit(ref chart, i))
+                {
+                    if (true == RollWound(ref chart, i))
+                    {
+                        if (false == RollSave(ref chart, i))
+                        {
+                            RollDamage(ref chart, i);
+                        }
+                    }
+                } 
+            }
 
-            RollHit(ref chart);
-            RollWound(ref chart);
-            RollSave(ref chart);
-            RollDamage(ref chart);
-
-            chart.Damage.Sort();
-            chart.FailedSaves.Sort();
-            chart.SaveAttempts.Sort();
-            chart.InitialShotsHit.Sort();
-            chart.ShotsTaken.Sort();
-            chart.SuccessfulWounds.Sort();
-            chart.WoundAttempts.Sort();
-            chart.FailedWounds.Sort();
-            chart.SuccessfulSaves.Sort();
-            chart.ShotsMissed.Sort();
-            chart.RerolledHits.Sort();
-            chart.FinalHitList.Sort();
-            chart.MissedRerolledHits.Sort();
-            chart.SuccessfulRerolledHits.Sort();
+            if (chart.InitialShotsHit.Count > 0)
+            {
+                chart.FinalHitList.AddRange(chart.InitialShotsHit);
+            }
+            if (chart.RerolledHits.Count > 0)
+            {
+                chart.FinalHitList.AddRange(chart.RerolledHits);
+            }
 
             return chart;
         }
 
-        private void RollHit(ref Chart chart)
+        private bool RollHit(ref Chart chart, int i)
         {
-
-            for (int i = 0; i < chart.Shots; i++)
-            {
                 int currShot = 0;
+                chart.RollStats.Add(new RollLine());
 
                 chart.ShotsTaken.Add((currShot = _rand.Next(1, 7)));
+                chart.RollStats[i]._hitValue.Text = currShot.ToString();
 
                 if (currShot >= chart.WsBs)
                 {
                     chart.InitialShotsHit.Add((currShot));
+                    chart.RollStats[i]._hitValue.ForeColor = chart.SuccsessColor;
+                    chart.RollStats[i]._rerollValue.Text = chart.NAText;
+                    return true;
                 }
                 else
                 {
-                    if (chart.ShouldReroll == false)
+                    if (chart.DontReroll == true)
                     {
                         chart.ShotsMissed.Add(currShot);
+                        chart.RollStats[i]._hitValue.ForeColor = chart.FailColor;
+                        chart.RollStats[i]._rerollValue.Text = chart.NAText;
+                        return false;
                     }
                     if (chart.ShouldRerollOnes == true && currShot == 1)
                     {
-                        chart.RerolledHits.Add(currShot = _rand.Next(1, 7));
+                        chart.RerolledShots.Add(currShot = _rand.Next(1, 7));
                     }
                     else if (chart.ShouldRerollMisses == true)
                     {
-                        chart.RerolledHits.Add(currShot = _rand.Next(1, 7));
+                        chart.RerolledShots.Add(currShot = _rand.Next(1, 7));
                     }
 
                     if (currShot >= chart.WsBs)
                     {
-                        chart.SuccessfulRerolledHits.Add((currShot));
+                        chart.RerolledHits.Add((currShot));
+                        chart.RollStats[i]._hitValue.ForeColor = chart.SuccsessColor;
+                        return true;
                     }
                     else
                     {
-                        chart.MissedRerolledHits.Add((currShot));
+                        chart.RollStats[i]._hitValue.ForeColor = chart.FailColor;
+                        return false;
                     }
                 }
-            }
-
-            chart.FinalHitList.AddRange(chart.InitialShotsHit);
-            chart.FinalHitList.AddRange(chart.SuccessfulRerolledHits);
-
         }
 
-        private void RollWound(ref Chart chart)
+        private bool RollWound(ref Chart chart, int i)
         {
             int target = 0;
 
             // Set the target for the to wound roll.
-            if ((chart.Strength == (chart.Tough * 2)) || chart.Strength >= (chart.Tough * 2)
-            ) // strength equal to or double tough, 2+
+            if ((chart.Strength == (chart.Tough * 2)) || chart.Strength >= (chart.Tough * 2)) // strength equal to or double tough, 2+
             {
                 target = 2;
             }
@@ -112,23 +116,27 @@ namespace MathHammer.src
             }
 
             // Rolls for wounds
-            for (int i = 0; i < chart.InitialShotsHit.Count; i++)
-            {
-                int currWoundRoll = 0;
-                chart.WoundAttempts.Add(currWoundRoll = _rand.Next(1, 7));
+            int currWoundRoll = 0;
 
-                if (currWoundRoll >= target)
-                {
-                    chart.SuccessfulWounds.Add(currWoundRoll);
-                }
-                else
-                {
-                    chart.FailedWounds.Add(currWoundRoll);
-                }
+            currWoundRoll = _rand.Next(1, 7);
+
+            chart.RollStats[i]._woundValue.Text = currWoundRoll.ToString();
+
+
+            if (currWoundRoll >= target)
+            {
+                chart.SuccessfulWounds.Add(currWoundRoll);
+                chart.RollStats[i]._woundValue.ForeColor = chart.SuccsessColor;
+                return true;
+            }
+            else
+            {
+                chart.RollStats[i]._woundValue.ForeColor = chart.FailColor;
+                return false;
             }
         }
 
-        private void RollSave(ref Chart chart)
+        private bool RollSave(ref Chart chart, int i)
         {
             int saveToUse;
 
@@ -147,37 +155,34 @@ namespace MathHammer.src
             {
                 saveToUse = chart.Save + chart.Ap;
             }
+            int currSaveRoll = _rand.Next(1, 7);
 
-            for (int i = 0; i < chart.SuccessfulWounds.Count; i++)
+            chart.RollStats[i]._armorRoll.Text = currSaveRoll.ToString();
+
+            if (currSaveRoll < saveToUse)
             {
-                int currSaveRoll = _rand.Next(1, 7);
-
-                chart.SaveAttempts.Add(currSaveRoll);
-
-                if (currSaveRoll < saveToUse)
-                {
-                    chart.FailedSaves.Add(currSaveRoll);
-                }
-                else
-                {
-                    chart.SuccessfulSaves.Add(currSaveRoll);
-                }
+                chart.FailedSaves.Add(currSaveRoll);
+                chart.RollStats[i]._armorRoll.ForeColor = chart.FailColor;
+                return false;
+            }
+            else
+            {
+                chart.RollStats[i]._armorRoll.ForeColor = chart.SuccsessColor;
+                return true;
             }
         }
 
-        private void RollDamage(ref Chart chart)
+        private void RollDamage(ref Chart chart, int i)
         {
-            for (int i = 0; i < chart.FailedSaves.Count; i++)
+            int innerTotal = 0;
+            for (int j = 0; j < chart.DiceNum; j++)
             {
-                int innerTotal = 0;
-                for (int j = 0; j < chart.DiceNum; j++)
-                {
-                    int roll = _rand.Next(1, chart.DiceType + 1);
-                    innerTotal += roll;
-                }
-
-                chart.Damage.Add(innerTotal);
+                int roll = _rand.Next(1, chart.DiceType + 1);
+                innerTotal += roll;
             }
+
+            chart.Damage.Add(innerTotal);
+            chart.RollStats[i]._damageValue.Text = innerTotal.ToString();
         }
     }
 
@@ -186,17 +191,13 @@ namespace MathHammer.src
         internal List<int> ShotsTaken;
         internal List<int> InitialShotsHit;
         internal List<int> ShotsMissed;
-        internal List<int> WoundAttempts;
-        internal List<int> FailedWounds;
         internal List<int> SuccessfulWounds;
-        internal List<int> SaveAttempts;
         internal List<int> FailedSaves;
-        internal List<int> SuccessfulSaves;
         internal List<int> Damage;
-        internal List<int> RerolledHits;
+        internal List<int> RerolledShots;
         internal List<int> FinalHitList;
-        internal List<int> MissedRerolledHits;
-        internal List<int> SuccessfulRerolledHits;
+        internal List<int> RerolledHits;
+        internal List<RollLine> RollStats;
 
         internal readonly int WsBs;
         internal readonly int Shots;
@@ -208,12 +209,18 @@ namespace MathHammer.src
         internal readonly int Save;
         internal readonly int InvulSave;
 
-        internal readonly bool ShouldReroll;
+        internal readonly Color SuccsessColor;
+        internal readonly Color FailColor;
+        internal readonly Color DefaultColor;
+
+        internal readonly bool DontReroll;
         internal readonly bool ShouldRerollOnes;
         internal readonly bool ShouldRerollMisses;
         internal readonly bool ShouldRerollWounds;
 
-        public Chart(int score,
+        internal readonly string NAText;
+
+        public Chart(int stats,
             int shots,
             int strength,
             int ap,
@@ -227,7 +234,7 @@ namespace MathHammer.src
             bool rMisses,
             bool rWounds)
         {
-            WsBs = score;
+            WsBs = stats;
             Shots = shots;
             Strength = strength;
             Ap = ap;
@@ -237,7 +244,13 @@ namespace MathHammer.src
             Save = save;
             InvulSave = invulSave;
 
-            ShouldReroll = rNone;
+            SuccsessColor = Color.DarkGreen;
+            FailColor = Color.DarkRed;
+            DefaultColor = Color.Black;
+
+            NAText = "N/A";
+
+            DontReroll = rNone;
             ShouldRerollOnes = rOnes;
             ShouldRerollMisses = rMisses;
             ShouldRerollWounds = rWounds;
@@ -245,17 +258,13 @@ namespace MathHammer.src
             ShotsMissed = new List<int>();
             InitialShotsHit = new List<int>();
             ShotsTaken = new List<int>();
-            FailedWounds = new List<int>();
             SuccessfulWounds = new List<int>();
-            WoundAttempts = new List<int>();
             FailedSaves = new List<int>();
-            SuccessfulSaves = new List<int>();
-            SaveAttempts = new List<int>();
             Damage = new List<int>();
-            RerolledHits = new List<int>();
+            RerolledShots = new List<int>();
             FinalHitList = new List<int>();
-            MissedRerolledHits = new List<int>();
-            SuccessfulRerolledHits = new List<int>();
+            RerolledHits = new List<int>();
+            RollStats = new List<RollLine>();
         }
     }
 }
