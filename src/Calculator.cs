@@ -12,6 +12,8 @@ namespace MathHammer
 
         private bool _calcTesla = false;
         private bool _calcMortalWound = false;
+        private bool _apOverride = false;
+        private bool _damageOverride = false;
         private int _teslaShots = 0;
         private int _mortalWoundCount = 0;
 
@@ -31,7 +33,7 @@ namespace MathHammer
 
             // Sets up number of times to run loop depending on if the number of shots is variable or 
             // an explicit number.
-            if (false == chart.VariableShots)
+            if (false == chart.HasVariableShots)
             {
                 itter = chart.FlatShots;
             }
@@ -45,8 +47,6 @@ namespace MathHammer
 
             // As long as each previous hit / wound, etc is successful, continue rolling.
             // Otherwise, go to next roll line.
-            // Else clauses are there to simply fill in the text properties that would normally
-            // be the default zero
             for (int i = 0; i < itter; i++)
             {
                 if (true == RollHit(ref chart, i))
@@ -254,6 +254,15 @@ namespace MathHammer
                 _mortalWoundCount++;
                 _calcMortalWound = true;
             }
+            if (true == chart.ResolveWithModifiedAp && currWoundRoll >= chart.ModifiedApWoundRollMinimum)
+            {
+                _apOverride = true;
+            }
+
+            if (true == chart.ResolveWithModifiedDamage && currWoundRoll >= chart.ModifiedDamageWoundRolllMinimum)
+            {
+                _damageOverride = true;
+            }
 
             return true;
         }
@@ -275,7 +284,15 @@ namespace MathHammer
             }
             else
             {
-                saveToUse = chart.Save + chart.Ap;
+                if (true == _apOverride)
+                {
+                    _apOverride = false;
+                    saveToUse = chart.Save + chart.ModifiedApValue;
+                }
+                else
+                {
+                    saveToUse = chart.Save + chart.Ap;
+                }
             }
             int currSaveRoll = _rand.Next(1, 7);
 
@@ -298,13 +315,18 @@ namespace MathHammer
         {
             int innerTotal = 0;
 
-            if (true == chart.VariableDamage)
+            if (true == chart.HasVariableDamage)
             {
                 for (int j = 0; j < chart.DamageDiceNum; j++)
                 {
                     int roll = _rand.Next(1, chart.DamageDiceType + 1);
                     innerTotal += roll;
                 }
+            }
+            else if (true == _damageOverride)
+            {
+                _damageOverride = false;
+                innerTotal = chart.ModifiedDamageValue;
             }
             else
             {
@@ -375,6 +397,10 @@ namespace MathHammer
         internal readonly int WoundXValue;
         internal readonly int WoundMortalXValue;
         internal readonly int MortalWoundDamageValue;
+        internal readonly int ModifiedApWoundRollMinimum;
+        internal readonly int ModifiedApValue;
+        internal readonly int ModifiedDamageWoundRolllMinimum;
+        internal readonly int ModifiedDamageValue;
 
         internal readonly Color SuccsessColor;
         internal readonly Color FailColor;
@@ -390,8 +416,11 @@ namespace MathHammer
         internal readonly bool ShoundWoundOnX;
         internal readonly bool ShouldMortalWoundOnX;
         internal readonly bool IsTeslaWeapon;
-        internal readonly bool VariableShots;
-        internal readonly bool VariableDamage;
+        internal readonly bool HasVariableShots;
+        internal readonly bool HasVariableDamage;
+        internal readonly bool ResolveWithModifiedAp;
+        internal readonly bool ResolveWithModifiedDamage;
+        internal readonly bool ResolveNormally;
 
         internal readonly string NaText;
         internal readonly string TeslaText;
@@ -413,6 +442,10 @@ namespace MathHammer
             int flatDamge,
             int woundXValue, 
             int woundMortalXValue,
+            int modifiedApWoundRollMinimum, 
+            int modifiedApValue, 
+            int modifiedDamageWoundRolllMinimum, 
+            int modifiedDamageValue,
             bool rerollNone,
             bool rerollOnes,
             bool rerollMisses,
@@ -422,8 +455,12 @@ namespace MathHammer
             bool shoundWoundOnX, 
             bool shouldMortalWoundOnX, 
             bool isTeslaWeapon, 
-            bool variableShots, 
-            bool variableDamage)
+            bool hasVariableShots, 
+            bool hasVariableDamage,
+            bool resolveNormally,
+            bool resolveWithModifiedAp, 
+            bool resolveWithModifiedDamage
+            )
         {
             WsBs = stats;
             FlatShots = flatShots;
@@ -461,8 +498,15 @@ namespace MathHammer
             ShoundWoundOnX = shoundWoundOnX;
             ShouldMortalWoundOnX = shouldMortalWoundOnX;
             IsTeslaWeapon = isTeslaWeapon;
-            VariableShots = variableShots;
-            VariableDamage = variableDamage;
+            HasVariableShots = hasVariableShots;
+            HasVariableDamage = hasVariableDamage;
+            ResolveWithModifiedAp = resolveWithModifiedAp;
+            ResolveWithModifiedDamage = resolveWithModifiedDamage;
+            ResolveNormally = resolveNormally;
+            ModifiedApWoundRollMinimum = modifiedApWoundRollMinimum;
+            ModifiedApValue = modifiedApValue;
+            ModifiedDamageWoundRolllMinimum = modifiedDamageWoundRolllMinimum;
+            ModifiedDamageValue = modifiedDamageValue;
 
 
             ShotsMissed = new List<int>();
