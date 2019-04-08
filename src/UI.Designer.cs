@@ -66,6 +66,7 @@
             this._woundMortalOnXRadio = new System.Windows.Forms.RadioButton();
             this._woundingUseStandardRadio = new System.Windows.Forms.RadioButton();
             this._damagePanel = new System.Windows.Forms.Panel();
+            this._xResolveNormallyRadio = new System.Windows.Forms.RadioButton();
             this._xResolveDamageDamageValue = new System.Windows.Forms.MaskedTextBox();
             this._xResolveDamageHitValue = new System.Windows.Forms.MaskedTextBox();
             this._xResolveApApValue = new System.Windows.Forms.MaskedTextBox();
@@ -97,7 +98,12 @@
             this.tEQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vEQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kEQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._xResolveNormallyRadio = new System.Windows.Forms.RadioButton();
+            this.loadRosterFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadAttackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadDefenderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadBothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._yourArmyCombo = new System.Windows.Forms.ComboBox();
+            this._opposingArmyCombo = new System.Windows.Forms.ComboBox();
             this._modifersPanel.SuspendLayout();
             this.woundPanel.SuspendLayout();
             this._damagePanel.SuspendLayout();
@@ -237,7 +243,7 @@
             // _totalHitsLabel
             // 
             this._totalHitsLabel.AutoSize = true;
-            this._totalHitsLabel.Location = new System.Drawing.Point(679, 213);
+            this._totalHitsLabel.Location = new System.Drawing.Point(736, 246);
             this._totalHitsLabel.Name = "_totalHitsLabel";
             this._totalHitsLabel.Size = new System.Drawing.Size(52, 13);
             this._totalHitsLabel.TabIndex = 18;
@@ -246,7 +252,7 @@
             // _totalHitsNum
             // 
             this._totalHitsNum.AutoSize = true;
-            this._totalHitsNum.Location = new System.Drawing.Point(679, 235);
+            this._totalHitsNum.Location = new System.Drawing.Point(736, 268);
             this._totalHitsNum.Name = "_totalHitsNum";
             this._totalHitsNum.Size = new System.Drawing.Size(13, 13);
             this._totalHitsNum.TabIndex = 19;
@@ -255,7 +261,7 @@
             // _woundTotalLabel
             // 
             this._woundTotalLabel.AutoSize = true;
-            this._woundTotalLabel.Location = new System.Drawing.Point(737, 213);
+            this._woundTotalLabel.Location = new System.Drawing.Point(794, 246);
             this._woundTotalLabel.Name = "_woundTotalLabel";
             this._woundTotalLabel.Size = new System.Drawing.Size(74, 13);
             this._woundTotalLabel.TabIndex = 20;
@@ -264,7 +270,7 @@
             // _woundsTotalNum
             // 
             this._woundsTotalNum.AutoSize = true;
-            this._woundsTotalNum.Location = new System.Drawing.Point(737, 235);
+            this._woundsTotalNum.Location = new System.Drawing.Point(794, 268);
             this._woundsTotalNum.Name = "_woundsTotalNum";
             this._woundsTotalNum.Size = new System.Drawing.Size(13, 13);
             this._woundsTotalNum.TabIndex = 21;
@@ -273,7 +279,7 @@
             // _damageResultsLabel
             // 
             this._damageResultsLabel.AutoSize = true;
-            this._damageResultsLabel.Location = new System.Drawing.Point(918, 213);
+            this._damageResultsLabel.Location = new System.Drawing.Point(975, 246);
             this._damageResultsLabel.Name = "_damageResultsLabel";
             this._damageResultsLabel.Size = new System.Drawing.Size(138, 13);
             this._damageResultsLabel.TabIndex = 22;
@@ -282,7 +288,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(1119, 213);
+            this.label7.Location = new System.Drawing.Point(1176, 246);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(68, 13);
             this.label7.TabIndex = 23;
@@ -291,7 +297,7 @@
             // _damageTotalNum
             // 
             this._damageTotalNum.AutoSize = true;
-            this._damageTotalNum.Location = new System.Drawing.Point(1119, 235);
+            this._damageTotalNum.Location = new System.Drawing.Point(1176, 268);
             this._damageTotalNum.Name = "_damageTotalNum";
             this._damageTotalNum.Size = new System.Drawing.Size(13, 13);
             this._damageTotalNum.TabIndex = 24;
@@ -336,7 +342,7 @@
             // _totalFailedSavesLabel
             // 
             this._totalFailedSavesLabel.AutoSize = true;
-            this._totalFailedSavesLabel.Location = new System.Drawing.Point(817, 213);
+            this._totalFailedSavesLabel.Location = new System.Drawing.Point(874, 246);
             this._totalFailedSavesLabel.Name = "_totalFailedSavesLabel";
             this._totalFailedSavesLabel.Size = new System.Drawing.Size(95, 13);
             this._totalFailedSavesLabel.TabIndex = 30;
@@ -345,7 +351,7 @@
             // _failedSavesNum
             // 
             this._failedSavesNum.AutoSize = true;
-            this._failedSavesNum.Location = new System.Drawing.Point(817, 235);
+            this._failedSavesNum.Location = new System.Drawing.Point(874, 268);
             this._failedSavesNum.Name = "_failedSavesNum";
             this._failedSavesNum.Size = new System.Drawing.Size(13, 13);
             this._failedSavesNum.TabIndex = 31;
@@ -474,6 +480,17 @@
             this._damagePanel.Name = "_damagePanel";
             this._damagePanel.Size = new System.Drawing.Size(274, 77);
             this._damagePanel.TabIndex = 53;
+            // 
+            // _xResolveNormallyRadio
+            // 
+            this._xResolveNormallyRadio.AutoSize = true;
+            this._xResolveNormallyRadio.Location = new System.Drawing.Point(4, 6);
+            this._xResolveNormallyRadio.Name = "_xResolveNormallyRadio";
+            this._xResolveNormallyRadio.Size = new System.Drawing.Size(107, 17);
+            this._xResolveNormallyRadio.TabIndex = 59;
+            this._xResolveNormallyRadio.TabStop = true;
+            this._xResolveNormallyRadio.Text = "Resolve Normally";
+            this._xResolveNormallyRadio.UseVisualStyleBackColor = true;
             // 
             // _xResolveDamageDamageValue
             // 
@@ -717,6 +734,7 @@
             // _menuStrip
             // 
             this._menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadRosterFilesToolStripMenuItem,
             this.fillsToolStripMenuItem});
             this._menuStrip.Location = new System.Drawing.Point(0, 0);
             this._menuStrip.Name = "_menuStrip";
@@ -771,16 +789,52 @@
             this.kEQToolStripMenuItem.Text = "KEQ";
             this.kEQToolStripMenuItem.Click += new System.EventHandler(this.kEQToolStripMenuItem_Click);
             // 
-            // _xResolveNormallyRadio
+            // loadRosterFilesToolStripMenuItem
             // 
-            this._xResolveNormallyRadio.AutoSize = true;
-            this._xResolveNormallyRadio.Location = new System.Drawing.Point(4, 6);
-            this._xResolveNormallyRadio.Name = "_xResolveNormallyRadio";
-            this._xResolveNormallyRadio.Size = new System.Drawing.Size(107, 17);
-            this._xResolveNormallyRadio.TabIndex = 59;
-            this._xResolveNormallyRadio.TabStop = true;
-            this._xResolveNormallyRadio.Text = "Resolve Normally";
-            this._xResolveNormallyRadio.UseVisualStyleBackColor = true;
+            this.loadRosterFilesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadAttackerToolStripMenuItem,
+            this.loadDefenderToolStripMenuItem,
+            this.loadBothToolStripMenuItem});
+            this.loadRosterFilesToolStripMenuItem.Name = "loadRosterFilesToolStripMenuItem";
+            this.loadRosterFilesToolStripMenuItem.Size = new System.Drawing.Size(107, 20);
+            this.loadRosterFilesToolStripMenuItem.Text = "Load Roster Files";
+            // 
+            // loadAttackerToolStripMenuItem
+            // 
+            this.loadAttackerToolStripMenuItem.Name = "loadAttackerToolStripMenuItem";
+            this.loadAttackerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadAttackerToolStripMenuItem.Text = "Load Attacker";
+            this.loadAttackerToolStripMenuItem.Click += new System.EventHandler(this.loadAttackerToolStripMenuItem_Click);
+            // 
+            // loadDefenderToolStripMenuItem
+            // 
+            this.loadDefenderToolStripMenuItem.Name = "loadDefenderToolStripMenuItem";
+            this.loadDefenderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadDefenderToolStripMenuItem.Text = "Load Defender";
+            // 
+            // loadBothToolStripMenuItem
+            // 
+            this.loadBothToolStripMenuItem.Name = "loadBothToolStripMenuItem";
+            this.loadBothToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadBothToolStripMenuItem.Text = "Load Both";
+            // 
+            // _yourArmyCombo
+            // 
+            this._yourArmyCombo.FormattingEnabled = true;
+            this._yourArmyCombo.Location = new System.Drawing.Point(486, 205);
+            this._yourArmyCombo.Name = "_yourArmyCombo";
+            this._yourArmyCombo.Size = new System.Drawing.Size(152, 21);
+            this._yourArmyCombo.TabIndex = 53;
+            this._yourArmyCombo.Text = "Your Army";
+            // 
+            // _opposingArmyCombo
+            // 
+            this._opposingArmyCombo.FormattingEnabled = true;
+            this._opposingArmyCombo.Location = new System.Drawing.Point(650, 205);
+            this._opposingArmyCombo.Name = "_opposingArmyCombo";
+            this._opposingArmyCombo.Size = new System.Drawing.Size(152, 21);
+            this._opposingArmyCombo.TabIndex = 54;
+            this._opposingArmyCombo.Text = "Opposing Army";
             // 
             // Ui
             // 
@@ -788,6 +842,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this._opposingArmyCombo);
+            this.Controls.Add(this._yourArmyCombo);
             this.Controls.Add(this._flatShotsBox);
             this.Controls.Add(this._atkShotsDBox);
             this.Controls.Add(this._variableShotsCheckbox);
@@ -920,6 +976,12 @@
         private System.Windows.Forms.MaskedTextBox _xResolveDamageDamageValue;
         private System.Windows.Forms.MaskedTextBox _xResolveDamageHitValue;
         private System.Windows.Forms.RadioButton _xResolveNormallyRadio;
+        private System.Windows.Forms.ToolStripMenuItem loadRosterFilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadAttackerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadDefenderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadBothToolStripMenuItem;
+        private System.Windows.Forms.ComboBox _yourArmyCombo;
+        private System.Windows.Forms.ComboBox _opposingArmyCombo;
     }
 }
 

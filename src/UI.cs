@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using MathHammer.src;
 using MathHammer.StatBlocks;
 
 namespace MathHammer
@@ -422,6 +423,11 @@ namespace MathHammer
         {
             _xResolveDamageHitValue.Visible = _xResolveDamageRadio.Checked;
             _xResolveDamageDamageValue.Visible = _xResolveDamageRadio.Checked;
+        }
+
+        private void loadAttackerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            XmlHandler.OpenDocumentPrompt();
         }
     }
 }
