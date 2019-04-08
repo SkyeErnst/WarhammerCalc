@@ -16,19 +16,6 @@ namespace MathHammer
         public Ui()
         {
             InitializeComponent();
-            _noRerollRadio.Checked = true;
-            _dontRerollWounds.Checked = true;
-            _woundingUseStandardRadio.Checked = true;
-
-            _woundOnXBox.Hide();
-            _woundMortalOnXBox.Hide();
-
-            _flatShotsBox.Show();
-            _atkVariableShotsNumberBox.Hide();
-            _atkShotsDBox.Hide();
-            _atkDiceDType.Hide();
-            _atkDamageDiceAmount.Hide();
-            _flatDamageBox.Show();
 
             _linesAdded = new List<RollLine>();
             _woundLabels = new List<Label>();
@@ -70,6 +57,17 @@ namespace MathHammer
             {
                 _atkDiceDType.Text = "0";
             }
+            if ("" == _xResolveApWoundValue.Text || "" == _xResolveApApValue.Text)
+            {
+                _xResolveApWoundValue.Text = "0";
+                _xResolveApApValue.Text = "0";
+            }
+
+            if ("" == _xResolveDamageHitValue.Text || "" == _xResolveDamageDamageValue.Text)
+            {
+                _xResolveDamageHitValue.Text = "0";
+                _xResolveDamageDamageValue.Text = "0";
+            }
 
             try
             {
@@ -89,8 +87,13 @@ namespace MathHammer
                 Int32.Parse(_flatDamageBox.Text),
                 Int32.Parse(_woundOnXBox.Text),
                 Int32.Parse(_woundMortalOnXBox.Text),
+                Int32.Parse(_xResolveApWoundValue.Text),
+                Int32.Parse(_xResolveApApValue.Text),
+                Int32.Parse(_xResolveDamageHitValue.Text),
+                Int32.Parse(_xResolveDamageDamageValue.Text),
 
-                _noRerollRadio.Checked,
+
+                _noRerollHitRadio.Checked,
                 _rerollOnesRadio.Checked,
                 _rerollMissesRadio.Checked,
                 _rerollFailedWoundsRadio.Checked,
@@ -100,7 +103,10 @@ namespace MathHammer
                 _woundMortalOnXRadio.Checked,
                 _teslaCheckbox.Checked,
                 _variableShotsCheckbox.Checked,
-                _varableDamageCheckbox.Checked
+                _varableDamageCheckbox.Checked,
+                _xResolveNormallyRadio.Checked,
+                _xResolveApRadio.Checked,
+                _xResolveDamageRadio.Checked
                 );
 
                 MainProgram.Calc.Roll(ref chart);
@@ -311,7 +317,6 @@ namespace MathHammer
 
                 _flatShotsBox.Show();
             }
-
         }
 
         private void VariableDamageCheckedChanged(object sender, EventArgs e)
@@ -332,12 +337,27 @@ namespace MathHammer
 
         private void Ui_Load(object sender, EventArgs e)
         {
-            _geqButton.TabStop = false;
-            _meqButton.TabStop = false;
-            _teqButton.TabStop = false;
-            _veqButton.TabStop = false;
-            _keqButton.TabStop = false;
-            _noRerollRadio.TabStop = false;
+            _noRerollHitRadio.Checked = true;
+            _dontRerollWounds.Checked = true;
+            _woundingUseStandardRadio.Checked = true;
+
+            _woundOnXBox.Hide();
+            _woundMortalOnXBox.Hide();
+
+            _xResolveNormallyRadio.Checked = true;
+            _xResolveApWoundValue.Hide();
+            _xResolveApApValue.Hide();
+            _xResolveDamageHitValue.Hide();
+            _xResolveDamageDamageValue.Hide();
+
+            _flatShotsBox.Show();
+            _atkVariableShotsNumberBox.Hide();
+            _atkShotsDBox.Hide();
+            _atkDiceDType.Hide();
+            _atkDamageDiceAmount.Hide();
+            _flatDamageBox.Show();
+
+            _noRerollHitRadio.TabStop = false;
             _rerollOnesRadio.TabStop = false;
             _rerollMissesRadio.TabStop = false;
             _autoHitCheckbox.TabStop = false;
@@ -353,64 +373,55 @@ namespace MathHammer
             _teslaCheckbox.TabStop = false;
         }
 
-        private void _atkWsBsBox_Click(object sender, EventArgs e)
+        private void LeftAdjustCursor(object sender, EventArgs e)
         {
-            _atkWsBsBox.Select(0,0);
+            if (sender.GetType() == typeof(MaskedTextBox))
+            {
+                MaskedTextBox snd = (MaskedTextBox)sender;
+
+                snd.Text = "";
+                snd.Select(0,0);
+            }
         }
 
-        private void _flatShotsBox_Click(object sender, EventArgs e)
+        private void gEQToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _flatShotsBox.Select(0,0);
+            _geqButton_Click(sender, e);
         }
 
-        private void _atkVariableShotsNumberBox_Click(object sender, EventArgs e)
+        private void mEQToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _atkVariableShotsNumberBox.Select(0,0);
+            _meqButton_Click(sender, e);
         }
 
-        private void _atkShotsDBox_Click(object sender, EventArgs e)
+        private void tEQToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _atkShotsDBox.Select(0,0);
+            _teqButton_Click(sender, e);
         }
 
-        private void _atkStrBox_Click(object sender, EventArgs e)
+        private void vEQToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _atkStrBox.Select(0,0);
+            _veqButton_Click(sender, e);
         }
 
-        private void _atkAPBox_Click(object sender, EventArgs e)
+        private void kEQToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _atkAPBox.Select(0,0);
+            _keqButton_Click(sender, e);
         }
 
-        private void _flatDamageBox_Click(object sender, EventArgs e)
+        private void _xResolveApRadio_CheckedChanged(object sender, EventArgs e)
         {
-            _flatDamageBox.Select(0,0);
+            // Checked will equal true when that radio is selected, so we can set
+            // the visibility directly without the need of if statements.
+
+            _xResolveApWoundValue.Visible = _xResolveApRadio.Checked;
+            _xResolveApApValue.Visible = _xResolveApRadio.Checked;
         }
 
-        private void _atkDamageDiceAmount_Click(object sender, EventArgs e)
+        private void _xResolveDamageRadio_CheckedChanged(object sender, EventArgs e)
         {
-            _atkDamageDiceAmount.Select(0,0);
-        }
-
-        private void _atkDiceDType_Click(object sender, EventArgs e)
-        {
-            _atkDiceDType.Select(0,0);
-        }
-
-        private void _defToughness_Click(object sender, EventArgs e)
-        {
-            _defToughness.Select(0,0);
-        }
-
-        private void _defSave_Click(object sender, EventArgs e)
-        {
-            _defSave.Select(0,0);
-        }
-
-        private void _invulSaveBox_Click(object sender, EventArgs e)
-        {
-            _invulSaveBox.Select(0,0);
+            _xResolveDamageHitValue.Visible = _xResolveDamageRadio.Checked;
+            _xResolveDamageDamageValue.Visible = _xResolveDamageRadio.Checked;
         }
     }
 }
