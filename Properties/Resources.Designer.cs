@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MathHammer.Properties
+namespace WarhammerCalcUI.Properties
 {
 
 

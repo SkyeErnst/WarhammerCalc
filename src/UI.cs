@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
-using MathHammer.StatBlocks;
+using WarhammerCalcData;
+using WarhammerCalcData.UnitEquivalencyStats;
 
-namespace MathHammer
+namespace WarhammerCalcUI
 {
     public partial class Ui : Form
     {
@@ -71,7 +71,7 @@ namespace MathHammer
 
             try
             {
-                Chart chart = new Chart
+                ShotChart chart = new ShotChart
                 (
                 Int32.Parse(_atkWsBsBox.Text),
                 Int32.Parse(_flatShotsBox.Text),
@@ -109,7 +109,7 @@ namespace MathHammer
                 _xResolveDamageRadio.Checked
                 );
 
-                MainProgram.Calc.Roll(ref chart);
+                MainProgram.diceRoller.Roll(ref chart);
 
                 DisplayResults(chart);
             }
@@ -128,7 +128,7 @@ namespace MathHammer
         /// Given a Chart object, 
         /// </summary>
         /// <param name="crt"></param>
-        private void DisplayResults(Chart crt)
+        private void DisplayResults(ShotChart crt)
         {
 
             if (_linesAdded.Count > 0)
@@ -252,31 +252,6 @@ namespace MathHammer
             Keq = 4
         }
 
-        private void _geqButton_Click(object sender, EventArgs e)
-        {
-            FillEquivalentValues(EqSelection.Geq);
-        }
-
-        private void _meqButton_Click(object sender, EventArgs e)
-        {
-            FillEquivalentValues(EqSelection.Meq);
-        }
-
-        private void _teqButton_Click(object sender, EventArgs e)
-        {
-            FillEquivalentValues(EqSelection.Teq);
-        }
-
-        private void _veqButton_Click(object sender, EventArgs e)
-        {
-            FillEquivalentValues(EqSelection.Veq);
-        }
-
-        private void _keqButton_Click(object sender, EventArgs e)
-        {
-            FillEquivalentValues(EqSelection.Keq);
-        }
-
         private void WoundRollXRadioChanged(object sender, EventArgs e)
         {
             if (true == _woundOnXRadio.Checked)
@@ -386,27 +361,27 @@ namespace MathHammer
 
         private void gEQToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _geqButton_Click(sender, e);
+            FillEquivalentValues(EqSelection.Geq);
         }
 
         private void mEQToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _meqButton_Click(sender, e);
+            FillEquivalentValues(EqSelection.Meq);
         }
 
         private void tEQToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _teqButton_Click(sender, e);
+            FillEquivalentValues(EqSelection.Teq);
         }
 
         private void vEQToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _veqButton_Click(sender, e);
+            FillEquivalentValues(EqSelection.Veq);
         }
 
         private void kEQToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _keqButton_Click(sender, e);
+            FillEquivalentValues(EqSelection.Keq);
         }
 
         private void _xResolveApRadio_CheckedChanged(object sender, EventArgs e)

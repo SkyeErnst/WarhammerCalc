@@ -23,6 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>default</LangVersion>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -47,19 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Calculator.cs" />
-    <Compile Include="src\RollLine.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="src\RollLine.Designer.cs">
-      <DependentUpon>RollLine.cs</DependentUpon>
-    </Compile>
-    <Compile Include="src\StatBlocks\GeqStats.cs" />
-    <Compile Include="src\StatBlocks\IStats.cs" />
-    <Compile Include="src\StatBlocks\KeqStats.cs" />
-    <Compile Include="src\StatBlocks\MeqStats.cs" />
-    <Compile Include="src\StatBlocks\TeqStats.cs" />
-    <Compile Include="src\StatBlocks\VeqStats.cs" />
     <Compile Include="src\UI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,9 +56,6 @@
     </Compile>
     <Compile Include="src\MainProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="src\RollLine.resx">
-      <DependentUpon>RollLine.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="src\UI.resx">
       <DependentUpon>UI.cs</DependentUpon>
     </EmbeddedResource>
@@ -95,6 +80,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="WarhammerCalcData\WarhammerCalcData.csproj">
+      <Project>{689bd64c-fbdb-42f0-94e3-5885ab5f82cb}</Project>
+      <Name>WarhammerCalcData</Name>
+    </ProjectReference>
+    <ProjectReference Include="WarhammerCalcDice\WarhammerCalcDice.csproj">
+      <Project>{f695ba62-db11-449e-945c-a1a2b4c6acd2}</Project>
+      <Name>WarhammerCalcDice</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\UnitEquivalencyStats\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

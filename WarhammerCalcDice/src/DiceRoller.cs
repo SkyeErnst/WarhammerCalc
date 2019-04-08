@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.WindowsRuntime;
+using WarhammerCalcData;
 
-namespace MathHammer
+
+namespace WarhammerCalcDice
 {
-    public class Calculator
+    public class DiceRoller
     {
         private readonly Random _rand;
 
@@ -17,12 +17,12 @@ namespace MathHammer
         private int _teslaShots = 0;
         private int _mortalWoundCount = 0;
 
-        public Calculator()
+        public DiceRoller()
         {
             _rand = new Random();
         }
 
-        public Chart Roll(ref Chart chart)
+        public ShotChart Roll(ref ShotChart chart)
         {
             _calcTesla = false;
             _calcMortalWound = false;
@@ -95,7 +95,7 @@ namespace MathHammer
             return chart;
         }
 
-        private bool RollHit(ref Chart chart, int i)
+        private bool RollHit(ref ShotChart chart, int i)
         {
             // Variable for holding the current randomly generated dice roll
             int currShot = 0;
@@ -119,7 +119,7 @@ namespace MathHammer
                 if (currShot >= chart.WsBs)
                 {
                     chart.InitialShotsHit.Add((currShot));
-                    chart.RollStats[i]._hitValue.ForeColor = chart.SuccsessColor;
+                    chart.RollStats[i]._hitValue.ForeColor = chart.SuccessColor;
                     chart.RollStats[i]._hitRerollValue.Text = chart.NaText;
                 }
                 // if initial shot is a miss.
@@ -149,7 +149,7 @@ namespace MathHammer
                         if (currShot >= chart.WsBs)
                         {
                             chart.RerolledHits.Add((currShot));
-                            chart.RollStats[i]._hitRerollValue.ForeColor = chart.SuccsessColor;
+                            chart.RollStats[i]._hitRerollValue.ForeColor = chart.SuccessColor;
                         }
                         // If the newly generated roll is not a hit
                         else
@@ -178,11 +178,11 @@ namespace MathHammer
             return true;
         }
 
-        private bool RollWound(ref Chart chart, int i)
+        private bool RollWound(ref ShotChart chart, int i)
         {
             int woundTarget = 0;
 
-            if (true == chart.ShoundWoundOnX)
+            if (true == chart.ShouldWoundOnX)
             {
                 woundTarget = chart.WoundXValue;
             }
@@ -222,7 +222,7 @@ namespace MathHammer
             if (currWoundRoll >= woundTarget)
             {
                 chart.SuccessfulWounds.Add(currWoundRoll);
-                chart.RollStats[i]._woundValue.ForeColor = chart.SuccsessColor;
+                chart.RollStats[i]._woundValue.ForeColor = chart.SuccessColor;
 
             }
             else if ((true == chart.ShouldRerollWoundsOfOne && 1 == currWoundRoll) || true == chart.ShouldRerollFailedWounds)
@@ -235,7 +235,7 @@ namespace MathHammer
                 if (currWoundRoll >= woundTarget)
                 {
                     chart.SuccessfulWounds.Add(currWoundRoll);
-                    chart.RollStats[i]._woundRerollValue.ForeColor = chart.SuccsessColor;
+                    chart.RollStats[i]._woundRerollValue.ForeColor = chart.SuccessColor;
                 }
                 else
                 {
@@ -259,7 +259,7 @@ namespace MathHammer
                 _apOverride = true;
             }
 
-            if (true == chart.ResolveWithModifiedDamage && currWoundRoll >= chart.ModifiedDamageWoundRolllMinimum)
+            if (true == chart.ResolveWithModifiedDamage && currWoundRoll >= chart.ModifiedDamageWoundRollMinimum)
             {
                 _damageOverride = true;
             }
@@ -267,7 +267,7 @@ namespace MathHammer
             return true;
         }
 
-        private bool RollSave(ref Chart chart, int i)
+        private bool RollSave(ref ShotChart chart, int i)
         {
             int saveToUse;
 
@@ -306,12 +306,12 @@ namespace MathHammer
             }
             else
             {
-                chart.RollStats[i]._armorRoll.ForeColor = chart.SuccsessColor;
+                chart.RollStats[i]._armorRoll.ForeColor = chart.SuccessColor;
                 return true;
             }
         }
 
-        private void RollDamage(ref Chart chart, int i)
+        private void RollDamage(ref ShotChart chart, int i)
         {
             int innerTotal = 0;
 
@@ -330,29 +330,29 @@ namespace MathHammer
             }
             else
             {
-                innerTotal = chart.FlatDamge;
+                innerTotal = chart.FlatDamage;
             }
 
             chart.Damage.Add(innerTotal);
             chart.RollStats[i]._damageValue.Text = innerTotal.ToString();
         }
 
-        private void HandleTesla(ref Chart chart)
+        private void HandleTesla(ref ShotChart chart)
         {
             chart.RollStats.Add(new RollLine());
             chart.RollStats[chart.RollStats.Count - 1]._hitValue.Text = chart.TeslaText;
             chart.RollStats[chart.RollStats.Count - 1]._hitValue.ForeColor = chart.SpecialEventColor;
 
-            if(true == RollWound(ref chart, chart.RollStats.Count - 1))
+            if (true == RollWound(ref chart, chart.RollStats.Count - 1))
             {
                 if (false == RollSave(ref chart, chart.RollStats.Count - 1))
                 {
                     RollDamage(ref chart, chart.RollStats.Count - 1);
                 }
-            } 
+            }
         }
 
-        private void HandleMortalWounds(ref Chart chart)
+        private void HandleMortalWounds(ref ShotChart chart)
         {
             chart.RollStats.Add(new RollLine());
             chart.SuccessfulWounds.Add(0);
@@ -366,159 +366,6 @@ namespace MathHammer
             chart.RollStats[chart.RollStats.Count - 1]._damageValue.Text = chart.MortalWoundDamageValue.ToString();
 
             chart.Damage.Add(1);
-        }
-    }
-    
-    public struct Chart
-    {
-        internal List<int> ShotsTaken;
-        internal List<int> InitialShotsHit;
-        internal List<int> ShotsMissed;
-        internal List<int> SuccessfulWounds;
-        internal List<int> FailedSaves;
-        internal List<int> Damage;
-        internal List<int> RerolledShots;
-        internal List<int> FinalHitList;
-        internal List<int> RerolledHits;
-        internal List<RollLine> RollStats;
-
-        internal readonly int WsBs;
-        internal readonly int FlatShots;
-        internal readonly int Strength;
-        internal readonly int Ap;
-        internal readonly int DamageDiceNum;
-        internal readonly int DamageDiceType;
-        internal readonly int Tough;
-        internal readonly int Save;
-        internal readonly int InvulSave;
-        internal readonly int ShotDiceNum;
-        internal readonly int ShotDiceType;
-        internal readonly int FlatDamge;
-        internal readonly int WoundXValue;
-        internal readonly int WoundMortalXValue;
-        internal readonly int MortalWoundDamageValue;
-        internal readonly int ModifiedApWoundRollMinimum;
-        internal readonly int ModifiedApValue;
-        internal readonly int ModifiedDamageWoundRolllMinimum;
-        internal readonly int ModifiedDamageValue;
-
-        internal readonly Color SuccsessColor;
-        internal readonly Color FailColor;
-        internal readonly Color SpecialEventColor;
-        internal readonly Color DefaultColor;
-
-        internal readonly bool DontReroll;
-        internal readonly bool ShouldRerollOnesHit;
-        internal readonly bool ShouldRerollMisses;
-        internal readonly bool ShouldRerollFailedWounds;
-        internal readonly bool ShouldRerollWoundsOfOne;
-        internal readonly bool ShouldAutohit;
-        internal readonly bool ShoundWoundOnX;
-        internal readonly bool ShouldMortalWoundOnX;
-        internal readonly bool IsTeslaWeapon;
-        internal readonly bool HasVariableShots;
-        internal readonly bool HasVariableDamage;
-        internal readonly bool ResolveWithModifiedAp;
-        internal readonly bool ResolveWithModifiedDamage;
-        internal readonly bool ResolveNormally;
-
-        internal readonly string NaText;
-        internal readonly string TeslaText;
-        internal readonly string AutohitText;
-        internal readonly string MortalWoundText;
-
-        public Chart(
-            int stats,
-            int flatShots,
-            int strength,
-            int ap,
-            int damageDiceNum,
-            int damageDiceType,
-            int tough,
-            int save,
-            int invulSave,
-            int shotDiceNum, 
-            int shotDiceType,
-            int flatDamge,
-            int woundXValue, 
-            int woundMortalXValue,
-            int modifiedApWoundRollMinimum, 
-            int modifiedApValue, 
-            int modifiedDamageWoundRolllMinimum, 
-            int modifiedDamageValue,
-            bool rerollNone,
-            bool rerollOnes,
-            bool rerollMisses,
-            bool rerollWounds, 
-            bool shouldRerollWoundsOfOne, 
-            bool shouldAutohit, 
-            bool shoundWoundOnX, 
-            bool shouldMortalWoundOnX, 
-            bool isTeslaWeapon, 
-            bool hasVariableShots, 
-            bool hasVariableDamage,
-            bool resolveNormally,
-            bool resolveWithModifiedAp, 
-            bool resolveWithModifiedDamage
-            )
-        {
-            WsBs = stats;
-            FlatShots = flatShots;
-            Strength = strength;
-            Ap = ap;
-            DamageDiceNum = damageDiceNum;
-            DamageDiceType = damageDiceType;
-            Tough = tough;
-            Save = save;
-            InvulSave = invulSave;
-            ShotDiceNum = shotDiceNum;
-            ShotDiceType = shotDiceType;
-            FlatDamge = flatDamge;
-            WoundXValue = woundXValue;
-            WoundMortalXValue = woundMortalXValue;
-            MortalWoundDamageValue = 1;
-
-            SuccsessColor = Color.DarkGreen;
-            FailColor = Color.DarkRed;
-            SpecialEventColor = Color.Aquamarine;
-            DefaultColor = Color.Black;
-            
-
-            NaText = "N/A";
-            TeslaText = "TESLA";
-            AutohitText = "AUTO";
-            MortalWoundText = "MORTAL";
-
-            DontReroll = rerollNone;
-            ShouldRerollOnesHit = rerollOnes;
-            ShouldRerollMisses = rerollMisses;
-            ShouldRerollFailedWounds = rerollWounds;
-            ShouldRerollWoundsOfOne = shouldRerollWoundsOfOne;
-            ShouldAutohit = shouldAutohit;
-            ShoundWoundOnX = shoundWoundOnX;
-            ShouldMortalWoundOnX = shouldMortalWoundOnX;
-            IsTeslaWeapon = isTeslaWeapon;
-            HasVariableShots = hasVariableShots;
-            HasVariableDamage = hasVariableDamage;
-            ResolveWithModifiedAp = resolveWithModifiedAp;
-            ResolveWithModifiedDamage = resolveWithModifiedDamage;
-            ResolveNormally = resolveNormally;
-            ModifiedApWoundRollMinimum = modifiedApWoundRollMinimum;
-            ModifiedApValue = modifiedApValue;
-            ModifiedDamageWoundRolllMinimum = modifiedDamageWoundRolllMinimum;
-            ModifiedDamageValue = modifiedDamageValue;
-
-
-            ShotsMissed = new List<int>();
-            InitialShotsHit = new List<int>();
-            ShotsTaken = new List<int>();
-            SuccessfulWounds = new List<int>();
-            FailedSaves = new List<int>();
-            Damage = new List<int>();
-            RerolledShots = new List<int>();
-            FinalHitList = new List<int>();
-            RerolledHits = new List<int>();
-            RollStats = new List<RollLine>();
         }
     }
 }

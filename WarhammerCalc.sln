@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalc", "WarhammerCalc.csproj", "{0C2D8C8B-78E5-4BC7-9BDC-5E4EF878A059}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalcUI", "WarhammerCalcUI.csproj", "{0C2D8C8B-78E5-4BC7-9BDC-5E4EF878A059}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalcDice", "WarhammerCalcDice\WarhammerCalcDice.csproj", "{F695BA62-DB11-449E-945C-A1A2B4C6ACD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalcData", "WarhammerCalcData\WarhammerCalcData.csproj", "{689BD64C-FBDB-42F0-94E3-5885AB5F82CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{0C2D8C8B-78E5-4BC7-9BDC-5E4EF878A059}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C2D8C8B-78E5-4BC7-9BDC-5E4EF878A059}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C2D8C8B-78E5-4BC7-9BDC-5E4EF878A059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F695BA62-DB11-449E-945C-A1A2B4C6ACD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F695BA62-DB11-449E-945C-A1A2B4C6ACD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F695BA62-DB11-449E-945C-A1A2B4C6ACD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F695BA62-DB11-449E-945C-A1A2B4C6ACD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{689BD64C-FBDB-42F0-94E3-5885AB5F82CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{689BD64C-FBDB-42F0-94E3-5885AB5F82CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{689BD64C-FBDB-42F0-94E3-5885AB5F82CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{689BD64C-FBDB-42F0-94E3-5885AB5F82CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
