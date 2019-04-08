@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
+using WarhammerCalcDice;
 
-namespace MathHammer
+namespace WarhammerCalcUI
 {
     static class MainProgram
     {
-        internal static Calculator Calc;
+        internal static DiceRoller diceRoller;
         internal static Ui ui;
 
         /// <summary>
@@ -16,7 +17,7 @@ namespace MathHammer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Calc = new Calculator();
+            diceRoller = new DiceRoller();
             ui = new Ui();
             
             Application.Run(ui);

@@ -1,4 +1,4 @@
-﻿namespace MathHammer.StatBlocks
+﻿namespace WarhammerCalcData.UnitEquivalencyStats
 {
     interface IStats
     {

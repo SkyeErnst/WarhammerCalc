@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace MathHammer
+namespace WarhammerCalcData
 {
     public partial class RollLine : UserControl
     {

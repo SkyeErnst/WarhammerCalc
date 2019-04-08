@@ -1,4 +1,4 @@
-﻿namespace MathHammer
+﻿namespace WarhammerCalcUI
 {
     partial class Ui
     {

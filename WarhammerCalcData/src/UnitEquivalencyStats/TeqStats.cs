@@ -1,5 +1,5 @@
 ﻿
-namespace MathHammer.StatBlocks
+namespace WarhammerCalcData.UnitEquivalencyStats
 {
     public struct TeqStats : IStats
     {

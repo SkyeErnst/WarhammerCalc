@@ -1,4 +1,4 @@
-﻿namespace MathHammer
+﻿namespace WarhammerCalcData
 {
     partial class RollLine
     {
@@ -191,13 +191,13 @@
         private System.Windows.Forms.Label _armorLabel;
         private System.Windows.Forms.Label _damageLabel;
         private System.Windows.Forms.Label _hitLabel;
-        internal System.Windows.Forms.Label _hitValue;
-        internal System.Windows.Forms.Label _hitRerollValue;
-        internal System.Windows.Forms.Label _woundValue;
-        internal System.Windows.Forms.Label _armorRoll;
-        internal System.Windows.Forms.Label _damageValue;
+        public System.Windows.Forms.Label _hitValue;
+        public System.Windows.Forms.Label _hitRerollValue;
+        public System.Windows.Forms.Label _woundValue;
+        public System.Windows.Forms.Label _armorRoll;
+        public System.Windows.Forms.Label _damageValue;
         private System.Windows.Forms.Label _woundRerollLabel;
-        internal System.Windows.Forms.Label _woundRerollValue;
+        public System.Windows.Forms.Label _woundRerollValue;
         private System.Windows.Forms.Label label1;
     }
 }
