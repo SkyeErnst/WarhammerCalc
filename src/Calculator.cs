@@ -172,7 +172,7 @@ namespace MathHammer
                 if (true == chart.IsTeslaWeapon && 6 == currShot)
                 {
                     _calcTesla = true;
-                    _teslaShots += 3;
+                    _teslaShots += 2;
                 }
             }
             return true;
