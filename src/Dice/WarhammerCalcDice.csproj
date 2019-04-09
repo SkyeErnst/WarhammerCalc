@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{689BD64C-FBDB-42F0-94E3-5885AB5F82CB}</ProjectGuid>
+    <ProjectGuid>{F695BA62-DB11-449E-945C-A1A2B4C6ACD2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WarhammerCalcData</RootNamespace>
-    <AssemblyName>WarhammerCalcData</AssemblyName>
+    <RootNamespace>WarhammerCalcDice</RootNamespace>
+    <AssemblyName>WarhammerCalcDice</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <IntermediateOutputPath>C:\Users\Skye\AppData\Local\Temp\vs154A.tmp\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <IntermediateOutputPath>C:\Users\Skye\AppData\Local\Temp\vs154A.tmp\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -44,37 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\DiceRoller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="src\RollLine.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="src\RollLine.Designer.cs">
-      <DependentUpon>RollLine.cs</DependentUpon>
-    </Compile>
-    <Compile Include="src\ShotChart.cs" />
-    <Compile Include="src\UnitEquivalencyStats\GEQStats.cs" />
-    <Compile Include="src\UnitEquivalencyStats\IStats.cs" />
-    <Compile Include="src\UnitEquivalencyStats\KeqStats.cs" />
-    <Compile Include="src\UnitEquivalencyStats\MEQStats.cs" />
-    <Compile Include="src\UnitEquivalencyStats\TeqStats.cs" />
-    <Compile Include="src\UnitEquivalencyStats\VeqStats.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="src\RollLine.resx">
-      <DependentUpon>RollLine.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
+    <ProjectReference Include="..\Data\WarhammerCalcData.csproj">
+      <Project>{689bd64c-fbdb-42f0-94e3-5885ab5f82cb}</Project>
+      <Name>WarhammerCalcData</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

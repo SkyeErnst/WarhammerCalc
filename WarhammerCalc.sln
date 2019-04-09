@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalcData", "src\Data\WarhammerCalcData.csproj", "{689BD64C-FBDB-42F0-94E3-5885AB5F82CB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F487F039-631A-4A3D-BF44-0B9F2D5733E1}"
+	ProjectSection(SolutionItems) = preProject
+		App.config = App.config
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalcDice", "src\Dice\WarhammerCalcDice.csproj", "{F695BA62-DB11-449E-945C-A1A2B4C6ACD2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalcData", "src\WarhammerCalcData\WarhammerCalcData.csproj", "{689BD64C-FBDB-42F0-94E3-5885AB5F82CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "src\UI\UI.csproj", "{26C0F3E1-2409-4AA7-B47D-BF9C1E994B37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalcDice", "src\WarhammerCalcDice\WarhammerCalcDice.csproj", "{F695BA62-DB11-449E-945C-A1A2B4C6ACD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "src\WarhammerCalcUI\UI.csproj", "{26C0F3E1-2409-4AA7-B47D-BF9C1E994B37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
