@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalcData", "src\Wa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalcDice", "src\WarhammerCalcDice\WarhammerCalcDice.csproj", "{F695BA62-DB11-449E-945C-A1A2B4C6ACD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "src\WarhammerCalcUI\UI.csproj", "{26C0F3E1-2409-4AA7-B47D-BF9C1E994B37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalcUI", "src\WarhammerCalcUI\WarhammerCalcUI.csproj", "{26C0F3E1-2409-4AA7-B47D-BF9C1E994B37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
