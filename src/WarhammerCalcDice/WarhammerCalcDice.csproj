@@ -48,7 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data\WarhammerCalcData.csproj">
+    <ProjectReference Include="..\WarhammerCalcData\WarhammerCalcData.csproj">
       <Project>{689bd64c-fbdb-42f0-94e3-5885ab5f82cb}</Project>
       <Name>WarhammerCalcData</Name>
     </ProjectReference>

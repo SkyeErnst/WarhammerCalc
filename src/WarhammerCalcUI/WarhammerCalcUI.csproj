@@ -84,11 +84,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data\WarhammerCalcData.csproj">
+    <ProjectReference Include="..\WarhammerCalcData\WarhammerCalcData.csproj">
       <Project>{689bd64c-fbdb-42f0-94e3-5885ab5f82cb}</Project>
       <Name>WarhammerCalcData</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Dice\WarhammerCalcDice.csproj">
+    <ProjectReference Include="..\WarhammerCalcDice\WarhammerCalcDice.csproj">
       <Project>{f695ba62-db11-449e-945c-a1a2b4c6acd2}</Project>
       <Name>WarhammerCalcDice</Name>
     </ProjectReference>
