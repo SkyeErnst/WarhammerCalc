@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Drawing;
 using WarhammerCalcData;
+using RandomNumberUtility;
 
 
 namespace WarhammerCalcDice
 {
     public class DiceRoller
     {
-        private readonly Random _rand;
 
         private bool _calcTesla = false;
         private bool _calcMortalWound = false;
@@ -17,11 +17,6 @@ namespace WarhammerCalcDice
         private int _teslaShots = 0;
         private int _mortalWoundCount = 0;
 
-        public DiceRoller()
-        {
-            _rand = new Random();
-        }
-
         public ShotChart Roll(ref ShotChart chart)
         {
             _calcTesla = false;
@@ -29,25 +24,9 @@ namespace WarhammerCalcDice
             _teslaShots = 0;
             _mortalWoundCount = 0;
 
-            int itter = 0;
-
-            // Sets up number of times to run loop depending on if the number of shots is variable or 
-            // an explicit number.
-            if (false == chart.HasVariableShots)
-            {
-                itter = chart.FlatShots;
-            }
-            else
-            {
-                for (int i = 0; i < chart.ShotDiceNum; i++)
-                {
-                    itter += _rand.Next(1, chart.ShotDiceType + 1);
-                }
-            }
-
             // As long as each previous hit / wound, etc is successful, continue rolling.
             // Otherwise, go to next roll line.
-            for (int i = 0; i < itter; i++)
+            for (int i = 0; i < chart.ShotsToTake; i++)
             {
                 if (true == RollHit(ref chart, i))
                 {
@@ -57,10 +36,10 @@ namespace WarhammerCalcDice
                         {
                             RollDamage(ref chart, i);
                         }
-                        else
-                        {
-                            chart.RollStats[i]._damageValue.Text = chart.NaText;
-                        }
+                        //else
+                        //{
+                        //    chart.RollStats[i]._damageValue.Text = chart.NaText;
+                        //}
                     }
                 }
             }
@@ -83,14 +62,14 @@ namespace WarhammerCalcDice
             }
 
             // Puts together the initial hits list and the rerolled hits list.
-            if (chart.InitialShotsHit.Count > 0)
-            {
-                chart.FinalHitList.AddRange(chart.InitialShotsHit);
-            }
-            if (chart.RerolledHits.Count > 0)
-            {
-                chart.FinalHitList.AddRange(chart.RerolledHits);
-            }
+            //if (chart.InitialShotsHit.length > 0)
+            //{
+            //    chart.FinalHitList.AddRange(chart.InitialShotsHit);
+            //}
+            //if (chart.RerolledHits.Count > 0)
+            //{
+            //    chart.FinalHitList.AddRange(chart.RerolledHits);
+            //}
 
             return chart;
         }
@@ -112,7 +91,7 @@ namespace WarhammerCalcDice
             else
             {
                 // Randomly generates a dice roll and sets the text property to the roll
-                chart.ShotsTaken.Add((currShot = _rand.Next(1, 7)));
+                chart.ShotsTaken.Add((currShot = Rand.Next(1, 7)));
                 chart.RollStats[i]._hitValue.Text = currShot.ToString();
 
                 // If initial shot is a hit...
@@ -142,7 +121,7 @@ namespace WarhammerCalcDice
                         chart.RollStats[i]._hitValue.ForeColor = chart.FailColor;
 
                         // Generates a new dice roll and fills in the re-roll value label with the dice roll
-                        chart.RerolledShots.Add(currShot = _rand.Next(1, 7));
+                        chart.RerolledShots.Add(currShot = Rand.Next(1, 7));
                         chart.RollStats[i]._hitRerollValue.Text = currShot.ToString();
 
                         // If the newly generated roll is a hit
@@ -215,7 +194,7 @@ namespace WarhammerCalcDice
             // Rolls for wounds
             int currWoundRoll = 0;
 
-            currWoundRoll = _rand.Next(1, 7);
+            currWoundRoll = Rand.Next(1, 7);
 
             chart.RollStats[i]._woundValue.Text = currWoundRoll.ToString();
 
@@ -227,7 +206,7 @@ namespace WarhammerCalcDice
             }
             else if ((true == chart.ShouldRerollWoundsOfOne && 1 == currWoundRoll) || true == chart.ShouldRerollFailedWounds)
             {
-                currWoundRoll = _rand.Next(1, 7);
+                currWoundRoll = Rand.Next(1, 7);
 
                 chart.RollStats[i]._woundRerollValue.Text = currWoundRoll.ToString();
                 chart.RollStats[i]._woundValue.ForeColor = chart.FailColor;
@@ -294,7 +273,8 @@ namespace WarhammerCalcDice
                     saveToUse = chart.Save + chart.Ap;
                 }
             }
-            int currSaveRoll = _rand.Next(1, 7);
+
+            int currSaveRoll = Generator.GetRandomNumber(1, 6);
 
             chart.RollStats[i]._armorRoll.Text = currSaveRoll.ToString();
 
@@ -319,7 +299,7 @@ namespace WarhammerCalcDice
             {
                 for (int j = 0; j < chart.DamageDiceNum; j++)
                 {
-                    int roll = _rand.Next(1, chart.DamageDiceType + 1);
+                    int roll = Rand.Next(1, chart.DamageDiceType + 1);
                     innerTotal += roll;
                 }
             }

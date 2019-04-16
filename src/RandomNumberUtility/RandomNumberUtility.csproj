@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F695BA62-DB11-449E-945C-A1A2B4C6ACD2}</ProjectGuid>
+    <ProjectGuid>{5482BAF9-AB64-42A0-861F-A908E43AA053}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WarhammerCalcDice</RootNamespace>
-    <AssemblyName>WarhammerCalcDice</AssemblyName>
+    <RootNamespace>RandomNumberUtility</RootNamespace>
+    <AssemblyName>RandomNumberUtility</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -21,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,8 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,18 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\DiceRoller.cs" />
+    <Compile Include="Generator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RandomNumberUtility\RandomNumberUtility.csproj">
-      <Project>{5482baf9-ab64-42a0-861f-a908e43aa053}</Project>
-      <Name>RandomNumberUtility</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WarhammerCalcData\WarhammerCalcData.csproj">
-      <Project>{689bd64c-fbdb-42f0-94e3-5885ab5f82cb}</Project>
-      <Name>WarhammerCalcData</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

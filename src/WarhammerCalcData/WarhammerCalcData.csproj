@@ -56,6 +56,7 @@
     <Compile Include="src\RollLine.Designer.cs">
       <DependentUpon>RollLine.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\RollLineSimple.cs" />
     <Compile Include="src\ShotChart.cs" />
     <Compile Include="src\UnitEquivalencyStats\GEQStats.cs" />
     <Compile Include="src\UnitEquivalencyStats\IStats.cs" />
@@ -75,6 +76,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RandomNumberUtility\RandomNumberUtility.csproj">
+      <Project>{5482baf9-ab64-42a0-861f-a908e43aa053}</Project>
+      <Name>RandomNumberUtility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

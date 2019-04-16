@@ -109,7 +109,7 @@ namespace WarhammerCalcUI
                 _xResolveDamageRadio.Checked
                 );
 
-                MainProgram.diceRoller.Roll(ref chart);
+                MainProgram.DiceRollRef.Roll(ref chart);
 
                 DisplayResults(chart);
             }
@@ -397,6 +397,16 @@ namespace WarhammerCalcUI
         {
             _xResolveDamageHitValue.Visible = _xResolveDamageRadio.Checked;
             _xResolveDamageDamageValue.Visible = _xResolveDamageRadio.Checked;
+        }
+
+        /// <summary>
+        /// Takes a simple roll line and converts it for full display for use in non-analyzing mode.
+        /// </summary>
+        /// <param name="chart"></param>
+        /// <param name="convertedList"></param>
+        private void ConvertRollLineSimple(ref ShotChart chart, List<RollLine> convertedList)
+        {
+            // TODO
         }
     }
 }

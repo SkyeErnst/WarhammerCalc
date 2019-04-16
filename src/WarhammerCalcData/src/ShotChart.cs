@@ -1,20 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using RandomNumberUtility;
 
 namespace WarhammerCalcData
 {
     public struct ShotChart
     {
-        public List<int> ShotsTaken;
-        public List<int> InitialShotsHit;
-        public List<int> ShotsMissed;
-        public List<int> SuccessfulWounds;
-        public List<int> FailedSaves;
-        public List<int> Damage;
-        public List<int> RerolledShots;
-        public List<int> FinalHitList;
-        public List<int> RerolledHits;
-        public List<RollLine> RollStats;
+        public int[] ShotsTaken;
+        public int[] InitialShotsHit;
+        public int[] ShotsMissed;
+        public int[] SuccessfulWounds;
+        public int[] FailedSaves;
+        public int[] Damage;
+        public int[] RerolledShots;
+        public int[] FinalHitList;
+        public int[] RerolledHits;
+        public RollLineSimple[] RollStats;
 
         public readonly int WsBs;
         public readonly int FlatShots;
@@ -27,6 +26,7 @@ namespace WarhammerCalcData
         public readonly int InvulSave;
         public readonly int ShotDiceNum;
         public readonly int ShotDiceType;
+        public readonly int ShotsToTake;
         public readonly int FlatDamage;
         public readonly int WoundXValue;
         public readonly int WoundMortalXValue;
@@ -35,11 +35,6 @@ namespace WarhammerCalcData
         public readonly int ModifiedApValue;
         public readonly int ModifiedDamageWoundRollMinimum;
         public readonly int ModifiedDamageValue;
-
-        public readonly Color SuccessColor;
-        public readonly Color FailColor;
-        public readonly Color SpecialEventColor;
-        public readonly Color DefaultColor;
 
         public readonly bool DontReroll;
         public readonly bool ShouldRerollOnesHit;
@@ -62,7 +57,7 @@ namespace WarhammerCalcData
         public readonly string MortalWoundText;
 
         public ShotChart(
-            int stats,
+            int scoreWsBs,
             int flatShots,
             int strength,
             int ap,
@@ -96,7 +91,7 @@ namespace WarhammerCalcData
             bool resolveWithModifiedDamage
             )
         {
-            WsBs = stats;
+            WsBs = scoreWsBs;
             FlatShots = flatShots;
             Strength = strength;
             Ap = ap;
@@ -111,12 +106,6 @@ namespace WarhammerCalcData
             WoundXValue = woundXValue;
             WoundMortalXValue = woundMortalXValue;
             MortalWoundDamageValue = 1;
-
-            SuccessColor = Color.DarkGreen;
-            FailColor = Color.DarkRed;
-            SpecialEventColor = Color.Aquamarine;
-            DefaultColor = Color.Black;
-
 
             NaText = "N/A";
             TeslaText = "TESLA";
@@ -142,17 +131,43 @@ namespace WarhammerCalcData
             ModifiedDamageWoundRollMinimum = modifiedDamageWoundRollMinimum;
             ModifiedDamageValue = modifiedDamageValue;
 
+            // Sets the number of shots to be taken, depending on if the shot number is 
+            // variable or flat.
+            if (true == hasVariableDamage)
+            {
+                ShotsToTake = 0;
 
-            ShotsMissed = new List<int>();
-            InitialShotsHit = new List<int>();
-            ShotsTaken = new List<int>();
-            SuccessfulWounds = new List<int>();
-            FailedSaves = new List<int>();
-            Damage = new List<int>();
-            RerolledShots = new List<int>();
-            FinalHitList = new List<int>();
-            RerolledHits = new List<int>();
-            RollStats = new List<RollLine>();
+                for (int i = 0; i < ShotDiceNum; i++)
+                {
+                    ShotsToTake += Generator.GetRandomNumber(1, ShotDiceType);
+                }
+            }
+            else
+            {
+                ShotsToTake = flatShots;
+            }
+
+            ShotsMissed = new int[ShotsToTake];
+            InitialShotsHit = new int[ShotsToTake];
+            ShotsTaken = new int[ShotsToTake];
+            SuccessfulWounds = new int[ShotsToTake];
+            FailedSaves = new int[ShotsToTake];
+            Damage = new int[ShotsToTake];
+            RerolledShots = new int[ShotsToTake];
+            FinalHitList = new int[ShotsToTake];
+            RerolledHits = new int[ShotsToTake];
+            RollStats = new RollLineSimple[ShotsToTake];
+
+        }
+
+        private static void PopulateArray<T>(T[] arrToPop, T value)
+        {
+            int len = arrToPop.Length;
+
+            for (int i = 0; i < len; i++)
+            {
+                arrToPop[i] = value;
+            }
         }
     }
 }
