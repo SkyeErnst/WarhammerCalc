@@ -1,6 +1,6 @@
 ﻿namespace WarhammerCalcData
 {
-    partial class RollLine
+    partial class RollLineDisplay
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             this._hitLabel = new System.Windows.Forms.Label();
-            this._hitValue = new System.Windows.Forms.Label();
-            this._hitRerollValue = new System.Windows.Forms.Label();
+            this.HitValue = new System.Windows.Forms.Label();
+            this.HitRerollValue = new System.Windows.Forms.Label();
             this._hitRerollLabel = new System.Windows.Forms.Label();
-            this._woundValue = new System.Windows.Forms.Label();
+            this.WoundValue = new System.Windows.Forms.Label();
             this._woundLabel = new System.Windows.Forms.Label();
-            this._armorRoll = new System.Windows.Forms.Label();
+            this.ArmorRollValue = new System.Windows.Forms.Label();
             this._armorLabel = new System.Windows.Forms.Label();
-            this._damageValue = new System.Windows.Forms.Label();
+            this.DamageValue = new System.Windows.Forms.Label();
             this._damageLabel = new System.Windows.Forms.Label();
             this._woundRerollLabel = new System.Windows.Forms.Label();
-            this._woundRerollValue = new System.Windows.Forms.Label();
+            this.WoundRerollValue = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -52,23 +52,23 @@
             this._hitLabel.TabIndex = 0;
             this._hitLabel.Text = "Hit Roll";
             // 
-            // _hitValue
+            // HitValue
             // 
-            this._hitValue.AutoSize = true;
-            this._hitValue.Location = new System.Drawing.Point(3, 24);
-            this._hitValue.Name = "_hitValue";
-            this._hitValue.Size = new System.Drawing.Size(27, 13);
-            this._hitValue.TabIndex = 1;
-            this._hitValue.Text = "N/A";
+            this.HitValue.AutoSize = true;
+            this.HitValue.Location = new System.Drawing.Point(3, 24);
+            this.HitValue.Name = "HitValue";
+            this.HitValue.Size = new System.Drawing.Size(27, 13);
+            this.HitValue.TabIndex = 1;
+            this.HitValue.Text = "N/A";
             // 
-            // _hitRerollValue
+            // HitRerollValue
             // 
-            this._hitRerollValue.AutoSize = true;
-            this._hitRerollValue.Location = new System.Drawing.Point(78, 24);
-            this._hitRerollValue.Name = "_hitRerollValue";
-            this._hitRerollValue.Size = new System.Drawing.Size(27, 13);
-            this._hitRerollValue.TabIndex = 3;
-            this._hitRerollValue.Text = "N/A";
+            this.HitRerollValue.AutoSize = true;
+            this.HitRerollValue.Location = new System.Drawing.Point(78, 24);
+            this.HitRerollValue.Name = "HitRerollValue";
+            this.HitRerollValue.Size = new System.Drawing.Size(27, 13);
+            this.HitRerollValue.TabIndex = 3;
+            this.HitRerollValue.Text = "N/A";
             // 
             // _hitRerollLabel
             // 
@@ -79,14 +79,14 @@
             this._hitRerollLabel.TabIndex = 2;
             this._hitRerollLabel.Text = "Reroll Value";
             // 
-            // _woundValue
+            // WoundValue
             // 
-            this._woundValue.AutoSize = true;
-            this._woundValue.Location = new System.Drawing.Point(148, 24);
-            this._woundValue.Name = "_woundValue";
-            this._woundValue.Size = new System.Drawing.Size(27, 13);
-            this._woundValue.TabIndex = 5;
-            this._woundValue.Text = "N/A";
+            this.WoundValue.AutoSize = true;
+            this.WoundValue.Location = new System.Drawing.Point(148, 24);
+            this.WoundValue.Name = "WoundValue";
+            this.WoundValue.Size = new System.Drawing.Size(27, 13);
+            this.WoundValue.TabIndex = 5;
+            this.WoundValue.Text = "N/A";
             // 
             // _woundLabel
             // 
@@ -97,14 +97,14 @@
             this._woundLabel.TabIndex = 4;
             this._woundLabel.Text = "Wound Roll";
             // 
-            // _armorRoll
+            // ArmorRollValue
             // 
-            this._armorRoll.AutoSize = true;
-            this._armorRoll.Location = new System.Drawing.Point(293, 24);
-            this._armorRoll.Name = "_armorRoll";
-            this._armorRoll.Size = new System.Drawing.Size(27, 13);
-            this._armorRoll.TabIndex = 7;
-            this._armorRoll.Text = "N/A";
+            this.ArmorRollValue.AutoSize = true;
+            this.ArmorRollValue.Location = new System.Drawing.Point(293, 24);
+            this.ArmorRollValue.Name = "ArmorRollValue";
+            this.ArmorRollValue.Size = new System.Drawing.Size(27, 13);
+            this.ArmorRollValue.TabIndex = 7;
+            this.ArmorRollValue.Text = "N/A";
             // 
             // _armorLabel
             // 
@@ -115,14 +115,14 @@
             this._armorLabel.TabIndex = 6;
             this._armorLabel.Text = "Armor Save";
             // 
-            // _damageValue
+            // DamageValue
             // 
-            this._damageValue.AutoSize = true;
-            this._damageValue.Location = new System.Drawing.Point(361, 24);
-            this._damageValue.Name = "_damageValue";
-            this._damageValue.Size = new System.Drawing.Size(27, 13);
-            this._damageValue.TabIndex = 9;
-            this._damageValue.Text = "N/A";
+            this.DamageValue.AutoSize = true;
+            this.DamageValue.Location = new System.Drawing.Point(361, 24);
+            this.DamageValue.Name = "DamageValue";
+            this.DamageValue.Size = new System.Drawing.Size(27, 13);
+            this.DamageValue.TabIndex = 9;
+            this.DamageValue.Text = "N/A";
             // 
             // _damageLabel
             // 
@@ -142,15 +142,15 @@
             this._woundRerollLabel.TabIndex = 10;
             this._woundRerollLabel.Text = "Wound Reroll";
             // 
-            // _woundRerollValue
+            // WoundRerollValue
             // 
-            this._woundRerollValue.AutoSize = true;
-            this._woundRerollValue.Location = new System.Drawing.Point(224, 24);
-            this._woundRerollValue.Name = "_woundRerollValue";
-            this._woundRerollValue.Size = new System.Drawing.Size(27, 13);
-            this._woundRerollValue.TabIndex = 11;
-            this._woundRerollValue.Text = "N/A";
-            this._woundRerollValue.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.WoundRerollValue.AutoSize = true;
+            this.WoundRerollValue.Location = new System.Drawing.Point(224, 24);
+            this.WoundRerollValue.Name = "WoundRerollValue";
+            this.WoundRerollValue.Size = new System.Drawing.Size(27, 13);
+            this.WoundRerollValue.TabIndex = 11;
+            this.WoundRerollValue.Text = "N/A";
+            this.WoundRerollValue.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label1
             // 
@@ -160,24 +160,24 @@
             this.label1.TabIndex = 12;
             this.label1.Text = "____________________________________________________________________";
             // 
-            // RollLine
+            // RollLineDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label1);
-            this.Controls.Add(this._woundRerollValue);
+            this.Controls.Add(this.WoundRerollValue);
             this.Controls.Add(this._woundRerollLabel);
-            this.Controls.Add(this._damageValue);
+            this.Controls.Add(this.DamageValue);
             this.Controls.Add(this._damageLabel);
-            this.Controls.Add(this._armorRoll);
+            this.Controls.Add(this.ArmorRollValue);
             this.Controls.Add(this._armorLabel);
-            this.Controls.Add(this._woundValue);
+            this.Controls.Add(this.WoundValue);
             this.Controls.Add(this._woundLabel);
-            this.Controls.Add(this._hitRerollValue);
+            this.Controls.Add(this.HitRerollValue);
             this.Controls.Add(this._hitRerollLabel);
-            this.Controls.Add(this._hitValue);
+            this.Controls.Add(this.HitValue);
             this.Controls.Add(this._hitLabel);
-            this.Name = "RollLine";
+            this.Name = "RollLineDisplay";
             this.Size = new System.Drawing.Size(402, 56);
             this.Load += new System.EventHandler(this.RollLine_Load);
             this.ResumeLayout(false);
@@ -191,13 +191,13 @@
         private System.Windows.Forms.Label _armorLabel;
         private System.Windows.Forms.Label _damageLabel;
         private System.Windows.Forms.Label _hitLabel;
-        public System.Windows.Forms.Label _hitValue;
-        public System.Windows.Forms.Label _hitRerollValue;
-        public System.Windows.Forms.Label _woundValue;
-        public System.Windows.Forms.Label _armorRoll;
-        public System.Windows.Forms.Label _damageValue;
+        public System.Windows.Forms.Label HitValue;
+        public System.Windows.Forms.Label HitRerollValue;
+        public System.Windows.Forms.Label WoundValue;
+        public System.Windows.Forms.Label ArmorRollValue;
+        public System.Windows.Forms.Label DamageValue;
         private System.Windows.Forms.Label _woundRerollLabel;
-        public System.Windows.Forms.Label _woundRerollValue;
+        public System.Windows.Forms.Label WoundRerollValue;
         private System.Windows.Forms.Label label1;
     }
 }

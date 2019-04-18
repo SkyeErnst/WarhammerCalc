@@ -26,7 +26,7 @@ namespace WarhammerCalcData
         //public int[] RerolledShots;
         ////public int[] FinalHitList;
         //public int[] RerolledHits;
-        public RollLineSimple[] RollStats;
+        public List<RollLine> RollStats;
 
         public readonly int WsBs;
         public readonly int FlatShots;
@@ -51,7 +51,7 @@ namespace WarhammerCalcData
         public readonly int TeslaShotAddition;
 
         public readonly bool DontReroll;
-        public readonly bool ShouldRerollOnesHit;
+        public readonly bool ShouldRerollHitsOfOne;
         public readonly bool ShouldRerollMisses;
         public readonly bool ShouldRerollFailedWounds;
         public readonly bool ShouldRerollWoundsOfOne;
@@ -128,7 +128,7 @@ namespace WarhammerCalcData
             MortalWoundText = "MORTAL";
 
             DontReroll = rerollNone;
-            ShouldRerollOnesHit = rerollOnes;
+            ShouldRerollHitsOfOne = rerollOnes;
             ShouldRerollMisses = rerollMisses;
             ShouldRerollFailedWounds = rerollWounds;
             ShouldRerollWoundsOfOne = shouldRerollWoundsOfOne;
@@ -172,7 +172,7 @@ namespace WarhammerCalcData
             //RerolledShots = new int[NumberOfShotsToMake];
             ////FinalHitList = new int[NumberOfShotsToMake];
             //RerolledHits = new int[NumberOfShotsToMake];
-            RollStats = new RollLineSimple[NumberOfShotsToMake];
+            RollStats = new List<RollLine>();
 
 
             // Initializes arrays to value of -1, for ease
@@ -194,9 +194,9 @@ namespace WarhammerCalcData
 
             //foreach (object obj in arrLs)
             //{
-            //    if (obj is RollLineSimple)
+            //    if (obj is RollLine)
             //    {
-            //        PopulateArray(RollStats, new RollLineSimple());
+            //        PopulateArray(RollStats, new RollLine());
             //    }
             //    else
             //    {
@@ -204,7 +204,7 @@ namespace WarhammerCalcData
             //    }
             //}
 
-            PopulateArray(RollStats, new RollLineSimple());
+            //PopulateArray(RollStats, new RollLine());
         }
 
         private static void PopulateArray<T>(IList<T> arrToPop, T value)

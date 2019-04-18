@@ -10,14 +10,18 @@ namespace WarhammerCalcUI
     public partial class Ui : Form
     {
 
-        private List<RollLine> _linesAdded;
+        private List<RollLineDisplay> _linesAdded;
         private List<Label> _woundLabels;
+
+        private Color _successColor = Color.ForestGreen;
+        private Color _failColor = Color.Red;
+        private Color _specialColor = Color.Aquamarine;
 
         public Ui()
         {
             InitializeComponent();
 
-            _linesAdded = new List<RollLine>();
+            _linesAdded = new List<RollLineDisplay>();
             _woundLabels = new List<Label>();
         }
 
@@ -130,16 +134,73 @@ namespace WarhammerCalcUI
         /// <param name="crt"></param>
         private void DisplayResults(ShotChart crt)
         {
+            #region Previous implementation
+
+            //if (_linesAdded.Count > 0)
+            //{
+            //    foreach (RollLineDisplay line in _linesAdded)
+            //    {
+            //        this.Controls.Remove(line);
+            //    }
+            //    _linesAdded.Clear();
+            //}
+
+            //if (_woundLabels.Count > 0)
+            //{
+            //    foreach (Label lbl in _woundLabels)
+            //    {
+            //        this.Controls.Remove(lbl);
+            //    }
+            //    _woundLabels.Clear();
+            //}
+
+            //_totalHitsNum.Text = crt.FinalHitList.Count.ToString();
+            //_woundsTotalNum.Text = crt.SuccessfulWounds.Count.ToString();
+            //_failedSavesNum.Text = crt.FailedSaves.Count.ToString();
+            //_damageTotalNum.Text = Sum(crt.Damage).ToString();
+
+            //Point currPoint;
+            //int yOffset = 50;
+
+            //currPoint = _resultsLabel.Location;
+            //currPoint.Y += yOffset;
+
+            //for (int i = 0; i < crt.RollStats.Count; i++)
+            //{
+            //    this.Controls.Add(crt.RollStats[i]);
+            //    _linesAdded.Add(crt.RollStats[i]);
+            //    crt.RollStats[i].Location = currPoint;
+            //    currPoint.Y += yOffset;
+            //}
+
+            //Point tmpPoint = _damageResultsLabel.Location;
+
+            //for (int i = 0; i < crt.Damage.Count; i++)
+            //{
+            //    Label lbl = new Label();
+            //    _woundLabels.Add(lbl);
+
+            //    lbl.AutoSize = true;
+
+            //    lbl.Text = "Wound: " + (i + 1) + "," + " Damage: " + crt.Damage[i];
+
+            //    this.Controls.Add(lbl);
+
+            //    tmpPoint.Y += 30;
+
+            //    lbl.Location = tmpPoint;
+            //}
+
+            #endregion
 
             if (_linesAdded.Count > 0)
             {
-                foreach (RollLine line in _linesAdded)
+                foreach (RollLineDisplay line in _linesAdded)
                 {
                     this.Controls.Remove(line);
                 }
                 _linesAdded.Clear();
             }
-
             if (_woundLabels.Count > 0)
             {
                 foreach (Label lbl in _woundLabels)
@@ -149,42 +210,18 @@ namespace WarhammerCalcUI
                 _woundLabels.Clear();
             }
 
-            _totalHitsNum.Text = crt.FinalHitList.Count.ToString();
-            _woundsTotalNum.Text = crt.SuccessfulWounds.Count.ToString();
-            _failedSavesNum.Text = crt.FailedSaves.Count.ToString();
-            _damageTotalNum.Text = Sum(crt.Damage).ToString();
+            ConvertRollLineSimple(ref crt, out _linesAdded);
+
+            int count = crt.RollStats.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                
+            }
 
             Point currPoint;
             int yOffset = 50;
 
-            currPoint = _resultsLabel.Location;
-            currPoint.Y += yOffset;
-
-            for (int i = 0; i < crt.RollStats.Count; i++)
-            {
-                this.Controls.Add(crt.RollStats[i]);
-                _linesAdded.Add(crt.RollStats[i]);
-                crt.RollStats[i].Location = currPoint;
-                currPoint.Y += yOffset;
-            }
-
-            Point tmpPoint = _damageResultsLabel.Location;
-
-            for (int i = 0; i < crt.Damage.Count; i++)
-            {
-                Label lbl = new Label();
-                _woundLabels.Add(lbl);
-
-                lbl.AutoSize = true;
-
-                lbl.Text = "Wound: " + (i + 1) + "," + " Damage: " + crt.Damage[i];
-
-                this.Controls.Add(lbl);
-
-                tmpPoint.Y += 30;
-
-                lbl.Location = tmpPoint;
-            }
         }
 
         private void FillEquivalentValues(EqSelection selection)
@@ -231,6 +268,12 @@ namespace WarhammerCalcUI
             _invulSaveBox.Text = invulSave.ToString();
         }
 
+        /// <summary>
+        /// Simple summing method. Give it a readonly list,
+        /// and it will give you the sum of the items.
+        /// </summary>
+        /// <param name="values"></param>
+        /// <returns></returns>
         private static int Sum(IReadOnlyList<int> values)
         {
             int total = 0;
@@ -400,13 +443,68 @@ namespace WarhammerCalcUI
         }
 
         /// <summary>
-        /// Takes a simple roll line and converts it for full display for use in non-analyzing mode.
+        /// Takes a RollLine and converts it for full display for use in non-analyzing mode.
         /// </summary>
         /// <param name="chart"></param>
         /// <param name="convertedList"></param>
-        private void ConvertRollLineSimple(ref ShotChart chart, List<RollLine> convertedList)
+        private void ConvertRollLineSimple(ref ShotChart chart, out List<RollLineDisplay> convertedList)
         {
-            // TODO
+            int count = chart.RollStats.Count;
+            convertedList = new List<RollLineDisplay>();
+
+            for (int i = 0; i < count; i++)
+            {
+                convertedList.Add(new RollLineDisplay());
+                var currDisplay = convertedList[i];
+                var currChartLine = chart.RollStats[i];
+
+                try
+                {
+                    // Hit roll
+
+                    switch (currChartLine.HitOutcome)
+                    {
+                        case RollOutcome.DefaultOutcome:
+                            break;
+                        case RollOutcome.Success:
+                            break;
+                        case RollOutcome.Fail:
+                            break;
+                        case RollOutcome.Na:
+                            break;
+                    }
+
+                    // hit reroll
+
+                    // wound roll
+
+                    // wound re roll
+
+                    // armor roll
+
+                    // damage roll
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Error: " + e.Message + "\n\n" + "Trace log: " + e.ToString());
+                }
+
+                // colors 
+
+
+                // Hit roll
+
+                // hit reroll
+
+                // wound roll
+
+                // wound re roll
+
+                // armor roll
+
+                // damage roll
+
+            }
         }
     }
 }
