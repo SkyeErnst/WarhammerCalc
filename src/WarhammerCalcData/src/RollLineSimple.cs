@@ -2,14 +2,14 @@
 
 namespace WarhammerCalcData
 {
-    public struct RollLineSimple
+    public partial struct RollLineSimple
     {
-        private KeyVal<ModState, int> _hitRoll;
-        private KeyVal<ModState, int> _hitReroll;
-        private KeyVal<ModState, int> _woundRoll;
-        private KeyVal<ModState, int> _woundReroll;
-        private KeyVal<ModState, int> _armorRoll;
-        private KeyVal<ModState, int> _damageRoll;
+        private KeyVal<State, int, ShotOutcome> _hitRoll;
+        private KeyVal<State, int, ShotOutcome> _hitReroll;
+        private KeyVal<State, int, ShotOutcome> _woundRoll;
+        private KeyVal<State, int, ShotOutcome> _woundReroll;
+        private KeyVal<State, int, ShotOutcome> _armorRoll;
+        private KeyVal<State, int, ShotOutcome> _damageRoll;
 
         /// <summary>
         /// A simplified version of the RollLine class that
@@ -22,12 +22,12 @@ namespace WarhammerCalcData
         /// <param name="armorRoll"></param>
         /// <param name="damageRoll"></param>
         public RollLineSimple
-            (KeyVal<ModState, int> hitRoll,
-            KeyVal<ModState, int> hitReroll,
-            KeyVal<ModState, int> woundRoll,
-            KeyVal<ModState, int> woundReroll,
-            KeyVal<ModState, int> armorRoll,
-            KeyVal<ModState, int> damageRoll)
+            (KeyVal<State, int, ShotOutcome> hitRoll,
+            KeyVal<State, int, ShotOutcome> hitReroll,
+            KeyVal<State, int, ShotOutcome> woundRoll,
+            KeyVal<State, int, ShotOutcome> woundReroll,
+            KeyVal<State, int, ShotOutcome> armorRoll,
+            KeyVal<State, int, ShotOutcome> damageRoll)
         {
             _hitRoll = hitRoll;
             _hitReroll = hitReroll;
@@ -42,43 +42,104 @@ namespace WarhammerCalcData
         // The below properties function the same way as the ones that use
         // the {get;} syntax, but the syntax for these is much simpler.
 
+        #region Hitting
         public int HitRoll
         {
             get => _hitRoll.Value;
             set => _hitReroll.Value = value;
         }
+        public State HitRollState
+        {
+            get => _hitReroll.Key;
+            set => _hitReroll.Key = value;
+        }
+        public ShotOutcome ShotOutcome
+        {
+            get => _hitRoll.Outcome;
+            set => _hitRoll.Outcome = value;
+        }
 
-        
-        public ModState HitRollState => _hitRoll.Key;
-
-        public int HitReroll => _hitReroll.Value;
-        public ModState HitRerollState => _hitReroll.Key;
-
-        public int WoundRoll => _woundRoll.Value;
-        public ModState WoundRollState => _woundRoll.Key;
-
-        public int WoundReroll => _woundReroll.Value;
-        public ModState WoundRerollState => _woundReroll.Key;
-
-        public int ArmorRoll => _armorRoll.Value;
-        public ModState ArmorRollState => _armorRoll.Key;
-
-        public int DamageRoll => _damageRoll.Value;
-        public ModState DamageRollState => _damageRoll.Key;
+        public int HitReroll
+        {
+            get => _hitReroll.Value;
+            set => _hitReroll.Value = value;
+        }
+        public State HitRerollState
+        {
+            get => _hitReroll.Key;
+            set => _hitReroll.Key = value;
+        }
 
         #endregion
 
-        /// <summary>
-        /// Handles special cases for weapons such as Tesla weapons,
-        /// mortal wounds, auto hitting weapons like flamers, etc.
-        /// </summary>
-        public enum ModState
+        #region Wounding
+        public int WoundRoll
         {
-            NormalState = 0,
-            Tesla,
-            Autohit,
-            Na,
-            MortalWound
+            get => _woundRoll.Value;
+            set => _woundRoll.Value = value;
         }
+        public State WoundRollState
+        {
+            get => _woundRoll.Key;
+            set => _woundRoll.Key = value;
+        }
+        public ShotOutcome WoundOutcome
+        {
+            get => _woundRoll.Outcome;
+            set => _woundRoll.Outcome = value;
+        }
+
+        public int WoundReroll
+        {
+            get => _woundReroll.Value;
+            set => _woundReroll.Value = value;
+        }
+        public State WoundRerollState
+        {
+            get => _woundReroll.Key;
+            set => _woundReroll.Key = value;
+        }
+        public ShotOutcome WoundRerollOutcome
+        {
+            get => _woundReroll.Outcome;
+            set => _woundReroll.Outcome = value;
+        }
+
+        #endregion
+
+        #region Armor
+        public int ArmorRoll 
+        {
+            get => _armorRoll.Value;
+            set => _armorRoll.Value = value;
+        }
+        public State ArmorRollState
+        {
+            get => _armorRoll.Key;
+            set => _armorRoll.Key = value;
+        }
+        public ShotOutcome ArmorOutcome
+        {
+            get => _armorRoll.Outcome;
+            set => _armorRoll.Outcome = value;
+        }
+
+        #endregion
+
+        #region Damage
+
+        public int DamageRoll
+        {
+            get => _damageRoll.Value;
+            set => _damageRoll.Value = value;
+        }
+        public State DamageRollState
+        {
+            get => _damageRoll.Key;
+            set => _damageRoll.Key = value;
+        }
+        #endregion  
+
+        #endregion
     }
 }

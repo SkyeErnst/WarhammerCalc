@@ -5,15 +5,27 @@ namespace WarhammerCalcData
 {
     public struct ShotChart
     {
-        public int[] ShotsTaken;
-        public int[] InitialShotsHit;
-        public int[] ShotsMissed;
-        public int[] SuccessfulWounds;
-        public int[] FailedSaves;
-        public int[] Damage;
-        public int[] RerolledShots;
-        public int[] FinalHitList;
-        public int[] RerolledHits;
+        ///// <summary>
+        ///// A container for every shot that has been taken
+        ///// </summary>
+        ////public int[] ShotsTaken;
+        ///// <summary>
+        ///// Contains only the shots that have hit
+        ///// </summary>
+        //public int[] ShotsHit;
+        ///// <summary>
+        ///// Contains only the shots that have missed.
+        ///// </summary>
+        //public int[] ShotsMissed;
+        ///// <summary>
+        ///// Container for the successful wound rolls
+        ///// </summary>
+        //public int[] SuccessfulWounds;
+        //public int[] FailedSaves;
+        //public int[] Damage;
+        //public int[] RerolledShots;
+        ////public int[] FinalHitList;
+        //public int[] RerolledHits;
         public RollLineSimple[] RollStats;
 
         public readonly int WsBs;
@@ -27,7 +39,7 @@ namespace WarhammerCalcData
         public readonly int InvulSave;
         public readonly int ShotDiceNum;
         public readonly int ShotDiceType;
-        public readonly int ShotsToTake;
+        public readonly int NumberOfShotsToMake;
         public readonly int FlatDamage;
         public readonly int WoundXValue;
         public readonly int WoundMortalXValue;
@@ -36,6 +48,7 @@ namespace WarhammerCalcData
         public readonly int ModifiedApValue;
         public readonly int ModifiedDamageWoundRollMinimum;
         public readonly int ModifiedDamageValue;
+        public readonly int TeslaShotAddition;
 
         public readonly bool DontReroll;
         public readonly bool ShouldRerollOnesHit;
@@ -107,6 +120,7 @@ namespace WarhammerCalcData
             WoundXValue = woundXValue;
             WoundMortalXValue = woundMortalXValue;
             MortalWoundDamageValue = 1;
+            TeslaShotAddition = 2;
 
             NaText = "N/A";
             TeslaText = "TESLA";
@@ -136,59 +150,61 @@ namespace WarhammerCalcData
             // variable or flat.
             if (true == hasVariableDamage)
             {
-                ShotsToTake = 0;
+                NumberOfShotsToMake = 0;
 
                 for (int i = 0; i < ShotDiceNum; i++)
                 {
-                    ShotsToTake += Generator.GetRandomNumber(1, ShotDiceType);
+                    NumberOfShotsToMake += Generator.GetRandomNumber(1, ShotDiceType);
                 }
             }
             else
             {
-                ShotsToTake = flatShots;
+                NumberOfShotsToMake = flatShots;
             }
 
 
-            ShotsMissed = new int[ShotsToTake];
-            InitialShotsHit = new int[ShotsToTake];
-            ShotsTaken = new int[ShotsToTake];
-            SuccessfulWounds = new int[ShotsToTake];
-            FailedSaves = new int[ShotsToTake];
-            Damage = new int[ShotsToTake];
-            RerolledShots = new int[ShotsToTake];
-            FinalHitList = new int[ShotsToTake];
-            RerolledHits = new int[ShotsToTake];
-            RollStats = new RollLineSimple[ShotsToTake];
+            //ShotsMissed = new int[NumberOfShotsToMake];
+            //ShotsHit = new int[NumberOfShotsToMake];
+            ////ShotsTaken = new int[NumberOfShotsToMake];
+            //SuccessfulWounds = new int[NumberOfShotsToMake];
+            //FailedSaves = new int[NumberOfShotsToMake];
+            //Damage = new int[NumberOfShotsToMake];
+            //RerolledShots = new int[NumberOfShotsToMake];
+            ////FinalHitList = new int[NumberOfShotsToMake];
+            //RerolledHits = new int[NumberOfShotsToMake];
+            RollStats = new RollLineSimple[NumberOfShotsToMake];
 
 
             // Initializes arrays to value of -1, for ease
             // of debugging in case of error.
 
-            List<object> arrLs = new List<object>
-            {
-                ShotsMissed,
-                InitialShotsHit,
-                ShotsTaken,
-                SuccessfulWounds,
-                FailedSaves,
-                Damage,
-                RerolledShots,
-                FinalHitList,
-                RerolledHits,
-                RollStats
-            };
+            //List<object> arrLs = new List<object>
+            //{
+            //    //ShotsMissed,
+            //    //ShotsHit,
+            //    //ShotsTaken,
+            //    //SuccessfulWounds,
+            //    //FailedSaves,
+            //    //Damage,
+            //    //RerolledShots,
+            //    //FinalHitList,
+            //    //RerolledHits,
+            //    RollStats
+            //};
 
-            foreach (object obj in arrLs)
-            {
-                if (obj is RollLineSimple)
-                {
-                    PopulateArray(RollStats, new RollLineSimple());
-                }
-                else
-                {
-                    PopulateArray((int[])obj, -1);
-                }
-            }
+            //foreach (object obj in arrLs)
+            //{
+            //    if (obj is RollLineSimple)
+            //    {
+            //        PopulateArray(RollStats, new RollLineSimple());
+            //    }
+            //    else
+            //    {
+            //        PopulateArray((int[])obj, -1);
+            //    }
+            //}
+
+            PopulateArray(RollStats, new RollLineSimple());
         }
 
         private static void PopulateArray<T>(IList<T> arrToPop, T value)

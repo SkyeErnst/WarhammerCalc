@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using WarhammerCalcData;
+﻿using WarhammerCalcData;
 using RandomNumberUtility;
 
 
@@ -26,7 +23,7 @@ namespace WarhammerCalcDice
 
             // As long as each previous hit / wound, etc is successful, continue rolling.
             // Otherwise, go to next roll line.
-            for (int i = 0; i < chart.ShotsToTake; i++)
+            for (int i = 0; i < chart.NumberOfShotsToMake; i++)
             {
                 if (true == RollHit(ref chart, i))
                 {
@@ -79,39 +76,38 @@ namespace WarhammerCalcDice
             // Variable for holding the current randomly generated dice roll
             int currShot = 0;
 
-            //chart.RollStats.Add(new RollLine());
-
             if (true == chart.ShouldAutohit)
             {
-                chart.InitialShotsHit[i] = 0;
-                chart.RollStats[i].HitRoll = 0;
-                chart.RollStats[i]._hitValue.Text = chart.AutohitText;
-                //chart.RollStats[i]._hitValue.ForeColor = chart.SpecialEventColor;
+                chart.RollStats[i].ShotRolls = 0;
+                chart.RollStats[i].HitRollState = RollLineSimple.State.Autohit;
+                chart.RollStats[i].ShotOutcome = ShotOutcome.Na;
                 return true;
             }
             else
             {
-                // Randomly generates a dice roll and sets the text property to the roll
-                chart.ShotsTaken.Add((currShot = Rand.Next(1, 7)));
-                chart.RollStats[i]._hitValue.Text = currShot.ToString();
+                // Make initial shot
+                currShot = Generator.GetRandomNumber(1, 6);
 
                 // If initial shot is a hit...
                 if (currShot >= chart.WsBs)
                 {
-                    chart.InitialShotsHit.Add((currShot));
-                    chart.RollStats[i]._hitValue.ForeColor = chart.SuccessColor;
-                    chart.RollStats[i]._hitRerollValue.Text = chart.NaText;
+                    chart.RollStats[i].ShotRolls = currShot;
+                    chart.RollStats[i].HitRollState = RollLineSimple.State.NormalState;
+                    chart.RollStats[i].ShotOutcome = ShotOutcome.Success;
+                    chart.RollStats[i].HitRerollState = RollLineSimple.State.Na;
                 }
-                // if initial shot is a miss.
+                // if initial shot is a miss...
                 else
                 {
+                    // And we're NOT rerolling
                     if (chart.DontReroll == true)
                     {
-                        chart.ShotsMissed.Add(currShot);
-                        chart.RollStats[i]._hitValue.ForeColor = chart.FailColor;
-                        //chart.RollStats[i]._hitRerollValue.Text = chart.NaText;
+                        chart.RollStats[i].ShotRolls = currShot;
+                        chart.RollStats[i].HitRollState = RollLineSimple.State.NormalState;
+                        chart.RollStats[i].ShotOutcome = ShotOutcome.Fail;
                         return false;
                     }
+                    // if we ARE rerolling
                     if ((chart.ShouldRerollOnesHit == true && currShot == 1
                          ||
                          chart.ShouldRerollMisses == true))
@@ -119,17 +115,17 @@ namespace WarhammerCalcDice
 
                         // Only way to get here is if initial shot fails,
                         // So set the hit value text color to fail
-                        chart.RollStats[i]._hitValue.ForeColor = chart.FailColor;
+                        // chart.RollStats[i]._hitValue.ForeColor = chart.FailColor;
 
                         // Generates a new dice roll and fills in the re-roll value label with the dice roll
-                        chart.RerolledShots.Add(currShot = Rand.Next(1, 7));
-                        chart.RollStats[i]._hitRerollValue.Text = currShot.ToString();
+                        chart.RerolledShots[i] = (currShot = Generator.GetRandomNumber(1, 6));
+                        //chart.RollStats[i]._hitRerollValue.Text = currShot.ToString();
 
                         // If the newly generated roll is a hit
                         if (currShot >= chart.WsBs)
                         {
-                            chart.RerolledHits.Add((currShot));
-                            chart.RollStats[i]._hitRerollValue.ForeColor = chart.SuccessColor;
+                            chart.RerolledHits[i] = currShot;
+                            //chart.RollStats[i]._hitRerollValue.ForeColor = chart.SuccessColor;
                         }
                         // If the newly generated roll is not a hit
                         else
