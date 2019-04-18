@@ -79,13 +79,14 @@ namespace WarhammerCalcDice
             // Variable for holding the current randomly generated dice roll
             int currShot = 0;
 
-            chart.RollStats.Add(new RollLine());
+            //chart.RollStats.Add(new RollLine());
 
             if (true == chart.ShouldAutohit)
             {
-                chart.InitialShotsHit.Add(0);
+                chart.InitialShotsHit[i] = 0;
+                chart.RollStats[i].HitRoll = 0;
                 chart.RollStats[i]._hitValue.Text = chart.AutohitText;
-                chart.RollStats[i]._hitValue.ForeColor = chart.SpecialEventColor;
+                //chart.RollStats[i]._hitValue.ForeColor = chart.SpecialEventColor;
                 return true;
             }
             else

@@ -1,4 +1,5 @@
 ﻿using RandomNumberUtility;
+using System.Collections.Generic;
 
 namespace WarhammerCalcData
 {
@@ -147,6 +148,7 @@ namespace WarhammerCalcData
                 ShotsToTake = flatShots;
             }
 
+
             ShotsMissed = new int[ShotsToTake];
             InitialShotsHit = new int[ShotsToTake];
             ShotsTaken = new int[ShotsToTake];
@@ -158,11 +160,40 @@ namespace WarhammerCalcData
             RerolledHits = new int[ShotsToTake];
             RollStats = new RollLineSimple[ShotsToTake];
 
+
+            // Initializes arrays to value of -1, for ease
+            // of debugging in case of error.
+
+            List<object> arrLs = new List<object>
+            {
+                ShotsMissed,
+                InitialShotsHit,
+                ShotsTaken,
+                SuccessfulWounds,
+                FailedSaves,
+                Damage,
+                RerolledShots,
+                FinalHitList,
+                RerolledHits,
+                RollStats
+            };
+
+            foreach (object obj in arrLs)
+            {
+                if (obj is RollLineSimple)
+                {
+                    PopulateArray(RollStats, new RollLineSimple());
+                }
+                else
+                {
+                    PopulateArray((int[])obj, -1);
+                }
+            }
         }
 
-        private static void PopulateArray<T>(T[] arrToPop, T value)
+        private static void PopulateArray<T>(IList<T> arrToPop, T value)
         {
-            int len = arrToPop.Length;
+            int len = arrToPop.Count;
 
             for (int i = 0; i < len; i++)
             {
