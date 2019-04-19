@@ -23,5 +23,10 @@
         /// For example, auto hitting shots, mortal wounds, damage, etc.
         /// </summary>
         Na,
+        /// <summary>
+        /// Used in cases such as when the initial shot is a hit
+        /// and the reroll value is not used.
+        /// </summary>
+        NotUsed
     }
 }

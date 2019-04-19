@@ -27,6 +27,11 @@
         /// Used if no special state can apply to this roll
         /// </summary>
         Na,
+        /// <summary>
+        /// State for if an ADDED shot caused a mortal wound.
+        /// I.E, this is only applied to the added RollLine objects
+        /// that are generated for applying mortal wound damage.
+        /// </summary>
         MortalWound
     }
 }

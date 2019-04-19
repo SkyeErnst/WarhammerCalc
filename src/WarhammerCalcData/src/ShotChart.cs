@@ -65,11 +65,6 @@ namespace WarhammerCalcData
         public readonly bool ResolveWithModifiedDamage;
         public readonly bool ResolveNormally;
 
-        public readonly string NaText;
-        public readonly string TeslaText;
-        public readonly string AutohitText;
-        public readonly string MortalWoundText;
-
         public ShotChart(
             int scoreWsBs,
             int flatShots,
@@ -121,11 +116,6 @@ namespace WarhammerCalcData
             WoundMortalXValue = woundMortalXValue;
             MortalWoundDamageValue = 1;
             TeslaShotAddition = 2;
-
-            NaText = "N/A";
-            TeslaText = "TESLA";
-            AutohitText = "AUTO";
-            MortalWoundText = "MORTAL";
 
             DontReroll = rerollNone;
             ShouldRerollHitsOfOne = rerollOnes;

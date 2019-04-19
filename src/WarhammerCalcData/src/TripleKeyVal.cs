@@ -4,9 +4,9 @@
     /// Custom implementation of the KeyValuePair class,
     /// featuring a slimmed down footprint and mutable values.
     /// </summary>
-    public class KeyVal<TState, TValue, TOutcome>
+    public class TripleKeyVal<TState, TValue, TOutcome>
     {
-        public KeyVal(TState state, TValue value, TOutcome outcome)
+        public TripleKeyVal(TState state, TValue value, TOutcome outcome)
         {
             State = state;
             Value = value;

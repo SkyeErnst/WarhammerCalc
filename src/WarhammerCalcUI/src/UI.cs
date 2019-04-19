@@ -13,9 +13,15 @@ namespace WarhammerCalcUI
         private List<RollLineDisplay> _linesAdded;
         private List<Label> _woundLabels;
 
+        private Color _defaultColor = Color.Black;
         private Color _successColor = Color.ForestGreen;
         private Color _failColor = Color.Red;
         private Color _specialColor = Color.Aquamarine;
+
+        private const string NaText = "N/A";
+        private const string TeslaText = "TESLA";
+        private const string AutohitText = "AUTO";
+        private const string MortalWoundText = "MORTAL";
 
         public Ui()
         {
@@ -460,50 +466,76 @@ namespace WarhammerCalcUI
 
                 try
                 {
-                    // Hit roll
+                    currDisplay.HitValue.Text = currChartLine.HitRoll.ToString();
+                    currDisplay.HitRerollValue.Text = currChartLine.HitReroll.ToString();
 
-                    switch (currChartLine.HitOutcome)
-                    {
-                        case RollOutcome.DefaultOutcome:
-                            break;
-                        case RollOutcome.Success:
-                            break;
-                        case RollOutcome.Fail:
-                            break;
-                        case RollOutcome.Na:
-                            break;
-                    }
+                    currDisplay.WoundValue.Text = currChartLine.Wound.ToString();
+                    currDisplay.WoundRerollValue.Text = currChartLine.WoundReroll.ToString();
 
-                    // hit reroll
+                    currDisplay.ArmorRollValue.Text = currChartLine.ArmorRoll.ToString();
 
-                    // wound roll
-
-                    // wound re roll
-
-                    // armor roll
-
-                    // damage roll
+                    currDisplay.DamageValue.Text = currChartLine.DamageRoll.ToString();
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show("Error: " + e.Message + "\n\n" + "Trace log: " + e.ToString());
                 }
 
-                // colors 
+                #region Text assignment
+                if
+                (
+                    State.Tesla == currChartLine.HitState
+                    ||
+                    State.Tesla == currChartLine.HitRerollState
+                )
+                {
+                    currDisplay.HitValue.Text = TeslaText;
+                    currDisplay.HitRerollValue.Text = TeslaText;
+                }
+
+                if (State.Autohit == currChartLine.HitState)
+                {
+                    currDisplay.HitValue.Text = AutohitText;
+                    currDisplay.HitRerollValue.Text = AutohitText;
+                }
+
+                if (State.MortalWound == currChartLine.HitState)
+                {
+                    currDisplay.HitValue.Text = MortalWoundText;
+                    currDisplay.HitRerollValue.Text = MortalWoundText;
+                    currDisplay.WoundValue.Text = MortalWoundText;
+                    currDisplay.WoundRerollValue.Text = MortalWoundText;
+                }
+
+                #endregion
+
+                #region Color assignment
+
+                #region Hits
+
+                if (RollOutcome.Success == currChartLine.HitOutcome)
+                {
+                    currDisplay.HitValue.ForeColor = _successColor;
+                }
 
 
-                // Hit roll
+                #endregion
+                switch (currChartLine.HitRerollOutcome)
+                {
+                    case RollOutcome.Success:
+                        currDisplay.HitRerollValue.ForeColor = _successColor;
+                        break;
+                    case RollOutcome.Fail:
+                        currDisplay.HitRerollValue.ForeColor = _failColor;
+                        break;
+                    case RollOutcome.Na:
+                        break;
+                    case RollOutcome.NotUsed:
 
-                // hit reroll
+                        break;
+                }
 
-                // wound roll
-
-                // wound re roll
-
-                // armor roll
-
-                // damage roll
-
+                #endregion
             }
         }
     }

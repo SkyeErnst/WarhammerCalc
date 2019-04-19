@@ -231,6 +231,7 @@ namespace WarhammerCalcDice
             {
                 _mortalWoundCount++;
                 _calcMortalWound = true;
+                currLine.HitState = State.MortalWound;
             }
 
             // Handles the special rules for when weapons resolve at a higher AP

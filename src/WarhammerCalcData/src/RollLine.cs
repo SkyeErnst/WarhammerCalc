@@ -10,29 +10,29 @@ namespace WarhammerCalcData
     [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
     public class RollLine
     {
-        private KeyVal<State, int, RollOutcome> _hitRoll;
-        private KeyVal<State, int, RollOutcome> _hitReroll;
-        private KeyVal<State, int, RollOutcome> _woundRoll;
-        private KeyVal<State, int, RollOutcome> _woundReroll;
-        private KeyVal<State, int, RollOutcome> _armorRoll;
-        private KeyVal<State, int, RollOutcome> _damageRoll;
+        private TripleKeyVal<State, int, RollOutcome> _hitRoll;
+        private TripleKeyVal<State, int, RollOutcome> _hitReroll;
+        private TripleKeyVal<State, int, RollOutcome> _woundRoll;
+        private TripleKeyVal<State, int, RollOutcome> _woundReroll;
+        private TripleKeyVal<State, int, RollOutcome> _armorRoll;
+        private TripleKeyVal<State, int, RollOutcome> _damageRoll;
 
         /// <summary>
-        /// The initial value to assign to the KeyVal objects.
+        /// The initial value to assign to the TripleKeyVal objects.
         /// </summary>
         private const int InitialValue = 0;
 
         public RollLine()
         {
-            _hitRoll = new KeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
-            _hitReroll = new KeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
+            _hitRoll = new TripleKeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
+            _hitReroll = new TripleKeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
 
-            _woundRoll = new KeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
-            _woundReroll = new KeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
+            _woundRoll = new TripleKeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
+            _woundReroll = new TripleKeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
 
-            _armorRoll = new KeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
+            _armorRoll = new TripleKeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
 
-            _damageRoll = new KeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
+            _damageRoll = new TripleKeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
         }
 
         #region Properties
