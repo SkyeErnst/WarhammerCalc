@@ -203,7 +203,7 @@ namespace WarhammerCalcUI
             {
                 foreach (RollLineDisplay line in _linesAdded)
                 {
-                    this.Controls.Remove(line);
+                    this.Controls.Remove(value: line);
                 }
                 _linesAdded.Clear();
             }
@@ -211,23 +211,52 @@ namespace WarhammerCalcUI
             {
                 foreach (Label lbl in _woundLabels)
                 {
-                    this.Controls.Remove(lbl);
+                    this.Controls.Remove(value: lbl);
                 }
                 _woundLabels.Clear();
             }
 
-            ConvertRollLineSimple(ref crt, out _linesAdded);
+            ConvertRollLineSimple(chart: ref crt, convertedList: out _linesAdded);
 
-            int count = crt.RollStats.Count;
-
-            for (int i = 0; i < count; i++)
-            {
-                
-            }
-
+            int count = _linesAdded.Count;
             Point currPoint;
             int yOffset = 50;
 
+            currPoint = _resultsLabel.Location;
+            currPoint.Y += yOffset;
+
+            for (int i = 0; i < count; i++)
+            {
+                _linesAdded[index: i].Location = currPoint;
+                //this.Controls.Add(_linesAdded[i]);
+                currPoint.Y += yOffset;
+            }
+
+            int cnt = crt.RollStats.Count;
+            Point tmpPoint = _damageResultsLabel.Location;
+
+            for (int i = 0; i < cnt; i++)
+            {
+                if (RollOutcome.Success == crt.RollStats[index: i].WoundOutcome)
+                {
+                    Label lbl = new Label();
+                    _woundLabels.Add(item: lbl);
+
+                    lbl.AutoSize = true;
+
+                    lbl.Text = "Wound: " + (i + 1) + "," + " Damage: " + crt.RollStats[index: i].DamageRoll;
+
+                    this.Controls.Add(value: lbl);
+
+                    tmpPoint.Y += 30;
+
+                    lbl.Location = tmpPoint;
+                }
+            }
+
+            this.Controls.AddRange(_linesAdded.ToArray());
+
+            _damageTotalNum.Text = Sum(values: crt.RollStats).ToString();
         }
 
         private void FillEquivalentValues(EqSelection selection)
@@ -280,13 +309,16 @@ namespace WarhammerCalcUI
         /// </summary>
         /// <param name="values"></param>
         /// <returns></returns>
-        private static int Sum(IReadOnlyList<int> values)
+        private static int Sum(List<RollLine> values)
         {
             int total = 0;
 
             for (int i = 0; i < values.Count; i++)
             {
-                total += values[i];
+                if (values[i].DamageRoll > 0)
+                {
+                    total += values[i].DamageRoll;
+                }
             }
 
             return total;
@@ -509,34 +541,48 @@ namespace WarhammerCalcUI
 
                 #endregion
 
-                #region Color assignment
+                //#region Color assignment
 
-                #region Hits
+                //#region Hits
 
-                if (RollOutcome.Success == currChartLine.HitOutcome)
-                {
-                    currDisplay.HitValue.ForeColor = _successColor;
-                }
+                //if (RollOutcome.Success == currChartLine.HitOutcome)
+                //{
+                //    currDisplay.HitValue.ForeColor = _successColor;
+                //}
+                //else if(RollOutcome.Fail == currChartLine.HitOutcome)
+                //{
+                //    currDisplay.HitValue.ForeColor = _failColor;
+                //}
 
 
-                #endregion
-                switch (currChartLine.HitRerollOutcome)
-                {
-                    case RollOutcome.Success:
-                        currDisplay.HitRerollValue.ForeColor = _successColor;
-                        break;
-                    case RollOutcome.Fail:
-                        currDisplay.HitRerollValue.ForeColor = _failColor;
-                        break;
-                    case RollOutcome.Na:
-                        break;
-                    case RollOutcome.NotUsed:
+                //#endregion
+                //switch (currChartLine.HitRerollOutcome)
+                //{
+                //    case RollOutcome.Success:
+                //        currDisplay.HitRerollValue.ForeColor = _successColor;
+                //        break;
+                //    case RollOutcome.Fail:
+                //        currDisplay.HitRerollValue.ForeColor = _failColor;
+                //        break;
+                //    case RollOutcome.Na:
+                //        break;
+                //    case RollOutcome.NotUsed:
 
-                        break;
-                }
+                //        break;
+                //}
 
-                #endregion
+                //#endregion
             }
+        }
+
+        private enum Check
+        {
+            Hit = 0,
+            HitReRoll,
+            Wound,
+            WoundReRoll,
+            Armor,
+            Damage
         }
     }
 }
