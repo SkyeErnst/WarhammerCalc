@@ -6,8 +6,9 @@ namespace WarhammerCalcUI
 {
     static class MainProgram
     {
-        internal static DiceRoller diceRoller;
-        internal static Ui ui;
+        public static DiceRoller DiceRollRef;
+
+        internal static Ui UiRef;
 
         /// <summary>
         /// The main entry point for the application.
@@ -17,10 +18,10 @@ namespace WarhammerCalcUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            diceRoller = new DiceRoller();
-            ui = new Ui();
+            DiceRollRef = new DiceRoller();
+            UiRef = new Ui();
             
-            Application.Run(ui);
+            Application.Run(UiRef);
         }
     }
 }

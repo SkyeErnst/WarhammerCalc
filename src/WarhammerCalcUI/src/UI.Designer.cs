@@ -66,6 +66,7 @@
             this._woundMortalOnXRadio = new System.Windows.Forms.RadioButton();
             this._woundingUseStandardRadio = new System.Windows.Forms.RadioButton();
             this._damagePanel = new System.Windows.Forms.Panel();
+            this._xResolveNormallyRadio = new System.Windows.Forms.RadioButton();
             this._xResolveDamageDamageValue = new System.Windows.Forms.MaskedTextBox();
             this._xResolveDamageHitValue = new System.Windows.Forms.MaskedTextBox();
             this._xResolveApApValue = new System.Windows.Forms.MaskedTextBox();
@@ -97,7 +98,6 @@
             this.tEQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vEQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kEQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._xResolveNormallyRadio = new System.Windows.Forms.RadioButton();
             this._modifersPanel.SuspendLayout();
             this.woundPanel.SuspendLayout();
             this._damagePanel.SuspendLayout();
@@ -475,6 +475,17 @@
             this._damagePanel.Size = new System.Drawing.Size(274, 77);
             this._damagePanel.TabIndex = 53;
             // 
+            // _xResolveNormallyRadio
+            // 
+            this._xResolveNormallyRadio.AutoSize = true;
+            this._xResolveNormallyRadio.Location = new System.Drawing.Point(4, 6);
+            this._xResolveNormallyRadio.Name = "_xResolveNormallyRadio";
+            this._xResolveNormallyRadio.Size = new System.Drawing.Size(107, 17);
+            this._xResolveNormallyRadio.TabIndex = 59;
+            this._xResolveNormallyRadio.TabStop = true;
+            this._xResolveNormallyRadio.Text = "Resolve Normally";
+            this._xResolveNormallyRadio.UseVisualStyleBackColor = true;
+            // 
             // _xResolveDamageDamageValue
             // 
             this._xResolveDamageDamageValue.Location = new System.Drawing.Point(232, 54);
@@ -771,17 +782,6 @@
             this.kEQToolStripMenuItem.Text = "KEQ";
             this.kEQToolStripMenuItem.Click += new System.EventHandler(this.kEQToolStripMenuItem_Click);
             // 
-            // _xResolveNormallyRadio
-            // 
-            this._xResolveNormallyRadio.AutoSize = true;
-            this._xResolveNormallyRadio.Location = new System.Drawing.Point(4, 6);
-            this._xResolveNormallyRadio.Name = "_xResolveNormallyRadio";
-            this._xResolveNormallyRadio.Size = new System.Drawing.Size(107, 17);
-            this._xResolveNormallyRadio.TabIndex = 59;
-            this._xResolveNormallyRadio.TabStop = true;
-            this._xResolveNormallyRadio.Text = "Resolve Normally";
-            this._xResolveNormallyRadio.UseVisualStyleBackColor = true;
-            // 
             // Ui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -827,7 +827,7 @@
             this.Controls.Add(this._AtkLabel);
             this.Controls.Add(this._menuStrip);
             this.Name = "Ui";
-            this.Text = "Math Hammer";
+            this.Text = "Warhamer Calc";
             this.Load += new System.EventHandler(this.Ui_Load);
             this._modifersPanel.ResumeLayout(false);
             this._modifersPanel.PerformLayout();

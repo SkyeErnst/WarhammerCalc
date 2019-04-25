@@ -44,19 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\KeyVal.cs" />
+    <Compile Include="src\TripleKeyVal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="src\RollLine.cs">
+    <Compile Include="src\ModState.cs" />
+    <Compile Include="src\RollLineDisplay.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="src\RollLine.Designer.cs">
-      <DependentUpon>RollLine.cs</DependentUpon>
+      <DependentUpon>RollLineDisplay.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\RollLine.cs" />
     <Compile Include="src\ShotChart.cs" />
+    <Compile Include="src\RollOutcome.cs" />
     <Compile Include="src\UnitEquivalencyStats\GEQStats.cs" />
     <Compile Include="src\UnitEquivalencyStats\IStats.cs" />
     <Compile Include="src\UnitEquivalencyStats\KeqStats.cs" />
@@ -65,8 +70,8 @@
     <Compile Include="src\UnitEquivalencyStats\VeqStats.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="src\RollLine.resx">
-      <DependentUpon>RollLine.cs</DependentUpon>
+    <EmbeddedResource Include="src\RollLineDisplay.resx">
+      <DependentUpon>RollLineDisplay.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +80,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RandomNumberUtility\RandomNumberUtility.csproj">
+      <Project>{5482baf9-ab64-42a0-861f-a908e43aa053}</Project>
+      <Name>RandomNumberUtility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

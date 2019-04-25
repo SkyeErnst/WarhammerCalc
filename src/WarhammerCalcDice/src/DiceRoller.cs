@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using RandomNumberUtility;
 using WarhammerCalcData;
-
 
 namespace WarhammerCalcDice
 {
     public class DiceRoller
     {
-        private readonly Random _rand;
 
         private bool _calcTesla = false;
         private bool _calcMortalWound = false;
@@ -17,11 +13,6 @@ namespace WarhammerCalcDice
         private int _teslaShots = 0;
         private int _mortalWoundCount = 0;
 
-        public DiceRoller()
-        {
-            _rand = new Random();
-        }
-
         public ShotChart Roll(ref ShotChart chart)
         {
             _calcTesla = false;
@@ -29,26 +20,12 @@ namespace WarhammerCalcDice
             _teslaShots = 0;
             _mortalWoundCount = 0;
 
-            int itter = 0;
-
-            // Sets up number of times to run loop depending on if the number of shots is variable or 
-            // an explicit number.
-            if (false == chart.HasVariableShots)
-            {
-                itter = chart.FlatShots;
-            }
-            else
-            {
-                for (int i = 0; i < chart.ShotDiceNum; i++)
-                {
-                    itter += _rand.Next(1, chart.ShotDiceType + 1);
-                }
-            }
-
             // As long as each previous hit / wound, etc is successful, continue rolling.
             // Otherwise, go to next roll line.
-            for (int i = 0; i < itter; i++)
+            for (int i = 0; i < chart.NumberOfShotsToMake; i++)
             {
+                chart.RollStats.Add(new RollLine());
+
                 if (true == RollHit(ref chart, i))
                 {
                     if (true == RollWound(ref chart, i))
@@ -56,10 +33,6 @@ namespace WarhammerCalcDice
                         if (false == RollSave(ref chart, i))
                         {
                             RollDamage(ref chart, i);
-                        }
-                        else
-                        {
-                            chart.RollStats[i]._damageValue.Text = chart.NaText;
                         }
                     }
                 }
@@ -82,16 +55,6 @@ namespace WarhammerCalcDice
                 }
             }
 
-            // Puts together the initial hits list and the rerolled hits list.
-            if (chart.InitialShotsHit.Count > 0)
-            {
-                chart.FinalHitList.AddRange(chart.InitialShotsHit);
-            }
-            if (chart.RerolledHits.Count > 0)
-            {
-                chart.FinalHitList.AddRange(chart.RerolledHits);
-            }
-
             return chart;
         }
 
@@ -99,71 +62,65 @@ namespace WarhammerCalcDice
         {
             // Variable for holding the current randomly generated dice roll
             int currShot = 0;
-
-            chart.RollStats.Add(new RollLine());
+            var currLine = chart.RollStats[i];
 
             if (true == chart.ShouldAutohit)
             {
-                chart.InitialShotsHit.Add(0);
-                chart.RollStats[i]._hitValue.Text = chart.AutohitText;
-                chart.RollStats[i]._hitValue.ForeColor = chart.SpecialEventColor;
+                currLine.HitRoll = 0;
+                currLine.HitState = State.Autohit;
+                currLine.HitOutcome = RollOutcome.Na;
                 return true;
             }
             else
             {
-                // Randomly generates a dice roll and sets the text property to the roll
-                chart.ShotsTaken.Add((currShot = _rand.Next(1, 7)));
-                chart.RollStats[i]._hitValue.Text = currShot.ToString();
+                // Make initial shot
+                currShot = Generator.GetRandomNumber(1, 6);
+                currLine.HitRoll = currShot;
 
                 // If initial shot is a hit...
                 if (currShot >= chart.WsBs)
                 {
-                    chart.InitialShotsHit.Add((currShot));
-                    chart.RollStats[i]._hitValue.ForeColor = chart.SuccessColor;
-                    chart.RollStats[i]._hitRerollValue.Text = chart.NaText;
+                    currLine.HitOutcome = RollOutcome.Success;
+
+                    currLine.HitRerollState = State.Na;
                 }
-                // if initial shot is a miss.
+                // if initial shot is a miss...
                 else
                 {
+                    // if we're NOT rerolling
                     if (chart.DontReroll == true)
                     {
-                        chart.ShotsMissed.Add(currShot);
-                        chart.RollStats[i]._hitValue.ForeColor = chart.FailColor;
-                        //chart.RollStats[i]._hitRerollValue.Text = chart.NaText;
+                        currLine.HitOutcome = RollOutcome.Fail;
                         return false;
                     }
-                    if ((chart.ShouldRerollOnesHit == true && currShot == 1
+                    // if we ARE rerolling
+                    else if ((chart.ShouldRerollHitsOfOne == true && currShot == 1)
                          ||
-                         chart.ShouldRerollMisses == true))
+                         chart.ShouldRerollMisses == true)
                     {
+                        chart.RollStats[i].HitOutcome = RollOutcome.Fail;
 
-                        // Only way to get here is if initial shot fails,
-                        // So set the hit value text color to fail
-                        chart.RollStats[i]._hitValue.ForeColor = chart.FailColor;
-
-                        // Generates a new dice roll and fills in the re-roll value label with the dice roll
-                        chart.RerolledShots.Add(currShot = _rand.Next(1, 7));
-                        chart.RollStats[i]._hitRerollValue.Text = currShot.ToString();
+                        // Generates the reroll
+                        currLine.HitReroll = (currShot = Generator.GetRandomNumber(1, 6));
 
                         // If the newly generated roll is a hit
                         if (currShot >= chart.WsBs)
                         {
-                            chart.RerolledHits.Add((currShot));
-                            chart.RollStats[i]._hitRerollValue.ForeColor = chart.SuccessColor;
+                            currLine.HitReroll = currShot;
+                            currLine.HitRerollState = State.NormalState;
+                            currLine.HitRerollOutcome = RollOutcome.Success;
                         }
                         // If the newly generated roll is not a hit
                         else
                         {
-                            chart.RollStats[i]._hitRerollValue.ForeColor = chart.FailColor;
+                            currLine.HitRerollOutcome = RollOutcome.Fail;
                             return false;
                         }
                     }
-                    // Handles case of dice roll being greater than 1, but re-roll one's is true
-                    else if (true == chart.ShouldRerollOnesHit && 1 != currShot)
+                    // If we are ONLY rerolling ones, and the shot is not a 1
+                    else if (true == chart.ShouldRerollHitsOfOne && 1 != currShot)
                     {
-                        //chart.RollStats[i]._hitRerollValue.Text = chart.NaText;
-                        chart.RollStats[i]._hitRerollValue.ForeColor = chart.DefaultColor;
-                        chart.RollStats[i]._hitValue.ForeColor = chart.FailColor;
+                        chart.RollStats[i].HitOutcome = RollOutcome.Fail;
                         return false;
                     }
                 }
@@ -181,6 +138,8 @@ namespace WarhammerCalcDice
         private bool RollWound(ref ShotChart chart, int i)
         {
             int woundTarget = 0;
+            int currWoundRoll = 0;
+            var currLine = chart.RollStats[i];
 
             if (true == chart.ShouldWoundOnX)
             {
@@ -189,76 +148,86 @@ namespace WarhammerCalcDice
             else
             {
                 // Set the target for the to wound roll.
-                if ((chart.Strength == (chart.Tough * 2)) || chart.Strength >= (chart.Tough * 2)) // strength equal to or double tough, 2+
+
+                // strength equal to or double tough, 2+
+                if ((chart.Strength == (chart.Tough * 2)) || chart.Strength >= (chart.Tough * 2)) 
                 {
                     woundTarget = 2;
                 }
-                else if (chart.Strength > chart.Tough) // strength greater than toughness, 3+
+                // strength greater than toughness, 3+
+                else if (chart.Strength > chart.Tough) 
                 {
                     woundTarget = 3;
                 }
-                else if (chart.Strength == chart.Tough) // both equal, 4+
+                // both equal, 4+
+                else if (chart.Strength == chart.Tough) 
                 {
                     woundTarget = 4;
                 }
-                else if (chart.Strength < chart.Tough) // str lower than tough, 5+
+                // str lower than tough, 5+
+                else if (chart.Strength < chart.Tough) 
                 {
                     woundTarget = 5;
                 }
-                else if ((chart.Tough == (chart.Strength / 2)) || (chart.Tough >= (chart.Strength / 2))
-                ) // str is 1/2 or less than tough
+                // str is 1/2 or less than tough, 6+
+                else if (chart.Tough <= (chart.Strength / 2))
                 {
                     woundTarget = 6;
                 }
             }
 
-            // Rolls for wounds
-            int currWoundRoll = 0;
+            currWoundRoll = Generator.GetRandomNumber(1, 6);
+            currLine.Wound = currWoundRoll;
 
-            currWoundRoll = _rand.Next(1, 7);
-
-            chart.RollStats[i]._woundValue.Text = currWoundRoll.ToString();
-
+            // if the wound is successful 
             if (currWoundRoll >= woundTarget)
             {
-                chart.SuccessfulWounds.Add(currWoundRoll);
-                chart.RollStats[i]._woundValue.ForeColor = chart.SuccessColor;
-
+                currLine.WoundOutcome = RollOutcome.Success;
             }
+            // if the wound is not successful but we are rerolling
             else if ((true == chart.ShouldRerollWoundsOfOne && 1 == currWoundRoll) || true == chart.ShouldRerollFailedWounds)
             {
-                currWoundRoll = _rand.Next(1, 7);
+                currLine.WoundOutcome = RollOutcome.Fail;
 
-                chart.RollStats[i]._woundRerollValue.Text = currWoundRoll.ToString();
-                chart.RollStats[i]._woundValue.ForeColor = chart.FailColor;
+                currLine.WoundReroll = (currWoundRoll = Generator.GetRandomNumber(1,6));
 
+                // If the reroll is a success
                 if (currWoundRoll >= woundTarget)
                 {
-                    chart.SuccessfulWounds.Add(currWoundRoll);
-                    chart.RollStats[i]._woundRerollValue.ForeColor = chart.SuccessColor;
+                    currLine.WoundRerollOutcome = RollOutcome.Success;
                 }
+                // if the reroll fails
                 else
                 {
-                    chart.RollStats[i]._woundRerollValue.ForeColor = chart.FailColor;
+                    currLine.WoundRerollOutcome = RollOutcome.Fail;
                     return false;
                 }
             }
+            // if the wound is not successful and we are not rerolling
             else
             {
-                chart.RollStats[i]._woundValue.ForeColor = chart.FailColor;
+                currLine.WoundOutcome = RollOutcome.Fail;
                 return false;
             }
 
+            // Handles the special rules for when weapons cause
+            // mortal wounds on roll of X or more.
             if (true == chart.ShouldMortalWoundOnX && currWoundRoll >= chart.WoundMortalXValue)
             {
                 _mortalWoundCount++;
                 _calcMortalWound = true;
+                currLine.HitState = State.MortalWound;
             }
+
+            // Handles the special rules for when weapons resolve at a higher AP
+            // on a wound roll of X
             if (true == chart.ResolveWithModifiedAp && currWoundRoll >= chart.ModifiedApWoundRollMinimum)
             {
                 _apOverride = true;
             }
 
+            // Handles the special rules for weapons that resolve with higher damage on 
+            // a wound roll of X.
             if (true == chart.ResolveWithModifiedDamage && currWoundRoll >= chart.ModifiedDamageWoundRollMinimum)
             {
                 _damageOverride = true;
@@ -270,6 +239,8 @@ namespace WarhammerCalcDice
         private bool RollSave(ref ShotChart chart, int i)
         {
             int saveToUse;
+            int currSaveRoll = 0;
+            RollLine currLine = chart.RollStats[i];
 
             if (chart.InvulSave != 0)
             {
@@ -294,19 +265,19 @@ namespace WarhammerCalcDice
                     saveToUse = chart.Save + chart.Ap;
                 }
             }
-            int currSaveRoll = _rand.Next(1, 7);
 
-            chart.RollStats[i]._armorRoll.Text = currSaveRoll.ToString();
+            currLine.ArmorRoll = (currSaveRoll = Generator.GetRandomNumber(1, 6));
 
+            // If the save is failed
             if (currSaveRoll < saveToUse)
             {
-                chart.FailedSaves.Add(currSaveRoll);
-                chart.RollStats[i]._armorRoll.ForeColor = chart.FailColor;
+                currLine.ArmorRollOutcome = RollOutcome.Fail;
                 return false;
             }
+            // If the save succeeds
             else
             {
-                chart.RollStats[i]._armorRoll.ForeColor = chart.SuccessColor;
+                currLine.ArmorRollOutcome = RollOutcome.Success;
                 return true;
             }
         }
@@ -314,12 +285,16 @@ namespace WarhammerCalcDice
         private void RollDamage(ref ShotChart chart, int i)
         {
             int innerTotal = 0;
+            var currLine = chart.RollStats[i];
 
             if (true == chart.HasVariableDamage)
             {
+                int roll = 0;
+
                 for (int j = 0; j < chart.DamageDiceNum; j++)
                 {
-                    int roll = _rand.Next(1, chart.DamageDiceType + 1);
+                    roll = Generator.GetRandomNumber(1, 6);
+
                     innerTotal += roll;
                 }
             }
@@ -333,16 +308,22 @@ namespace WarhammerCalcDice
                 innerTotal = chart.FlatDamage;
             }
 
-            chart.Damage.Add(innerTotal);
-            chart.RollStats[i]._damageValue.Text = innerTotal.ToString();
+            currLine.DamageRoll = innerTotal;
         }
 
         private void HandleTesla(ref ShotChart chart)
         {
-            chart.RollStats.Add(new RollLine());
-            chart.RollStats[chart.RollStats.Count - 1]._hitValue.Text = chart.TeslaText;
-            chart.RollStats[chart.RollStats.Count - 1]._hitValue.ForeColor = chart.SpecialEventColor;
+            RollLine currLine = new RollLine();
+            chart.RollStats.Add(currLine);
+            
 
+            currLine.HitState = State.Tesla;
+            currLine.HitRerollState = State.Tesla;
+            currLine.HitOutcome = RollOutcome.Na;
+            currLine.HitRerollOutcome = RollOutcome.Na;
+
+            // The tesla shots autohit, so we only need to roll for
+            // the wound and armor.
             if (true == RollWound(ref chart, chart.RollStats.Count - 1))
             {
                 if (false == RollSave(ref chart, chart.RollStats.Count - 1))
@@ -355,17 +336,35 @@ namespace WarhammerCalcDice
         private void HandleMortalWounds(ref ShotChart chart)
         {
             chart.RollStats.Add(new RollLine());
-            chart.SuccessfulWounds.Add(0);
+            RollLine currLine = chart.RollStats[chart.RollStats.Count - 1];
 
-            chart.RollStats[chart.RollStats.Count - 1]._hitValue.Text = chart.MortalWoundText;
-            chart.RollStats[chart.RollStats.Count - 1]._hitValue.ForeColor = chart.SpecialEventColor;
+            currLine.HitState = State.MortalWound;
+            currLine.HitRoll = 0;
+            currLine.HitOutcome = RollOutcome.Na;
 
-            chart.RollStats[chart.RollStats.Count - 1]._woundValue.Text = chart.MortalWoundText;
-            chart.RollStats[chart.RollStats.Count - 1]._woundValue.ForeColor = chart.SpecialEventColor;
+            currLine.HitRerollState = State.MortalWound;
+            currLine.HitReroll = 0;
+            currLine.HitRerollOutcome = RollOutcome.Na;
 
-            chart.RollStats[chart.RollStats.Count - 1]._damageValue.Text = chart.MortalWoundDamageValue.ToString();
+            currLine.WoundState = State.MortalWound;
+            currLine.Wound = 0;
+            currLine.WoundOutcome = RollOutcome.Na;
 
-            chart.Damage.Add(1);
+            currLine.WoundRerollState = State.MortalWound;
+            currLine.WoundReroll = 0;
+            currLine.WoundRerollOutcome = RollOutcome.Na;
+
+            currLine.WoundRerollState = State.MortalWound;
+            currLine.WoundReroll = 0;
+            currLine.WoundRerollOutcome = RollOutcome.Na;
+
+            currLine.ArmorRollState = State.MortalWound;
+            currLine.ArmorRoll = 0;
+            currLine.ArmorRollOutcome = RollOutcome.Na;
+
+            currLine.DamageRollState = State.MortalWound;
+            currLine.DamageRoll = chart.MortalWoundDamageValue;
+            currLine.DamageOutcome = RollOutcome.Na;
         }
     }
 }

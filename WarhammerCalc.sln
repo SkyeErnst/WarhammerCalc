@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalcDice", "src\Wa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalcUI", "src\WarhammerCalcUI\WarhammerCalcUI.csproj", "{26C0F3E1-2409-4AA7-B47D-BF9C1E994B37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomNumberUtility", "src\RandomNumberUtility\RandomNumberUtility.csproj", "{5482BAF9-AB64-42A0-861F-A908E43AA053}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{26C0F3E1-2409-4AA7-B47D-BF9C1E994B37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26C0F3E1-2409-4AA7-B47D-BF9C1E994B37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26C0F3E1-2409-4AA7-B47D-BF9C1E994B37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5482BAF9-AB64-42A0-861F-A908E43AA053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5482BAF9-AB64-42A0-861F-A908E43AA053}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5482BAF9-AB64-42A0-861F-A908E43AA053}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5482BAF9-AB64-42A0-861F-A908E43AA053}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
