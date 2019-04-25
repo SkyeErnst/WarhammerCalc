@@ -41,6 +41,8 @@
             this._woundRerollLabel = new System.Windows.Forms.Label();
             this.WoundRerollValue = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this._armorRerollLabel = new System.Windows.Forms.Label();
+            this.ArmorReRollValue = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // _hitLabel
@@ -111,14 +113,14 @@
             this._armorLabel.AutoSize = true;
             this._armorLabel.Location = new System.Drawing.Point(281, 11);
             this._armorLabel.Name = "_armorLabel";
-            this._armorLabel.Size = new System.Drawing.Size(62, 13);
+            this._armorLabel.Size = new System.Drawing.Size(55, 13);
             this._armorLabel.TabIndex = 6;
-            this._armorLabel.Text = "Armor Save";
+            this._armorLabel.Text = "Armor Roll";
             // 
             // DamageValue
             // 
             this.DamageValue.AutoSize = true;
-            this.DamageValue.Location = new System.Drawing.Point(361, 24);
+            this.DamageValue.Location = new System.Drawing.Point(433, 24);
             this.DamageValue.Name = "DamageValue";
             this.DamageValue.Size = new System.Drawing.Size(27, 13);
             this.DamageValue.TabIndex = 9;
@@ -127,7 +129,7 @@
             // _damageLabel
             // 
             this._damageLabel.AutoSize = true;
-            this._damageLabel.Location = new System.Drawing.Point(351, 11);
+            this._damageLabel.Location = new System.Drawing.Point(423, 11);
             this._damageLabel.Name = "_damageLabel";
             this._damageLabel.Size = new System.Drawing.Size(47, 13);
             this._damageLabel.TabIndex = 8;
@@ -156,14 +158,34 @@
             // 
             this.label1.Location = new System.Drawing.Point(-3, 37);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(413, 19);
+            this.label1.Size = new System.Drawing.Size(483, 19);
             this.label1.TabIndex = 12;
-            this.label1.Text = "____________________________________________________________________";
+            this.label1.Text = "________________________________________________________________________________";
+            // 
+            // _armorRerollLabel
+            // 
+            this._armorRerollLabel.AutoSize = true;
+            this._armorRerollLabel.Location = new System.Drawing.Point(349, 11);
+            this._armorRerollLabel.Name = "_armorRerollLabel";
+            this._armorRerollLabel.Size = new System.Drawing.Size(64, 13);
+            this._armorRerollLabel.TabIndex = 13;
+            this._armorRerollLabel.Text = "Armor Reroll";
+            // 
+            // ArmorReRollValue
+            // 
+            this.ArmorReRollValue.AutoSize = true;
+            this.ArmorReRollValue.Location = new System.Drawing.Point(363, 24);
+            this.ArmorReRollValue.Name = "ArmorReRollValue";
+            this.ArmorReRollValue.Size = new System.Drawing.Size(27, 13);
+            this.ArmorReRollValue.TabIndex = 14;
+            this.ArmorReRollValue.Text = "N/A";
             // 
             // RollLineDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.ArmorReRollValue);
+            this.Controls.Add(this._armorRerollLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.WoundRerollValue);
             this.Controls.Add(this._woundRerollLabel);
@@ -178,7 +200,7 @@
             this.Controls.Add(this.HitValue);
             this.Controls.Add(this._hitLabel);
             this.Name = "RollLineDisplay";
-            this.Size = new System.Drawing.Size(402, 56);
+            this.Size = new System.Drawing.Size(483, 56);
             this.Load += new System.EventHandler(this.RollLine_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -199,5 +221,7 @@
         private System.Windows.Forms.Label _woundRerollLabel;
         public System.Windows.Forms.Label WoundRerollValue;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label _armorRerollLabel;
+        public System.Windows.Forms.Label ArmorReRollValue;
     }
 }

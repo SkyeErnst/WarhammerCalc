@@ -5,7 +5,7 @@ namespace WarhammerCalcData
 {
     /// <summary>
     /// A simplified version of the RollLineDisplay class that
-    /// uses base types rather than objects of type FormControl.
+    /// uses custom types rather than objects of type FormControl.
     /// </summary>
     [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
     public class RollLine
@@ -15,7 +15,9 @@ namespace WarhammerCalcData
         private TripleKeyVal<State, int, RollOutcome> _woundRoll;
         private TripleKeyVal<State, int, RollOutcome> _woundReroll;
         private TripleKeyVal<State, int, RollOutcome> _armorRoll;
+        private TripleKeyVal<State, int, RollOutcome> _armorReRoll;
         private TripleKeyVal<State, int, RollOutcome> _damageRoll;
+
 
         /// <summary>
         /// The initial value to assign to the TripleKeyVal objects.
@@ -31,6 +33,7 @@ namespace WarhammerCalcData
             _woundReroll = new TripleKeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
 
             _armorRoll = new TripleKeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
+            _armorReRoll = new TripleKeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
 
             _damageRoll = new TripleKeyVal<State, int, RollOutcome>(State.DefaultState, InitialValue, RollOutcome.DefaultOutcome);
         }
@@ -125,6 +128,17 @@ namespace WarhammerCalcData
         {
             get => _armorRoll.Outcome;
             set => _armorRoll.Outcome = value;
+        }
+
+        public int ArmorReRoll
+        {
+            get => _armorReRoll.Value;
+            set => _armorReRoll.Value = value;
+        }
+        public RollOutcome ArmorReRollOutcome
+        {
+            get => _armorReRoll.Outcome;
+            set => _armorReRoll.Outcome = value;
         }
 
         #endregion

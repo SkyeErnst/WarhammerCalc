@@ -16,7 +16,7 @@
         /// </summary>
         NormalState,
         /// <summary>
-        /// This shot caused the tesla effect to trigger
+        /// This shot was caused by the triggering of the tesla effect
         /// </summary>
         Tesla,
         /// <summary>

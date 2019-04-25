@@ -1,7 +1,6 @@
 ﻿using RandomNumberUtility;
 using WarhammerCalcData;
 
-
 namespace WarhammerCalcDice
 {
     public class DiceRoller
@@ -35,10 +34,6 @@ namespace WarhammerCalcDice
                         {
                             RollDamage(ref chart, i);
                         }
-                        //else
-                        //{
-                        //    chart.RollStats[i]._damageValue.Text = chart.NaText;
-                        //}
                     }
                 }
             }
@@ -122,14 +117,12 @@ namespace WarhammerCalcDice
                             return false;
                         }
                     }
-                    //// Handles case of dice roll being greater than 1, but re-roll one's is true.
-                    //// This needs to be here so that the proper state values are set.
-                    //else if (true == chart.ShouldRerollHitsOfOne && 1 != currShot)
-                    //{
-                    //    chart.RollStats[i].hit
-                    //    chart.RollStats[i]._hitValue.ForeColor = chart.FailColor;
-                    //    return false;
-                    //}
+                    // If we are ONLY rerolling ones, and the shot is not a 1
+                    else if (true == chart.ShouldRerollHitsOfOne && 1 != currShot)
+                    {
+                        chart.RollStats[i].HitOutcome = RollOutcome.Fail;
+                        return false;
+                    }
                 }
 
                 // Handles case of the weapon having the tesla rule
@@ -137,14 +130,6 @@ namespace WarhammerCalcDice
                 {
                     _calcTesla = true;
                     _teslaShots += 2;
-                    if (RollOutcome.Success == chart.RollStats[i].HitOutcome)
-                    {
-                        currLine.HitState = State.Tesla;
-                    }
-                    else
-                    {
-                        currLine.HitRerollState = State.Tesla;
-                    }
                 }
             }
             return true;
@@ -328,7 +313,14 @@ namespace WarhammerCalcDice
 
         private void HandleTesla(ref ShotChart chart)
         {
-            chart.RollStats.Add(new RollLine());
+            RollLine currLine = new RollLine();
+            chart.RollStats.Add(currLine);
+            
+
+            currLine.HitState = State.Tesla;
+            currLine.HitRerollState = State.Tesla;
+            currLine.HitOutcome = RollOutcome.Na;
+            currLine.HitRerollOutcome = RollOutcome.Na;
 
             // The tesla shots autohit, so we only need to roll for
             // the wound and armor.
