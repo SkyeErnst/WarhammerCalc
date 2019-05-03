@@ -84,13 +84,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WarhammerCalcData\WarhammerCalcData.csproj">
+    <ProjectReference Include="..\WarhammerCalcData\WarhammerCalc.Data.csproj">
       <Project>{689bd64c-fbdb-42f0-94e3-5885ab5f82cb}</Project>
-      <Name>WarhammerCalcData</Name>
+      <Name>WarhammerCalc.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WarhammerCalcDice\WarhammerCalcDice.csproj">
+    <ProjectReference Include="..\WarhammerCalcDice\WarhammerCalc.Dice.csproj">
       <Project>{f695ba62-db11-449e-945c-a1a2b4c6acd2}</Project>
-      <Name>WarhammerCalcDice</Name>
+      <Name>WarhammerCalc.Dice</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
