@@ -88,9 +88,9 @@
       <Project>{689bd64c-fbdb-42f0-94e3-5885ab5f82cb}</Project>
       <Name>WarhammerCalc.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WarhammerCalcDice\WarhammerCalc.Dice.csproj">
+    <ProjectReference Include="..\WarhammerCalcDice\WarhammerCalc.DiceHandling.csproj">
       <Project>{f695ba62-db11-449e-945c-a1a2b4c6acd2}</Project>
-      <Name>WarhammerCalc.Dice</Name>
+      <Name>WarhammerCalc.DiceHandling</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
