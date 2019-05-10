@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 namespace WarhammerCalcData
@@ -160,7 +162,32 @@ namespace WarhammerCalcData
             get => _damageRoll.Outcome;
             set => _damageRoll.Outcome = value;
         }
-        #endregion  
+        #endregion
+
+        public int[] Raw
+        {
+            get
+            {
+                Debug.Assert(_hitRoll != null);
+                Debug.Assert(_hitReroll != null);
+                Debug.Assert(_woundRoll != null);
+                Debug.Assert(_woundReroll != null);
+                Debug.Assert(_armorRoll != null);
+                Debug.Assert(_armorReRoll != null);
+                Debug.Assert(_damageRoll != null);
+
+                int[] raw = new int[6];
+                raw[0] = _hitRoll.Value;
+                raw[1] = _hitReroll.Value;
+                raw[2] = _woundRoll.Value;
+                raw[3] = _woundReroll.Value;
+                raw[4] = _armorRoll.Value;
+                raw[5] = _armorReRoll.Value;
+                raw[6] = _damageRoll.Value;
+
+                return raw;
+            }
+        }
 
         #endregion
     }

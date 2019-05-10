@@ -79,6 +79,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="WarhammerCalcData.RollLine.datasource" />
+    <None Include="WarhammerCalcData.RollLineDisplay.datasource" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

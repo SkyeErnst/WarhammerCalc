@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using WarhammerCalcData;
 using WarhammerCalcData.UnitEquivalencyStats;
@@ -10,10 +12,12 @@ namespace WarhammerCalcUI
     public partial class Ui : Form
     {
 
-        private List<RollLineDisplay> _linesAdded;
-        private List<Label> _woundLabels;
+        private List<RollLineDisplay> m_LinesAdded;
+        private readonly List<Label> m_WoundLabels;
 
-        private Color _defaultColor = Color.Black;
+        private DataTable m_Table;
+
+        private Color m_DefaultColor = Color.Black;
         private Color _successColor = Color.ForestGreen;
         private Color _failColor = Color.Red;
         private Color _specialColor = Color.Aquamarine;
@@ -28,8 +32,8 @@ namespace WarhammerCalcUI
         {
             InitializeComponent();
 
-            _linesAdded = new List<RollLineDisplay>();
-            _woundLabels = new List<Label>();
+            m_LinesAdded = new List<RollLineDisplay>();
+            m_WoundLabels = new List<Label>();
         }
 
         /// <summary>
@@ -47,10 +51,12 @@ namespace WarhammerCalcUI
             {
                 _flatShotsBox.Text = "0";
             }
+
             if ("" == _atkVariableShotsNumberBox.Text)
             {
                 _atkVariableShotsNumberBox.Text = "0";
             }
+
             if ("" == _atkShotsDBox.Text)
             {
                 _atkShotsDBox.Text = "0";
@@ -60,14 +66,17 @@ namespace WarhammerCalcUI
             {
                 _flatDamageBox.Text = "0";
             }
+
             if ("" == _atkDamageDiceAmount.Text)
             {
                 _atkDamageDiceAmount.Text = "0";
             }
+
             if ("" == _atkDiceDType.Text)
             {
                 _atkDiceDType.Text = "0";
             }
+
             if ("" == _xResolveApWoundValue.Text || "" == _xResolveApApValue.Text)
             {
                 _xResolveApWoundValue.Text = "0";
@@ -84,40 +93,40 @@ namespace WarhammerCalcUI
             {
                 ShotChart chart = new ShotChart
                 (
-                Int32.Parse(_atkWsBsBox.Text),
-                Int32.Parse(_flatShotsBox.Text),
-                Int32.Parse(_atkStrBox.Text),
-                Int32.Parse(_atkAPBox.Text),
-                Int32.Parse(_atkDamageDiceAmount.Text),
-                Int32.Parse(_atkDiceDType.Text),
-                Int32.Parse(_defToughness.Text),
-                Int32.Parse(_defSave.Text),
-                Int32.Parse(_invulSaveBox.Text),
-                Int32.Parse(_atkVariableShotsNumberBox.Text),
-                Int32.Parse(_atkShotsDBox.Text),
-                Int32.Parse(_flatDamageBox.Text),
-                Int32.Parse(_woundOnXBox.Text),
-                Int32.Parse(_woundMortalOnXBox.Text),
-                Int32.Parse(_xResolveApWoundValue.Text),
-                Int32.Parse(_xResolveApApValue.Text),
-                Int32.Parse(_xResolveDamageHitValue.Text),
-                Int32.Parse(_xResolveDamageDamageValue.Text),
+                    Int32.Parse(_atkWsBsBox.Text),
+                    Int32.Parse(_flatShotsBox.Text),
+                    Int32.Parse(_atkStrBox.Text),
+                    Int32.Parse(_atkAPBox.Text),
+                    Int32.Parse(_atkDamageDiceAmount.Text),
+                    Int32.Parse(_atkDiceDType.Text),
+                    Int32.Parse(_defToughness.Text),
+                    Int32.Parse(_defSave.Text),
+                    Int32.Parse(_invulSaveBox.Text),
+                    Int32.Parse(_atkVariableShotsNumberBox.Text),
+                    Int32.Parse(_atkShotsDBox.Text),
+                    Int32.Parse(_flatDamageBox.Text),
+                    Int32.Parse(_woundOnXBox.Text),
+                    Int32.Parse(_woundMortalOnXBox.Text),
+                    Int32.Parse(_xResolveApWoundValue.Text),
+                    Int32.Parse(_xResolveApApValue.Text),
+                    Int32.Parse(_xResolveDamageHitValue.Text),
+                    Int32.Parse(_xResolveDamageDamageValue.Text),
 
 
-                _noRerollHitRadio.Checked,
-                _rerollOnesRadio.Checked,
-                _rerollMissesRadio.Checked,
-                _rerollFailedWoundsRadio.Checked,
-                _rerollWoundsOfOneRadio.Checked,
-                _autoHitCheckbox.Checked,
-                _woundOnXRadio.Checked,
-                _woundMortalOnXRadio.Checked,
-                _teslaCheckbox.Checked,
-                _variableShotsCheckbox.Checked,
-                _varableDamageCheckbox.Checked,
-                _xResolveNormallyRadio.Checked,
-                _xResolveApRadio.Checked,
-                _xResolveDamageRadio.Checked
+                    _noRerollHitRadio.Checked,
+                    _rerollOnesRadio.Checked,
+                    _rerollMissesRadio.Checked,
+                    _rerollFailedWoundsRadio.Checked,
+                    _rerollWoundsOfOneRadio.Checked,
+                    _autoHitCheckbox.Checked,
+                    _woundOnXRadio.Checked,
+                    _woundMortalOnXRadio.Checked,
+                    _teslaCheckbox.Checked,
+                    _variableShotsCheckbox.Checked,
+                    _varableDamageCheckbox.Checked,
+                    _xResolveNormallyRadio.Checked,
+                    _xResolveApRadio.Checked,
+                    _xResolveDamageRadio.Checked
                 );
 
                 MainProgram.DiceRollRef.Roll(ref chart);
@@ -127,7 +136,7 @@ namespace WarhammerCalcUI
             catch (Exception exception)
             {
                 string errorMessage =
-                    "Something went wrong. Ensure that all visible text boxes are filled in.\n\n" 
+                    "Something went wrong. Ensure that all visible text boxes are filled in.\n\n"
                     + exception.Message + "\n\n"
                     + "Stacktrace:\n"
                     + exception.ToString();
@@ -142,28 +151,34 @@ namespace WarhammerCalcUI
         private void DisplayResults(ShotChart crt)
         {
             #region Removes old data
-            if (_linesAdded.Count > 0)
+
+            if (m_LinesAdded.Count > 0)
             {
-                foreach (RollLineDisplay line in _linesAdded)
+                foreach (RollLineDisplay line in m_LinesAdded)
                 {
                     this.Controls.Remove(line);
                 }
-                _linesAdded.Clear();
+
+                m_LinesAdded.Clear();
             }
-            if (_woundLabels.Count > 0)
+
+            if (m_WoundLabels.Count > 0)
             {
-                foreach (Label lbl in _woundLabels)
+                foreach (Label lbl in m_WoundLabels)
                 {
                     this.Controls.Remove(lbl);
                 }
-                _woundLabels.Clear();
+
+                m_WoundLabels.Clear();
             }
+
             #endregion
 
-            ConvertRollLineSimple(ref crt, out _linesAdded);
+            ConvertToDataView(crt.RollStats, m_Table);
 
             #region Generate Labels
-            int count = _linesAdded.Count;
+
+            int count = m_LinesAdded.Count;
             Point currPoint;
             int yOffset = 50;
 
@@ -172,14 +187,14 @@ namespace WarhammerCalcUI
 
             for (int i = 0; i < count; i++)
             {
-                _linesAdded[i].Location = currPoint;
+                m_LinesAdded[i].Location = currPoint;
                 currPoint.Y += yOffset;
             }
 
             #endregion
 
-
             #region Displays damage by wound
+
             int cnt = crt.RollStats.Count;
             Point tmpPoint = _damageResultsLabel.Location;
 
@@ -187,9 +202,9 @@ namespace WarhammerCalcUI
             {
                 if (RollOutcome.Fail == crt.RollStats[i].ArmorRollOutcome)
                 {
-                    
+
                     Label lbl = new Label();
-                    _woundLabels.Add(lbl);
+                    m_WoundLabels.Add(lbl);
 
                     lbl.AutoSize = true;
 
@@ -205,7 +220,7 @@ namespace WarhammerCalcUI
 
             #endregion
 
-            this.Controls.AddRange(_linesAdded.ToArray());
+            this.Controls.AddRange(m_LinesAdded.ToArray());
 
             _damageTotalNum.Text = Sum(crt.RollStats).ToString();
             _totalHitsNum.Text = Count(crt.RollStats, ValueGrab.TotalHits).ToString();
@@ -298,12 +313,14 @@ namespace WarhammerCalcUI
                         {
                             instanceCount++;
                         }
+
                         break;
                     case ValueGrab.HitReRoll:
                         if (RollOutcome.Success == values[i].HitRerollOutcome)
                         {
                             instanceCount++;
                         }
+
                         break;
                     case ValueGrab.TotalHits:
                         if (RollOutcome.Success == values[i].HitOutcome
@@ -312,18 +329,21 @@ namespace WarhammerCalcUI
                         {
                             instanceCount++;
                         }
+
                         break;
                     case ValueGrab.Wound:
                         if (RollOutcome.Success == values[i].WoundOutcome)
                         {
                             instanceCount++;
                         }
+
                         break;
                     case ValueGrab.WoundReRoll:
                         if (RollOutcome.Success == values[i].WoundRerollOutcome)
                         {
                             instanceCount++;
                         }
+
                         break;
                     case ValueGrab.TotalWounds:
                         if (RollOutcome.Success == values[i].WoundOutcome
@@ -332,12 +352,14 @@ namespace WarhammerCalcUI
                         {
                             instanceCount++;
                         }
+
                         break;
                     case ValueGrab.FailedSaves:
                         if (RollOutcome.Fail == values[i].ArmorRollOutcome)
                         {
                             instanceCount++;
                         }
+
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(valGrab), valGrab, null);
@@ -456,10 +478,10 @@ namespace WarhammerCalcUI
         {
             if (sender.GetType() == typeof(MaskedTextBox))
             {
-                MaskedTextBox snd = (MaskedTextBox)sender;
+                MaskedTextBox snd = (MaskedTextBox) sender;
 
                 snd.Text = "";
-                snd.Select(0,0);
+                snd.Select(0, 0);
             }
         }
 
@@ -503,207 +525,244 @@ namespace WarhammerCalcUI
             _xResolveDamageDamageValue.Visible = _xResolveDamageRadio.Checked;
         }
 
-        /// <summary>
-        /// Takes a RollLine and converts it for full display for use in non-analyzing mode.
-        /// </summary>
-        /// <param name="chart"></param>
-        /// <param name="convertedList"></param>
-        private void ConvertRollLineSimple(ref ShotChart chart, out List<RollLineDisplay> convertedList)
+        private void ConvertToDataView(List<RollLine> originalData, out DataGrid convertedData)
         {
-            int count = chart.RollStats.Count;
-            convertedList = new List<RollLineDisplay>();
+            int count = originalData.Count;
+            convertedData = new DataGrid();
+            DataSet set = new DataSet("RollingData");
+           
+
+            convertedData.BeginInit();
+            convertedData.EndInit();
+
+
+            m_Table.BeginLoadData();
 
             for (int i = 0; i < count; i++)
             {
-                convertedList.Add(new RollLineDisplay());
-                RollLineDisplay currDisplay = convertedList[i];
-                RollLine currChartLine = chart.RollStats[i];
+                RollLine currentLine = originalData[i];
 
-                try
-                {
-                    currDisplay.HitValue.Text = currChartLine.HitRoll.ToString();
-                    currDisplay.HitRerollValue.Text = currChartLine.HitReroll.ToString();
+                object[] objectArray = currentLine.Raw.Cast<object>().ToArray();
 
-                    currDisplay.WoundValue.Text = currChartLine.Wound.ToString();
-                    currDisplay.WoundRerollValue.Text = currChartLine.WoundReroll.ToString();
+                set.load
+                
+                //convertedData.LoadDataRow(objectArray, true);
 
-                    currDisplay.ArmorRollValue.Text = currChartLine.ArmorRoll.ToString();
-                    currDisplay.ArmorReRollValue.Text = currChartLine.ArmorReRoll.ToString();
-
-                    currDisplay.DamageValue.Text = currChartLine.DamageRoll.ToString();
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show("Error: " + e.Message + "\n\n" + "Trace log: " + e.ToString());
-                }
-
-                #region Text assignment
-                if
-                (
-                    State.Tesla == currChartLine.HitState
-                    ||
-                    State.Tesla == currChartLine.HitRerollState
-                )
-                {
-                    currDisplay.HitValue.Text = TeslaText;
-                    currDisplay.HitRerollValue.Text = TeslaText;
-                }
-
-                if (State.Autohit == currChartLine.HitState)
-                {
-                    currDisplay.HitValue.Text = AutohitText;
-                    currDisplay.HitRerollValue.Text = AutohitText;
-                }
-
-                if (State.MortalWound == currChartLine.HitState)
-                {
-                    currDisplay.HitValue.Text = MortalWoundText;
-                    currDisplay.HitRerollValue.Text = MortalWoundText;
-                    currDisplay.WoundValue.Text = MortalWoundText;
-                    currDisplay.WoundRerollValue.Text = MortalWoundText;
-                }
-
-                #endregion
-
-                #region Color assignment
-
-                // If we should continue to the next set of results
-                bool cont = false;
-
-                #region Hit
-
-                // If the outcome of the hit roll is ANYTHING but success
-                if (RollOutcome.Success != currChartLine.HitOutcome)
-                {
-                    // if either hit or reroll hit failed
-                    if (RollOutcome.Fail == currChartLine.HitOutcome ||
-                        RollOutcome.Fail == currChartLine.HitRerollOutcome)
-                    {
-                        currDisplay.HitValue.ForeColor = _failColor;
-                    }
-
-                    if (RollOutcome.Success == currChartLine.HitRerollOutcome)
-                    {
-                        currDisplay.HitRerollValue.ForeColor = _successColor;
-                        cont = true;
-                    }
-                    else if(RollOutcome.Fail == currChartLine.HitRerollOutcome)
-                    {
-                        currDisplay.HitRerollValue.ForeColor = _failColor;
-                        cont = false;
-                    }
-
-                    else if (State.Tesla == currChartLine.HitState)
-                    {
-                        currDisplay.HitValue.ForeColor = _specialColor;
-                        currDisplay.HitRerollValue.ForeColor = _specialColor;
-                        cont = true;
-                    }
-                }
-                else
-                {
-                    currDisplay.HitValue.ForeColor = _successColor;
-                    cont = true;
-                }
-                #endregion
-
-                #region Wound
-
-                if (true == cont)
-                {
-                    if (RollOutcome.Success != currChartLine.WoundOutcome)
-                    {
-                        if (RollOutcome.Fail == currChartLine.WoundOutcome ||
-                            RollOutcome.Fail == currChartLine.WoundRerollOutcome)
-                        {
-                            currDisplay.WoundValue.ForeColor = _failColor;
-                        }
-
-                        if (RollOutcome.Success == currChartLine.WoundRerollOutcome)
-                        {
-                            currDisplay.WoundRerollValue.ForeColor = _successColor;
-                            cont = true;
-                        }
-                        else if (RollOutcome.Fail == currChartLine.WoundRerollOutcome)
-                        {
-                            currDisplay.WoundRerollValue.ForeColor = _failColor;
-                            cont = false;
-                        }
-                    }
-                    else
-                    {
-                        currDisplay.WoundValue.ForeColor = _successColor;
-                        cont = true;
-                    }
-                }
-                #endregion
-
-                #region Armor
-                if (true == cont)
-                {
-                    if (RollOutcome.Success != currChartLine.ArmorRollOutcome)
-                    {
-                        if (RollOutcome.Fail == currChartLine.ArmorRollOutcome ||
-                            RollOutcome.Fail == currChartLine.ArmorReRollOutcome)
-                        {
-                            currDisplay.ArmorRollValue.ForeColor = _failColor;
-                        }
-
-                        if (RollOutcome.Success == currChartLine.ArmorReRollOutcome)
-                        {
-                            currDisplay.ArmorReRollValue.ForeColor = _successColor;
-                            cont = true;
-                        }
-                        else if (RollOutcome.Fail == currChartLine.ArmorReRollOutcome)
-                        {
-                            currDisplay.ArmorReRollValue.ForeColor = _failColor;
-                            cont = false;
-                        }
-                    }
-                    else
-                    {
-                        currDisplay.ArmorRollValue.ForeColor = _successColor;
-                        cont = true;
-                    }
-                }
-                #endregion
-
-                #region Whiteout
-                if (State.Tesla != currChartLine.HitState)
-                {
-                    if (0 == currChartLine.HitReroll)
-                    {
-                        currDisplay.HitRerollValue.ForeColor = _whiteoutColor;
-                    }
-                }
-
-                if (0 == currChartLine.Wound)
-                {
-                    currDisplay.WoundValue.ForeColor = _whiteoutColor;
-                }
-                if (0 == currChartLine.WoundReroll)
-                {
-                    currDisplay.WoundRerollValue.ForeColor = _whiteoutColor;
-                }
-
-                if (0 == currChartLine.ArmorRoll)
-                {
-                    currDisplay.ArmorRollValue.ForeColor = _whiteoutColor;
-                }
-                if (0 == currChartLine.ArmorReRoll)
-                {
-                    currDisplay.ArmorReRollValue.ForeColor = _whiteoutColor;
-                }
-
-                if (0 == currChartLine.DamageRoll)
-                {
-                    currDisplay.DamageValue.ForeColor = _whiteoutColor;
-                }
-                #endregion
-
-                #endregion
             }
+
+            m_Table.EndLoadData();
+
+            throw new NotImplementedException();
         }
+
+        #region Old
+        ///// <summary>
+        ///// Takes a RollLine and converts it for full display for use in non-analyzing mode.
+        ///// </summary>
+        ///// <param name="chart"></param>
+        ///// <param name="convertedList"></param>
+        //private void ConvertRollLineSimple(ref ShotChart chart, out List<RollLineDisplay> convertedList)
+        //{
+        //    int count = chart.RollStats.Count;
+        //    //convertedList = new List<RollLineDisplay>();
+
+        //    #region Old implementation
+
+        //    //for (int i = 0; i < count; i++)
+        //    //{
+        //    //    convertedList.Add(new RollLineDisplay());
+        //    //    RollLineDisplay currDisplay = convertedList[i];
+        //    //    RollLine currChartLine = chart.RollStats[i];
+
+        //    //    try
+        //    //    {
+        //    //        currDisplay.HitValue.Text = currChartLine.HitRoll.ToString();
+        //    //        currDisplay.HitRerollValue.Text = currChartLine.HitReroll.ToString();
+
+        //    //        currDisplay.WoundValue.Text = currChartLine.Wound.ToString();
+        //    //        currDisplay.WoundRerollValue.Text = currChartLine.WoundReroll.ToString();
+
+        //    //        currDisplay.ArmorRollValue.Text = currChartLine.ArmorRoll.ToString();
+        //    //        currDisplay.ArmorReRollValue.Text = currChartLine.ArmorReRoll.ToString();
+
+        //    //        currDisplay.DamageValue.Text = currChartLine.DamageRoll.ToString();
+        //    //    }
+        //    //    catch (Exception e)
+        //    //    {
+        //    //        MessageBox.Show("Error: " + e.Message + "\n\n" + "Trace log: " + e.ToString());
+        //    //    }
+
+        //    //    #region Text assignment
+        //    //    if
+        //    //    (
+        //    //        State.Tesla == currChartLine.HitState
+        //    //        ||
+        //    //        State.Tesla == currChartLine.HitRerollState
+        //    //    )
+        //    //    {
+        //    //        currDisplay.HitValue.Text = TeslaText;
+        //    //        currDisplay.HitRerollValue.Text = TeslaText;
+        //    //    }
+
+        //    //    if (State.Autohit == currChartLine.HitState)
+        //    //    {
+        //    //        currDisplay.HitValue.Text = AutohitText;
+        //    //        currDisplay.HitRerollValue.Text = AutohitText;
+        //    //    }
+
+        //    //    if (State.MortalWound == currChartLine.HitState)
+        //    //    {
+        //    //        currDisplay.HitValue.Text = MortalWoundText;
+        //    //        currDisplay.HitRerollValue.Text = MortalWoundText;
+        //    //        currDisplay.WoundValue.Text = MortalWoundText;
+        //    //        currDisplay.WoundRerollValue.Text = MortalWoundText;
+        //    //    }
+
+        //    //    #endregion
+
+        //    //    #region Color assignment
+
+        //    //    // If we should continue to the next set of results
+        //    //    bool cont = false;
+
+        //    //    #region Hit
+
+        //    //    // If the outcome of the hit roll is ANYTHING but success
+        //    //    if (RollOutcome.Success != currChartLine.HitOutcome)
+        //    //    {
+        //    //        // if either hit or reroll hit failed
+        //    //        if (RollOutcome.Fail == currChartLine.HitOutcome ||
+        //    //            RollOutcome.Fail == currChartLine.HitRerollOutcome)
+        //    //        {
+        //    //            currDisplay.HitValue.ForeColor = _failColor;
+        //    //        }
+
+        //    //        if (RollOutcome.Success == currChartLine.HitRerollOutcome)
+        //    //        {
+        //    //            currDisplay.HitRerollValue.ForeColor = _successColor;
+        //    //            cont = true;
+        //    //        }
+        //    //        else if(RollOutcome.Fail == currChartLine.HitRerollOutcome)
+        //    //        {
+        //    //            currDisplay.HitRerollValue.ForeColor = _failColor;
+        //    //            cont = false;
+        //    //        }
+
+        //    //        else if (State.Tesla == currChartLine.HitState)
+        //    //        {
+        //    //            currDisplay.HitValue.ForeColor = _specialColor;
+        //    //            currDisplay.HitRerollValue.ForeColor = _specialColor;
+        //    //            cont = true;
+        //    //        }
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        currDisplay.HitValue.ForeColor = _successColor;
+        //    //        cont = true;
+        //    //    }
+        //    //    #endregion
+
+        //    //    #region Wound
+
+        //    //    if (true == cont)
+        //    //    {
+        //    //        if (RollOutcome.Success != currChartLine.WoundOutcome)
+        //    //        {
+        //    //            if (RollOutcome.Fail == currChartLine.WoundOutcome ||
+        //    //                RollOutcome.Fail == currChartLine.WoundRerollOutcome)
+        //    //            {
+        //    //                currDisplay.WoundValue.ForeColor = _failColor;
+        //    //            }
+
+        //    //            if (RollOutcome.Success == currChartLine.WoundRerollOutcome)
+        //    //            {
+        //    //                currDisplay.WoundRerollValue.ForeColor = _successColor;
+        //    //                cont = true;
+        //    //            }
+        //    //            else if (RollOutcome.Fail == currChartLine.WoundRerollOutcome)
+        //    //            {
+        //    //                currDisplay.WoundRerollValue.ForeColor = _failColor;
+        //    //                cont = false;
+        //    //            }
+        //    //        }
+        //    //        else
+        //    //        {
+        //    //            currDisplay.WoundValue.ForeColor = _successColor;
+        //    //            cont = true;
+        //    //        }
+        //    //    }
+        //    //    #endregion
+
+        //    //    #region Armor
+        //    //    if (true == cont)
+        //    //    {
+        //    //        if (RollOutcome.Success != currChartLine.ArmorRollOutcome)
+        //    //        {
+        //    //            if (RollOutcome.Fail == currChartLine.ArmorRollOutcome ||
+        //    //                RollOutcome.Fail == currChartLine.ArmorReRollOutcome)
+        //    //            {
+        //    //                currDisplay.ArmorRollValue.ForeColor = _failColor;
+        //    //            }
+
+        //    //            if (RollOutcome.Success == currChartLine.ArmorReRollOutcome)
+        //    //            {
+        //    //                currDisplay.ArmorReRollValue.ForeColor = _successColor;
+        //    //                cont = true;
+        //    //            }
+        //    //            else if (RollOutcome.Fail == currChartLine.ArmorReRollOutcome)
+        //    //            {
+        //    //                currDisplay.ArmorReRollValue.ForeColor = _failColor;
+        //    //                cont = false;
+        //    //            }
+        //    //        }
+        //    //        else
+        //    //        {
+        //    //            currDisplay.ArmorRollValue.ForeColor = _successColor;
+        //    //            cont = true;
+        //    //        }
+        //    //    }
+        //    //    #endregion
+
+        //    //    #region Whiteout
+        //    //    if (State.Tesla != currChartLine.HitState)
+        //    //    {
+        //    //        if (0 == currChartLine.HitReroll)
+        //    //        {
+        //    //            currDisplay.HitRerollValue.ForeColor = _whiteoutColor;
+        //    //        }
+        //    //    }
+
+        //    //    if (0 == currChartLine.Wound)
+        //    //    {
+        //    //        currDisplay.WoundValue.ForeColor = _whiteoutColor;
+        //    //    }
+        //    //    if (0 == currChartLine.WoundReroll)
+        //    //    {
+        //    //        currDisplay.WoundRerollValue.ForeColor = _whiteoutColor;
+        //    //    }
+
+        //    //    if (0 == currChartLine.ArmorRoll)
+        //    //    {
+        //    //        currDisplay.ArmorRollValue.ForeColor = _whiteoutColor;
+        //    //    }
+        //    //    if (0 == currChartLine.ArmorReRoll)
+        //    //    {
+        //    //        currDisplay.ArmorReRollValue.ForeColor = _whiteoutColor;
+        //    //    }
+
+        //    //    if (0 == currChartLine.DamageRoll)
+        //    //    {
+        //    //        currDisplay.DamageValue.ForeColor = _whiteoutColor;
+        //    //    }
+        //    //    #endregion
+
+        //    //    #endregion
+
+
+        //    #endregion
+
+        //}
+        #endregion
 
         private enum ValueGrab
         {
@@ -714,6 +773,12 @@ namespace WarhammerCalcUI
             WoundReRoll,
             TotalWounds,
             FailedSaves
+        }
+
+        private void OnExit(object sender, FormClosingEventArgs e)
+        {
+            m_Table.Dispose();
+            m_GridView.Dispose();
         }
     }
 }

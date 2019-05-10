@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this._AtkLabel = new System.Windows.Forms.Label();
             this._atkStrLabel = new System.Windows.Forms.Label();
             this._atkAPLable = new System.Windows.Forms.Label();
@@ -98,6 +99,9 @@
             this.tEQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vEQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kEQToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.m_GridView = new System.Windows.Forms.DataGridView();
+            this.rollLineDisplayBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.rollLineBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this._modifersPanel.SuspendLayout();
             this.woundPanel.SuspendLayout();
             this._damagePanel.SuspendLayout();
@@ -105,6 +109,9 @@
             this._hitPanel.SuspendLayout();
             this._woundRerollPanel.SuspendLayout();
             this._menuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.m_GridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rollLineDisplayBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rollLineBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // _AtkLabel
@@ -237,7 +244,7 @@
             // _totalHitsLabel
             // 
             this._totalHitsLabel.AutoSize = true;
-            this._totalHitsLabel.Location = new System.Drawing.Point(679, 213);
+            this._totalHitsLabel.Location = new System.Drawing.Point(605, 215);
             this._totalHitsLabel.Name = "_totalHitsLabel";
             this._totalHitsLabel.Size = new System.Drawing.Size(52, 13);
             this._totalHitsLabel.TabIndex = 18;
@@ -246,7 +253,7 @@
             // _totalHitsNum
             // 
             this._totalHitsNum.AutoSize = true;
-            this._totalHitsNum.Location = new System.Drawing.Point(679, 235);
+            this._totalHitsNum.Location = new System.Drawing.Point(605, 237);
             this._totalHitsNum.Name = "_totalHitsNum";
             this._totalHitsNum.Size = new System.Drawing.Size(13, 13);
             this._totalHitsNum.TabIndex = 19;
@@ -255,7 +262,7 @@
             // _woundTotalLabel
             // 
             this._woundTotalLabel.AutoSize = true;
-            this._woundTotalLabel.Location = new System.Drawing.Point(737, 213);
+            this._woundTotalLabel.Location = new System.Drawing.Point(663, 215);
             this._woundTotalLabel.Name = "_woundTotalLabel";
             this._woundTotalLabel.Size = new System.Drawing.Size(74, 13);
             this._woundTotalLabel.TabIndex = 20;
@@ -264,7 +271,7 @@
             // _woundsTotalNum
             // 
             this._woundsTotalNum.AutoSize = true;
-            this._woundsTotalNum.Location = new System.Drawing.Point(737, 235);
+            this._woundsTotalNum.Location = new System.Drawing.Point(663, 237);
             this._woundsTotalNum.Name = "_woundsTotalNum";
             this._woundsTotalNum.Size = new System.Drawing.Size(13, 13);
             this._woundsTotalNum.TabIndex = 21;
@@ -273,7 +280,7 @@
             // _damageResultsLabel
             // 
             this._damageResultsLabel.AutoSize = true;
-            this._damageResultsLabel.Location = new System.Drawing.Point(918, 213);
+            this._damageResultsLabel.Location = new System.Drawing.Point(844, 215);
             this._damageResultsLabel.Name = "_damageResultsLabel";
             this._damageResultsLabel.Size = new System.Drawing.Size(138, 13);
             this._damageResultsLabel.TabIndex = 22;
@@ -336,7 +343,7 @@
             // _totalFailedSavesLabel
             // 
             this._totalFailedSavesLabel.AutoSize = true;
-            this._totalFailedSavesLabel.Location = new System.Drawing.Point(817, 213);
+            this._totalFailedSavesLabel.Location = new System.Drawing.Point(743, 215);
             this._totalFailedSavesLabel.Name = "_totalFailedSavesLabel";
             this._totalFailedSavesLabel.Size = new System.Drawing.Size(95, 13);
             this._totalFailedSavesLabel.TabIndex = 30;
@@ -345,7 +352,7 @@
             // _failedSavesNum
             // 
             this._failedSavesNum.AutoSize = true;
-            this._failedSavesNum.Location = new System.Drawing.Point(817, 235);
+            this._failedSavesNum.Location = new System.Drawing.Point(743, 237);
             this._failedSavesNum.Name = "_failedSavesNum";
             this._failedSavesNum.Size = new System.Drawing.Size(13, 13);
             this._failedSavesNum.TabIndex = 31;
@@ -782,12 +789,29 @@
             this.kEQToolStripMenuItem.Text = "KEQ";
             this.kEQToolStripMenuItem.Click += new System.EventHandler(this.kEQToolStripMenuItem_Click);
             // 
+            // m_GridView
+            // 
+            this.m_GridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.m_GridView.Location = new System.Drawing.Point(7, 262);
+            this.m_GridView.Name = "m_GridView";
+            this.m_GridView.Size = new System.Drawing.Size(743, 195);
+            this.m_GridView.TabIndex = 53;
+            // 
+            // rollLineDisplayBindingSource
+            // 
+            this.rollLineDisplayBindingSource.DataSource = typeof(WarhammerCalcData.RollLineDisplay);
+            // 
+            // rollLineBindingSource
+            // 
+            this.rollLineBindingSource.DataSource = typeof(WarhammerCalcData.RollLine);
+            // 
             // Ui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.m_GridView);
             this.Controls.Add(this._flatShotsBox);
             this.Controls.Add(this._atkShotsDBox);
             this.Controls.Add(this._variableShotsCheckbox);
@@ -828,6 +852,7 @@
             this.Controls.Add(this._menuStrip);
             this.Name = "Ui";
             this.Text = "Warhamer Calc";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnExit);
             this.Load += new System.EventHandler(this.Ui_Load);
             this._modifersPanel.ResumeLayout(false);
             this._modifersPanel.PerformLayout();
@@ -843,6 +868,9 @@
             this._woundRerollPanel.PerformLayout();
             this._menuStrip.ResumeLayout(false);
             this._menuStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.m_GridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rollLineDisplayBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rollLineBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -920,6 +948,9 @@
         private System.Windows.Forms.MaskedTextBox _xResolveDamageDamageValue;
         private System.Windows.Forms.MaskedTextBox _xResolveDamageHitValue;
         private System.Windows.Forms.RadioButton _xResolveNormallyRadio;
+        private System.Windows.Forms.DataGridView m_GridView;
+        private System.Windows.Forms.BindingSource rollLineBindingSource;
+        private System.Windows.Forms.BindingSource rollLineDisplayBindingSource;
     }
 }
 
