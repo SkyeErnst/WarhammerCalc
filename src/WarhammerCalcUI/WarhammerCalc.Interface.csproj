@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{689BD64C-FBDB-42F0-94E3-5885AB5F82CB}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WarhammerCalcData</RootNamespace>
-    <AssemblyName>WarhammerCalcData</AssemblyName>
+    <ProjectGuid>{26C0F3E1-2409-4AA7-B47D-BF9C1E994B37}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>UI</RootNamespace>
+    <AssemblyName>WarhammerCalc</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -21,9 +22,10 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\bin\Release\</OutputPath>
@@ -31,60 +33,64 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>WarhammerCalcUI.MainProgram</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\KeyVal.cs" />
-    <Compile Include="src\TripleKeyVal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
+    <Compile Include="src\MainProgram.cs" />
+    <Compile Include="src\UI.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\ModState.cs" />
-    <Compile Include="src\RollLineDisplay.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="src\UI.designer.cs">
+      <DependentUpon>UI.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\RollLine.Designer.cs">
-      <DependentUpon>RollLineDisplay.cs</DependentUpon>
-    </Compile>
-    <Compile Include="src\RollLine.cs" />
-    <Compile Include="src\ShotChart.cs" />
-    <Compile Include="src\RollOutcome.cs" />
-    <Compile Include="src\UnitEquivalencyStats\GEQStats.cs" />
-    <Compile Include="src\UnitEquivalencyStats\IStats.cs" />
-    <Compile Include="src\UnitEquivalencyStats\KeqStats.cs" />
-    <Compile Include="src\UnitEquivalencyStats\MEQStats.cs" />
-    <Compile Include="src\UnitEquivalencyStats\TeqStats.cs" />
-    <Compile Include="src\UnitEquivalencyStats\VeqStats.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="src\RollLineDisplay.resx">
-      <DependentUpon>RollLineDisplay.cs</DependentUpon>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="src\UI.resx">
+      <DependentUpon>UI.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RandomNumberUtility\RandomNumberUtility.csproj">
-      <Project>{5482baf9-ab64-42a0-861f-a908e43aa053}</Project>
-      <Name>RandomNumberUtility</Name>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WarhammerCalcData\WarhammerCalc.Data.csproj">
+      <Project>{689bd64c-fbdb-42f0-94e3-5885ab5f82cb}</Project>
+      <Name>WarhammerCalc.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WarhammerCalcDice\WarhammerCalc.DiceHandling.csproj">
+      <Project>{f695ba62-db11-449e-945c-a1a2b4c6acd2}</Project>
+      <Name>WarhammerCalc.DiceHandling</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

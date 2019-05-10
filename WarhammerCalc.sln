@@ -8,13 +8,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		App.config = App.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalcData", "src\WarhammerCalcData\WarhammerCalcData.csproj", "{689BD64C-FBDB-42F0-94E3-5885AB5F82CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalc.Data", "src\WarhammerCalcData\WarhammerCalc.Data.csproj", "{689BD64C-FBDB-42F0-94E3-5885AB5F82CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalcDice", "src\WarhammerCalcDice\WarhammerCalcDice.csproj", "{F695BA62-DB11-449E-945C-A1A2B4C6ACD2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalc.DiceHandling", "src\WarhammerCalcDice\WarhammerCalc.DiceHandling.csproj", "{F695BA62-DB11-449E-945C-A1A2B4C6ACD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalcUI", "src\WarhammerCalcUI\WarhammerCalcUI.csproj", "{26C0F3E1-2409-4AA7-B47D-BF9C1E994B37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalc.Interface", "src\WarhammerCalcUI\WarhammerCalc.Interface.csproj", "{26C0F3E1-2409-4AA7-B47D-BF9C1E994B37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomNumberUtility", "src\RandomNumberUtility\RandomNumberUtility.csproj", "{5482BAF9-AB64-42A0-861F-A908E43AA053}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerCalc.RandomNumberUtility", "src\RandomNumberUtility\WarhammerCalc.RandomNumberUtility.csproj", "{5482BAF9-AB64-42A0-861F-A908E43AA053}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

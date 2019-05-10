@@ -48,13 +48,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RandomNumberUtility\RandomNumberUtility.csproj">
+    <ProjectReference Include="..\RandomNumberUtility\WarhammerCalc.RandomNumberUtility.csproj">
       <Project>{5482baf9-ab64-42a0-861f-a908e43aa053}</Project>
-      <Name>RandomNumberUtility</Name>
+      <Name>WarhammerCalc.RandomNumberUtility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WarhammerCalcData\WarhammerCalcData.csproj">
+    <ProjectReference Include="..\WarhammerCalcData\WarhammerCalc.Data.csproj">
       <Project>{689bd64c-fbdb-42f0-94e3-5885ab5f82cb}</Project>
-      <Name>WarhammerCalcData</Name>
+      <Name>WarhammerCalc.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
